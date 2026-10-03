@@ -229,6 +229,7 @@ footer a{color:var(--sub);}
     <a class="nav-link" href="#resumes">📄 Resumes</a>
     <a class="nav-link" href="#interview">🎯 Interview</a>
     <a class="nav-link" href="#certs">🏆 Certs</a>
+    <a class="nav-link" href="#ai-for-de">🤖 AI for DE</a>
     <a class="nav-link" href="#mantras">💪 Mantras</a>
     <div class="theme-switcher">
       <button class="theme-btn active" onclick="setTheme('dark',this)">🌙 Dark</button>
@@ -3204,6 +3205,604 @@ training_set = fe.<span class="fn">create_training_set</span>(
   <div class="cert-card"><div class="cert-icon">🟡</div><h4>Google Cloud — BigQuery / Composer</h4><p>GCP hands-on badges — useful for multi-cloud roles and broadens your appeal.</p><span class="cert-timing" style="background:#fff8e1;color:#e65100;">Bonus — After Core</span></div>
   <div class="cert-card"><div class="cert-icon">❄️</div><h4>Snowflake SnowPro Core</h4><p>Snowflake architecture, virtual warehouses, data sharing. Valued at finance firms.</p><span class="cert-timing" style="background:#e0f2f1;color:#004d40;">Bonus — After Core</span></div>
 </div>
+</div>
+
+<!-- AI for DE -->
+<div class="sec" id="ai-for-de">
+<hr class="div" style="margin-bottom:40px">
+<div class="section-title">🤖 AI for Data Engineers — Zero to Practical</div>
+<div class="section-sub">From absolute basics to daily workflow — everything a DE needs to know about AI</div>
+
+<!-- Intro Banner -->
+<div style="background:linear-gradient(135deg,rgba(168,85,247,0.12),rgba(6,182,212,0.08));border:1px solid rgba(168,85,247,0.3);border-radius:14px;padding:28px 32px;margin-bottom:36px;text-align:center;">
+  <div style="font-size:1.35rem;font-weight:800;margin-bottom:12px;">💡 "AI won't replace Data Engineers — DEs who use AI will replace those who don't."</div>
+  <p style="color:var(--sub);max-width:780px;margin:0 auto;font-size:0.95rem;line-height:1.8;">AI is a <strong style="color:var(--text);">tool</strong>, not a replacement. You still need to understand data, pipelines, schemas, and distributed systems. AI just makes you 10× faster at writing code, debugging errors, drafting docs, and exploring new tech. This section takes you from zero knowledge of AI to practical, daily usage — as a Data Engineer.</p>
+</div>
+
+<!-- ═══ SECTION 1: AI Fundamentals ═══ -->
+<div style="font-size:1.15rem;font-weight:800;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid rgba(168,85,247,0.3);">🧠 1. AI Fundamentals — What Every DE Must Know</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:18px;margin-bottom:36px;">
+
+  <div style="background:var(--card);border:1px solid var(--border);border-left:4px solid #a855f7;border-radius:10px;padding:20px;">
+    <div style="font-weight:800;margin-bottom:8px;color:#a855f7;">AI / ML / DL / GenAI — What's the Difference?</div>
+    <ul style="list-style:none;padding:0;font-size:0.84rem;">
+      <li style="padding:5px 0;border-bottom:1px solid var(--border);">▸ <strong>AI (Artificial Intelligence)</strong> — any system that mimics human decision-making. Umbrella term. Your Alexa = AI.</li>
+      <li style="padding:5px 0;border-bottom:1px solid var(--border);">▸ <strong>ML (Machine Learning)</strong> — AI that <em>learns patterns from data</em> instead of following hard-coded rules. Spam filter = ML.</li>
+      <li style="padding:5px 0;border-bottom:1px solid var(--border);">▸ <strong>DL (Deep Learning)</strong> — ML using neural networks with many layers. Powers image recognition, voice, translation.</li>
+      <li style="padding:5px 0;">▸ <strong>GenAI (Generative AI)</strong> — DL models that <em>generate</em> new content: text, images, code. GPT-4, Claude, Gemini = GenAI.</li>
+    </ul>
+    <div style="background:rgba(168,85,247,0.06);border-left:3px solid #a855f7;padding:10px 12px;border-radius:0 6px 6px 0;margin-top:10px;font-size:0.82rem;color:var(--sub);">
+      <strong style="color:#a855f7;">Analogy:</strong> AI is the field. ML is the main method. DL is a powerful ML technique. GenAI is the latest DL product. Like: vehicles → cars → electric cars → Tesla.
+    </div>
+  </div>
+
+  <div style="background:var(--card);border:1px solid var(--border);border-left:4px solid #06b6d4;border-radius:10px;padding:20px;">
+    <div style="font-weight:800;margin-bottom:8px;color:#06b6d4;">How a Model Actually Works</div>
+    <p style="color:var(--sub);font-size:0.84rem;margin-bottom:10px;">Think of it as a black box function: give it numbers → get a prediction back.</p>
+    <ul style="list-style:none;padding:0;font-size:0.84rem;">
+      <li style="padding:5px 0;border-bottom:1px solid var(--border);">▸ <strong>Input:</strong> structured data (age=32, orders_last_30d=5, avg_spend=120.0)</li>
+      <li style="padding:5px 0;border-bottom:1px solid var(--border);">▸ <strong>Features:</strong> those inputs cleaned and transformed into numbers the model understands</li>
+      <li style="padding:5px 0;border-bottom:1px solid var(--border);">▸ <strong>Model:</strong> a mathematical function learned from millions of historical examples</li>
+      <li style="padding:5px 0;">▸ <strong>Output:</strong> a score or label — "80% likely to churn" or "fraudulent: yes"</li>
+    </ul>
+    <div style="background:rgba(6,182,212,0.06);border-left:3px solid #06b6d4;padding:10px 12px;border-radius:0 6px 6px 0;margin-top:10px;font-size:0.82rem;color:var(--sub);">
+      <strong style="color:#06b6d4;">DE's job:</strong> you build the pipeline that feeds clean, correct features into the black box. The model is not your problem. The data pipeline is.
+    </div>
+  </div>
+
+  <div style="background:var(--card);border:1px solid var(--border);border-left:4px solid #10b981;border-radius:10px;padding:20px;">
+    <div style="font-weight:800;margin-bottom:8px;color:#10b981;">Training vs Inference</div>
+    <p style="color:var(--sub);font-size:0.84rem;margin-bottom:10px;"><strong>Analogy:</strong> training = chef learning a recipe by cooking it 10,000 times. Inference = chef cooking that dish for a customer.</p>
+    <ul style="list-style:none;padding:0;font-size:0.84rem;">
+      <li style="padding:5px 0;border-bottom:1px solid var(--border);">▸ <strong>Training:</strong> model learns from historical data. Expensive, done periodically (weekly/monthly). DE builds the training dataset pipeline.</li>
+      <li style="padding:5px 0;border-bottom:1px solid var(--border);">▸ <strong>Inference:</strong> trained model scores new data. Cheap per call, done constantly. DE builds feature lookups for real-time inference.</li>
+      <li style="padding:5px 0;">▸ <strong>DE owns ingredients, not the cooking:</strong> you ensure fresh, clean data is available for both phases.</li>
+    </ul>
+  </div>
+
+  <div style="background:var(--card);border:1px solid var(--border);border-left:4px solid #f59e0b;border-radius:10px;padding:20px;">
+    <div style="font-weight:800;margin-bottom:8px;color:#f59e0b;">Supervised / Unsupervised / Reinforcement</div>
+    <ul style="list-style:none;padding:0;font-size:0.84rem;">
+      <li style="padding:5px 0;border-bottom:1px solid var(--border);">▸ <strong>Supervised</strong> — labelled data: input + correct answer. Predict churn, fraud detection. DE builds labelled dataset pipelines.</li>
+      <li style="padding:5px 0;border-bottom:1px solid var(--border);">▸ <strong>Unsupervised</strong> — no labels, find patterns. Customer segmentation, anomaly detection. DE cleans + aggregates raw data for clustering.</li>
+      <li style="padding:5px 0;">▸ <strong>Reinforcement</strong> — agent learns by trial and error with rewards. Recommendation systems, robotics. DE logs interaction events (clicks, purchases).</li>
+    </ul>
+  </div>
+
+  <div style="background:var(--card);border:1px solid var(--border);border-left:4px solid #ef4444;border-radius:10px;padding:20px;">
+    <div style="font-weight:800;margin-bottom:8px;color:#ef4444;">Overfitting / Underfitting — Why Data Quality Matters</div>
+    <ul style="list-style:none;padding:0;font-size:0.84rem;">
+      <li style="padding:5px 0;border-bottom:1px solid var(--border);">▸ <strong>Overfitting:</strong> model memorized training data, fails on new data. Like a student who only memorised past exam answers — fails any new question. Caused by noisy or unrepresentative training data.</li>
+      <li style="padding:5px 0;border-bottom:1px solid var(--border);">▸ <strong>Underfitting:</strong> model too simple to learn patterns. Gives wrong answers even on training data. Caused by too little or poorly engineered features.</li>
+      <li style="padding:5px 0;">▸ <strong>DE impact:</strong> bad data quality = bad model, guaranteed. A model is only as good as its training data. Data cleaning and feature engineering are the highest-leverage DE contributions to model accuracy.</li>
+    </ul>
+  </div>
+
+  <div style="background:var(--card);border:1px solid var(--border);border-left:4px solid #0078d4;border-radius:10px;padding:20px;">
+    <div style="font-weight:800;margin-bottom:8px;color:#0078d4;">Tokens, Embeddings &amp; Vectors</div>
+    <ul style="list-style:none;padding:0;font-size:0.84rem;">
+      <li style="padding:5px 0;border-bottom:1px solid var(--border);">▸ <strong>Token:</strong> smallest unit an LLM processes. "data engineer" = 2 tokens. ~1 token ≈ ¾ of a word. GPT-4 can handle 128K tokens at once (its "context window").</li>
+      <li style="padding:5px 0;border-bottom:1px solid var(--border);">▸ <strong>Embedding:</strong> converting text into a list of numbers that represents its meaning. "king" and "queen" → similar number-lists. "apple" (fruit) vs "Apple" (company) → different vectors based on context.</li>
+      <li style="padding:5px 0;">▸ <strong>Vector:</strong> just a list of numbers, e.g. [0.12, -0.34, 0.89, …] with 1536 dimensions. Stored in a vector database. "Find similar items" = "find vectors with small distance."</li>
+    </ul>
+    <div style="background:rgba(0,120,212,0.06);border-left:3px solid #0078d4;padding:10px 12px;border-radius:0 6px 6px 0;margin-top:10px;font-size:0.82rem;color:var(--sub);">
+      <strong style="color:#0078d4;">Analogy:</strong> Embedding is like GPS coordinates for meaning. "Paris" and "Rome" have coordinates close together (both European capitals). "Python" (snake) and "Python" (language) have coordinates far apart.
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══ SECTION 2: How AI Uses Data — DE Fits In ═══ -->
+<div style="font-size:1.15rem;font-weight:800;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid rgba(6,182,212,0.3);">🔄 2. How AI Uses Data — Where DE Fits In</div>
+
+<!-- Flow Diagram -->
+<div style="margin-bottom:24px;">
+  <div style="display:flex;flex-wrap:wrap;align-items:center;gap:0;margin-bottom:20px;font-size:0.8rem;font-weight:700;">
+    <div style="background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:8px;padding:10px 14px;text-align:center;min-width:100px;">
+      <div style="font-size:1.1rem;">📦</div>RAW DATA
+    </div>
+    <div style="color:var(--green);font-size:1.2rem;padding:0 6px;">→</div>
+    <div style="background:rgba(63,185,80,0.1);border:1px solid var(--green);border-radius:8px;padding:10px 14px;text-align:center;min-width:100px;">
+      <div style="font-size:1.1rem;">🔧</div><span style="color:var(--green);">[DE builds]</span><br>INGEST + CLEAN
+    </div>
+    <div style="color:var(--green);font-size:1.2rem;padding:0 6px;">→</div>
+    <div style="background:rgba(63,185,80,0.1);border:1px solid var(--green);border-radius:8px;padding:10px 14px;text-align:center;min-width:100px;">
+      <div style="font-size:1.1rem;">⚙️</div><span style="color:var(--green);">[DE builds]</span><br>FEATURES
+    </div>
+    <div style="color:var(--sub);font-size:1.2rem;padding:0 6px;">→</div>
+    <div style="background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.3);border-radius:8px;padding:10px 14px;text-align:center;min-width:100px;">
+      <div style="font-size:1.1rem;">🧪</div><span style="color:#a855f7;">[ML team]</span><br>TRAIN MODEL
+    </div>
+    <div style="color:var(--green);font-size:1.2rem;padding:0 6px;">→</div>
+    <div style="background:rgba(63,185,80,0.1);border:1px solid var(--green);border-radius:8px;padding:10px 14px;text-align:center;min-width:110px;">
+      <div style="font-size:1.1rem;">📊</div><span style="color:var(--green);">[DE builds]</span><br>PREDICTIONS TABLE
+    </div>
+    <div style="color:var(--sub);font-size:1.2rem;padding:0 6px;">→</div>
+    <div style="background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;padding:10px 14px;text-align:center;min-width:110px;">
+      <div style="font-size:1.1rem;">💼</div>BUSINESS VALUE
+    </div>
+  </div>
+  <p style="color:var(--sub);font-size:0.84rem;">Green = DE's territory. Purple = ML/DS team. DE owns the data infrastructure on both sides of the model.</p>
+</div>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:36px;">
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px;">
+    <div style="font-weight:700;color:var(--green);margin-bottom:8px;">📥 Data Collection &amp; Ingestion</div>
+    <p style="font-size:0.84rem;color:var(--sub);">DE builds pipelines to pull data from source systems: APIs, databases, event streams, files. Tools: ADF, Airflow, Kafka, Pub/Sub. Quality checks happen here — reject bad records at the gate.</p>
+  </div>
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px;">
+    <div style="font-weight:700;color:var(--green);margin-bottom:8px;">🧹 Data Cleaning &amp; Quality</div>
+    <p style="font-size:0.84rem;color:var(--sub);">Remove nulls, fix types, deduplicate, standardise formats. ML models fail on dirty data silently — they produce wrong predictions with no error. DE adds Great Expectations or Deequ checks to catch this.</p>
+  </div>
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px;">
+    <div style="font-weight:700;color:var(--green);margin-bottom:8px;">⚙️ Feature Engineering</div>
+    <p style="font-size:0.84rem;color:var(--sub);">Transform raw columns into model-ready numbers: rolling windows, lag features, ratios, encodings. The most impactful DE work in an ML project. A 3% better feature can outperform a more complex model.</p>
+  </div>
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px;">
+    <div style="font-weight:700;color:var(--green);margin-bottom:8px;">🏪 Feature Store</div>
+    <p style="font-size:0.84rem;color:var(--sub);">DE builds and maintains a central table of reusable features. Prevents every data scientist from recomputing the same features differently. Ensures training and serving features are identical. Tools: Databricks Feature Store, Feast, Hopsworks.</p>
+  </div>
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px;">
+    <div style="font-weight:700;color:var(--green);margin-bottom:8px;">🚀 Model Serving Data</div>
+    <p style="font-size:0.84rem;color:var(--sub);">After a model is trained, DE builds the real-time feature lookup (Redis / Delta / BigTable) that the model API calls during inference. Also writes batch prediction results to a Delta/BigQuery table for BI consumption.</p>
+  </div>
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px;">
+    <div style="font-weight:700;color:var(--green);margin-bottom:8px;">📈 Model Monitoring</div>
+    <p style="font-size:0.84rem;color:var(--sub);">DE builds dashboards tracking prediction drift (model output distribution changing) and data drift (input feature statistics shifting). Log model inputs+outputs to Delta, run daily PSI/KS tests, alert on anomalies. Tools: Evidently AI, WhyLabs, custom Spark jobs.</p>
+  </div>
+</div>
+
+<!-- ═══ SECTION 3: Tools Landscape ═══ -->
+<div style="font-size:1.15rem;font-weight:800;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid rgba(16,185,129,0.3);">🛠️ 3. AI/ML Tools Landscape — What Exists</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:36px;">
+
+  <div class="ibox" style="border:1px solid var(--border);border-radius:10px;padding:18px;">
+    <h4 style="color:#0078d4;">☁️ Cloud ML Platforms</h4>
+    <ul>
+      <li>Azure Machine Learning — full lifecycle: train, track, deploy, monitor</li>
+      <li>AWS SageMaker — notebooks, training jobs, endpoints, pipelines</li>
+      <li>GCP Vertex AI — unified: AutoML, custom training, Feature Store, Pipelines</li>
+      <li>Databricks ML — MLflow-native, integrates with Delta Lake, Unity Catalog</li>
+    </ul>
+  </div>
+
+  <div class="ibox" style="border:1px solid var(--border);border-radius:10px;padding:18px;">
+    <h4 style="color:#a855f7;">🤖 LLM APIs</h4>
+    <ul>
+      <li>OpenAI — GPT-4o, text-embedding-3-small, best general performance</li>
+      <li>Anthropic — Claude (claude-3-5-sonnet) — great for code and analysis</li>
+      <li>Google — Gemini 1.5 Pro, 1M token context window</li>
+      <li>Meta — Llama 3 (open source, run locally or on Ollama)</li>
+    </ul>
+  </div>
+
+  <div class="ibox" style="border:1px solid var(--border);border-radius:10px;padding:18px;">
+    <h4 style="color:#f59e0b;">🗄️ Vector Databases</h4>
+    <ul>
+      <li>Pinecone — managed, serverless, fast similarity search</li>
+      <li>Weaviate — open source, hybrid search (vector + keyword)</li>
+      <li>ChromaDB — lightweight, great for local dev and prototyping</li>
+      <li>pgvector — add vector search to PostgreSQL (no new infra!)</li>
+      <li>Azure AI Search — managed, integrates with Azure OpenAI natively</li>
+      <li>Vertex AI Matching Engine — GCP's managed vector search</li>
+    </ul>
+  </div>
+
+  <div class="ibox" style="border:1px solid var(--border);border-radius:10px;padding:18px;">
+    <h4 style="color:#06b6d4;">🔄 ML Orchestration</h4>
+    <ul>
+      <li>MLflow — experiment tracking, model registry, used inside Databricks</li>
+      <li>Kubeflow — Kubernetes-native ML pipelines (complex, powerful)</li>
+      <li>Vertex AI Pipelines — GCP managed, Python SDK, KFP-based</li>
+      <li>Azure ML Pipelines — built into Azure ML, integrates with ADF</li>
+    </ul>
+  </div>
+
+  <div class="ibox" style="border:1px solid var(--border);border-radius:10px;padding:18px;">
+    <h4 style="color:#10b981;">🏪 Feature Stores</h4>
+    <ul>
+      <li>Databricks Feature Store — Delta-backed, point-in-time lookups built in</li>
+      <li>Vertex AI Feature Store — GCP managed, BigTable backend</li>
+      <li>Feast — open source, works with Redis + offline store of your choice</li>
+      <li>Hopsworks — full-featured open source, Python + Spark APIs</li>
+    </ul>
+  </div>
+
+  <div class="ibox" style="border:1px solid var(--border);border-radius:10px;padding:18px;">
+    <h4 style="color:#ef4444;">🦜 LLM Frameworks</h4>
+    <ul>
+      <li>LangChain — most popular, chains, agents, RAG pipelines</li>
+      <li>LlamaIndex — specialized in document indexing and RAG</li>
+      <li>Semantic Kernel (Microsoft) — enterprise, integrates with Azure OpenAI</li>
+      <li>Haystack — open source, production RAG and search pipelines</li>
+    </ul>
+  </div>
+
+  <div class="ibox" style="border:1px solid var(--border);border-radius:10px;padding:18px;">
+    <h4 style="color:#d29922;">✅ Data Quality for ML</h4>
+    <ul>
+      <li>Great Expectations — define expectations, validate datasets, HTML docs</li>
+      <li>Deequ (AWS) — Spark-native, column-level statistics and constraints</li>
+      <li>Soda Core — SQL + Python, integrates with dbt and Airflow</li>
+    </ul>
+  </div>
+
+  <div class="ibox" style="border:1px solid var(--border);border-radius:10px;padding:18px;">
+    <h4 style="color:#8b949e;">📊 Model Monitoring</h4>
+    <ul>
+      <li>Evidently AI — open source, drift reports, data quality dashboards</li>
+      <li>WhyLabs — managed, statistical profiling, integrates with MLflow</li>
+      <li>Azure ML Monitoring — built-in data drift detection for deployed models</li>
+      <li>Vertex Model Monitoring — GCP, skew detection, alert on drift</li>
+    </ul>
+  </div>
+
+</div>
+
+<!-- ═══ SECTION 4: Feature Engineering Deep Dive ═══ -->
+<div style="font-size:1.15rem;font-weight:800;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid rgba(245,158,11,0.3);">⚙️ 4. Feature Engineering — Deep Dive</div>
+<p style="color:var(--sub);margin-bottom:20px;font-size:0.9rem;">This is the most important DE contribution to any ML project. Better features beat better models every time.</p>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:24px;">
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px;">
+    <div style="font-weight:700;margin-bottom:10px;">Feature Types</div>
+    <ul style="list-style:none;padding:0;font-size:0.84rem;">
+      <li style="padding:4px 0;border-bottom:1px solid var(--border);">▸ <strong>Numerical:</strong> age, price, count, duration — use as-is after normalisation</li>
+      <li style="padding:4px 0;border-bottom:1px solid var(--border);">▸ <strong>Categorical:</strong> country, device_type — one-hot encode or ordinal encode</li>
+      <li style="padding:4px 0;border-bottom:1px solid var(--border);">▸ <strong>Temporal:</strong> timestamp → day_of_week, hour, days_since_last_event, is_weekend</li>
+      <li style="padding:4px 0;border-bottom:1px solid var(--border);">▸ <strong>Text:</strong> product description, review → TF-IDF, or embed with OpenAI/BERT</li>
+      <li style="padding:4px 0;">▸ <strong>Geospatial:</strong> lat/lon → distance_to_warehouse, city_tier, geo_cluster</li>
+    </ul>
+  </div>
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px;">
+    <div style="font-weight:700;margin-bottom:10px;">Common Transformations</div>
+    <ul style="list-style:none;padding:0;font-size:0.84rem;">
+      <li style="padding:4px 0;border-bottom:1px solid var(--border);">▸ <strong>Normalisation (Min-Max):</strong> scale 0→1. Prevents large numbers dominating.</li>
+      <li style="padding:4px 0;border-bottom:1px solid var(--border);">▸ <strong>Standardisation (Z-score):</strong> subtract mean, divide by stddev. Works better for algorithms that assume normal distribution.</li>
+      <li style="padding:4px 0;border-bottom:1px solid var(--border);">▸ <strong>One-hot encoding:</strong> country="IN" → [0,1,0,0] — each category becomes a 0/1 column</li>
+      <li style="padding:4px 0;border-bottom:1px solid var(--border);">▸ <strong>Binning:</strong> age 25-34 → age_bucket="25-34" — reduces noise in numeric ranges</li>
+      <li style="padding:4px 0;">▸ <strong>Lag features:</strong> value from 1/7/30 days ago — critical for time-series models</li>
+    </ul>
+  </div>
+  <div style="background:var(--card);border:1px solid var(--border);border-left:4px solid #ef4444;border-radius:10px;padding:18px;">
+    <div style="font-weight:700;margin-bottom:8px;color:#ef4444;">⚠️ Point-in-Time Correctness (No Data Leakage)</div>
+    <p style="font-size:0.84rem;color:var(--sub);margin-bottom:10px;">This is the #1 trap. If a user churned on Jan 15, features used to predict that churn MUST only use data from BEFORE Jan 15. Using Jan 20 data leaks the future into training — model looks perfect in testing but fails in production.</p>
+    <p style="font-size:0.84rem;"><strong>Rule:</strong> in your feature join, always filter: <code style="background:rgba(255,255,255,0.06);padding:2px 6px;border-radius:4px;">feature_date &lt; label_date</code></p>
+    <p style="font-size:0.84rem;color:var(--sub);margin-top:8px;">Databricks Feature Store and Feast handle this automatically if you use their point-in-time join API.</p>
+  </div>
+</div>
+
+<div class="code-box">
+<span class="cmt"># PySpark: rolling window features + lag features for churn prediction</span>
+<span class="kw">from</span> pyspark.sql <span class="kw">import</span> functions <span class="kw">as</span> F, Window
+
+<span class="cmt"># define window specs</span>
+w7  = Window.<span class="fn">partitionBy</span>(<span class="str">"user_id"</span>).<span class="fn">orderBy</span>(<span class="str">"event_date"</span>).<span class="fn">rowsBetween</span>(-<span class="num">7</span>,   <span class="num">0</span>)
+w30 = Window.<span class="fn">partitionBy</span>(<span class="str">"user_id"</span>).<span class="fn">orderBy</span>(<span class="str">"event_date"</span>).<span class="fn">rowsBetween</span>(-<span class="num">30</span>,  <span class="num">0</span>)
+w90 = Window.<span class="fn">partitionBy</span>(<span class="str">"user_id"</span>).<span class="fn">orderBy</span>(<span class="str">"event_date"</span>).<span class="fn">rowsBetween</span>(-<span class="num">90</span>,  <span class="num">0</span>)
+<span class="cmt"># lag window (for lag features)</span>
+wlag = Window.<span class="fn">partitionBy</span>(<span class="str">"user_id"</span>).<span class="fn">orderBy</span>(<span class="str">"event_date"</span>)
+
+features = daily_orders.<span class="fn">withColumn</span>(<span class="str">"orders_7d"</span>,  F.<span class="fn">sum</span>(<span class="str">"order_count"</span>).<span class="fn">over</span>(w7)) \
+  .<span class="fn">withColumn</span>(<span class="str">"orders_30d"</span>, F.<span class="fn">sum</span>(<span class="str">"order_count"</span>).<span class="fn">over</span>(w30)) \
+  .<span class="fn">withColumn</span>(<span class="str">"orders_90d"</span>, F.<span class="fn">sum</span>(<span class="str">"order_count"</span>).<span class="fn">over</span>(w90)) \
+  .<span class="fn">withColumn</span>(<span class="str">"avg_spend_30d"</span>, F.<span class="fn">avg</span>(<span class="str">"order_value"</span>).<span class="fn">over</span>(w30)) \
+  .<span class="fn">withColumn</span>(<span class="str">"spend_lag_7d"</span>,  F.<span class="fn">lag</span>(<span class="str">"order_value"</span>, <span class="num">7</span>).<span class="fn">over</span>(wlag)) \
+  .<span class="fn">withColumn</span>(<span class="str">"spend_lag_30d"</span>, F.<span class="fn">lag</span>(<span class="str">"order_value"</span>, <span class="num">30</span>).<span class="fn">over</span>(wlag)) \
+  .<span class="fn">withColumn</span>(<span class="str">"days_since_last_order"</span>,
+      F.<span class="fn">datediff</span>(F.<span class="fn">current_date</span>(), F.<span class="fn">max</span>(<span class="str">"order_date"</span>).<span class="fn">over</span>(w90))) \
+  .<span class="fn">withColumn</span>(<span class="str">"day_of_week"</span>, F.<span class="fn">dayofweek</span>(<span class="str">"event_date"</span>)) \
+  .<span class="fn">withColumn</span>(<span class="str">"is_weekend"</span>,
+      (F.<span class="fn">col</span>(<span class="str">"day_of_week"</span>).<span class="fn">isin</span>([<span class="num">1</span>,<span class="num">7</span>])).<span class="fn">cast</span>(<span class="str">"int"</span>))
+
+<span class="cmt"># point-in-time join: features must predate the label date</span>
+training_data = labels.<span class="fn">join</span>(features,
+    (labels.user_id == features.user_id) &amp;
+    (features.event_date &lt; labels.label_date),  <span class="cmt"># &lt;-- NO LEAKAGE</span>
+    <span class="str">"left"</span>
+)</div>
+
+<!-- ═══ SECTION 5: Vector DBs & Embeddings ═══ -->
+<div style="font-size:1.15rem;font-weight:800;margin:36px 0 16px;padding-bottom:8px;border-bottom:2px solid rgba(245,158,11,0.3);">🗄️ 5. Vector Databases &amp; Embeddings — New DE Territory</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;">
+<div>
+<p style="font-size:0.9rem;margin-bottom:12px;"><strong>What is an embedding?</strong> Converting text (or images, audio) into a list of numbers that captures its <em>meaning</em>. Similar content gets similar numbers. You can't do this in a regular SQL DB — you need a vector database.</p>
+<p style="font-size:0.9rem;margin-bottom:12px;"><strong>Why vector DBs?</strong> "Find me 5 products similar to this description" requires comparing 1536-dimension vectors against millions of items — in milliseconds. PostgreSQL can't do that at scale. Vector DBs (Pinecone, Weaviate, pgvector) use approximate nearest-neighbour (ANN) algorithms like HNSW to do it fast.</p>
+<p style="font-size:0.9rem;"><strong>DE's role in a RAG pipeline:</strong></p>
+<ol style="font-size:0.84rem;color:var(--sub);padding-left:20px;line-height:1.9;">
+  <li>Ingest source documents (PDFs, SharePoint, DB records) into Bronze</li>
+  <li>Clean and chunk into ~500-token pieces (avoid cutting mid-sentence)</li>
+  <li>Call embedding API (OpenAI/Vertex) to get a vector per chunk</li>
+  <li>Store vector + metadata + original text in vector DB</li>
+  <li>Build refresh pipeline: when new docs arrive, re-embed and upsert</li>
+</ol>
+</div>
+<div>
+<div style="background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.2);border-radius:10px;padding:16px;margin-bottom:16px;">
+  <div style="font-weight:700;color:#f59e0b;margin-bottom:8px;">RAG — 5 Steps, Plain English</div>
+  <ol style="font-size:0.84rem;color:var(--sub);padding-left:20px;line-height:2;">
+    <li>User asks: "What is our refund policy for eBay Plus members?"</li>
+    <li>Embed the question → get a vector [0.12, -0.34, …]</li>
+    <li>Search vector DB → retrieve 5 most similar document chunks</li>
+    <li>Stuff those chunks into the LLM prompt as context</li>
+    <li>LLM generates answer using those specific chunks — not hallucinated</li>
+  </ol>
+  <p style="font-size:0.82rem;color:var(--sub);margin-top:10px;"><strong style="color:#f59e0b;">Why?</strong> LLMs don't know your private company data. RAG gives them that context without expensive fine-tuning. DE builds the pipeline that keeps the vector DB fresh.</p>
+</div>
+</div>
+</div>
+
+<div class="code-box">
+<span class="cmt"># Python: embed text chunks and store in ChromaDB (local dev) or swap for Pinecone</span>
+<span class="kw">from</span> openai <span class="kw">import</span> OpenAI
+<span class="kw">import</span> chromadb
+
+client     = <span class="fn">OpenAI</span>()                           <span class="cmt"># or AzureOpenAI(...)</span>
+chroma     = chromadb.<span class="fn">Client</span>()
+collection = chroma.<span class="fn">create_collection</span>(<span class="str">"company_docs"</span>)
+
+<span class="kw">def</span> <span class="fn">embed</span>(text: str) -&gt; list[float]:
+    <span class="kw">return</span> client.embeddings.<span class="fn">create</span>(
+        input=text, model=<span class="str">"text-embedding-3-small"</span>
+    ).data[<span class="num">0</span>].embedding
+
+<span class="cmt"># ingest: chunk docs and embed each chunk</span>
+<span class="kw">for</span> chunk <span class="kw">in</span> document_chunks:
+    vec = <span class="fn">embed</span>(chunk[<span class="str">"text"</span>])
+    collection.<span class="fn">upsert</span>(
+        ids=[chunk[<span class="str">"id"</span>]],
+        embeddings=[vec],
+        documents=[chunk[<span class="str">"text"</span>]],
+        metadatas=[{<span class="str">"source"</span>: chunk[<span class="str">"source"</span>], <span class="str">"date"</span>: chunk[<span class="str">"date"</span>]}]
+    )
+
+<span class="cmt"># retrieval: get top-5 similar chunks for a query</span>
+query_vec = <span class="fn">embed</span>(<span class="str">"What is the refund policy for eBay Plus?"</span>)
+results   = collection.<span class="fn">query</span>(query_embeddings=[query_vec], n_results=<span class="num">5</span>)
+context   = <span class="str">"\n"</span>.<span class="fn">join</span>(results[<span class="str">"documents"</span>][<span class="num">0</span>])</div>
+
+<!-- ═══ SECTION 6: LLMs + GenAI ═══ -->
+<div style="font-size:1.15rem;font-weight:800;margin:36px 0 16px;padding-bottom:8px;border-bottom:2px solid rgba(168,85,247,0.3);">🤖 6. LLMs + Generative AI — What DE Needs to Know</div>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:16px;margin-bottom:24px;">
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px;">
+    <div style="font-weight:700;margin-bottom:8px;color:#a855f7;">What is an LLM?</div>
+    <p style="font-size:0.84rem;color:var(--sub);">A Large Language Model is a neural network trained on massive text data (the internet, books, code) to predict the next token. That's it. "Next token prediction" done at massive scale emerges into reasoning, coding, summarization. GPT-4, Claude, Gemini, Llama are all LLMs.</p>
+  </div>
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px;">
+    <div style="font-weight:700;margin-bottom:8px;color:#06b6d4;">Prompt Engineering Basics</div>
+    <ul style="list-style:none;padding:0;font-size:0.84rem;">
+      <li style="padding:4px 0;border-bottom:1px solid var(--border);">▸ <strong>System prompt:</strong> sets context and persona — "You are a PySpark expert. Respond concisely."</li>
+      <li style="padding:4px 0;border-bottom:1px solid var(--border);">▸ <strong>User prompt:</strong> the actual request — "Write a PySpark job that reads parquet from ADLS and deduplicates."</li>
+      <li style="padding:4px 0;">▸ <strong>Few-shot examples:</strong> show 2-3 examples of input/output before your question. Dramatically improves quality for structured tasks.</li>
+    </ul>
+  </div>
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px;">
+    <div style="font-weight:700;margin-bottom:8px;color:#10b981;">Fine-tuning vs RAG</div>
+    <ul style="list-style:none;padding:0;font-size:0.84rem;">
+      <li style="padding:4px 0;border-bottom:1px solid var(--border);">▸ <strong>RAG:</strong> inject your data into every prompt at query time. Cheap, real-time updates, DE builds it. Use when data changes frequently.</li>
+      <li style="padding:4px 0;border-bottom:1px solid var(--border);">▸ <strong>Fine-tuning:</strong> retrain model weights on your data. Expensive, static snapshot. Use for consistent tone/style or specialised tasks like SQL generation in your schema.</li>
+      <li style="padding:4px 0;">▸ <strong>DE's role in fine-tuning:</strong> build the training dataset (input/output pairs), convert to JSONL, push to training API. That's it.</li>
+    </ul>
+  </div>
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px;">
+    <div style="font-weight:700;margin-bottom:8px;color:#f59e0b;">Tokens, Context Windows &amp; Chunking</div>
+    <p style="font-size:0.84rem;color:var(--sub);margin-bottom:8px;">LLMs can only "see" a limited amount of text at once — the context window (GPT-4: 128K tokens ≈ 300 pages). This matters for DE because:</p>
+    <ul style="list-style:none;padding:0;font-size:0.84rem;">
+      <li style="padding:4px 0;border-bottom:1px solid var(--border);">▸ You can't dump a 10,000-page PDF into a prompt — you must chunk it first</li>
+      <li style="padding:4px 0;border-bottom:1px solid var(--border);">▸ Chunking strategy affects RAG quality: too small = loses context, too large = wastes tokens</li>
+      <li style="padding:4px 0;">▸ Optimal chunk: ~500 tokens with 50-token overlap. DE builds the chunking pipeline.</li>
+    </ul>
+  </div>
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px;">
+    <div style="font-weight:700;margin-bottom:8px;color:#ef4444;">Agents &amp; Tool Use</div>
+    <p style="font-size:0.84rem;color:var(--sub);margin-bottom:8px;">An LLM "agent" can call external tools (APIs, databases) to get information before answering. Instead of just text → text, it can:</p>
+    <ul style="list-style:none;padding:0;font-size:0.84rem;">
+      <li style="padding:4px 0;border-bottom:1px solid var(--border);">▸ Call your internal data API: "get_sales_for_region(region='APAC', month='2025-09')"</li>
+      <li style="padding:4px 0;border-bottom:1px solid var(--border);">▸ Run a SQL query against your data warehouse</li>
+      <li style="padding:4px 0;">▸ DE's job: build those tool APIs and define the data contracts agents will call</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══ SECTION 7: Using AI Daily ═══ -->
+<div style="font-size:1.15rem;font-weight:800;margin:36px 0 16px;padding-bottom:8px;border-bottom:2px solid rgba(63,185,80,0.3);">💪 7. How to Use AI as a Data Engineer — Daily Workflow</div>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;margin-bottom:24px;">
+
+  <div style="background:var(--card);border:1px solid var(--border);border-left:4px solid var(--green);border-radius:10px;padding:20px;">
+    <div style="font-weight:800;color:var(--green);margin-bottom:10px;">A. Writing Code Faster</div>
+    <p style="font-size:0.84rem;color:var(--sub);margin-bottom:12px;"><strong>GitHub Copilot / Cursor:</strong> type a comment describing what you want → code appears. Works phenomenally well for PySpark boilerplate, ADF pipeline JSON, and SQL.</p>
+    <p style="font-size:0.84rem;color:var(--sub);">Example workflow: write your comment intent → tab to accept → review + tweak. Saves 60-70% of typing time for standard tasks.</p>
+  </div>
+
+  <div style="background:var(--card);border:1px solid var(--border);border-left:4px solid #06b6d4;border-radius:10px;padding:20px;">
+    <div style="font-weight:800;color:#06b6d4;margin-bottom:10px;">B. Debugging Pipelines</div>
+    <p style="font-size:0.84rem;color:var(--sub);margin-bottom:8px;">Copy-paste the full Spark stack trace → "What's wrong and how to fix it?" Instantly get root cause + fix instead of Googling for 30 minutes.</p>
+    <p style="font-size:0.84rem;color:var(--sub);">Also works for: ADF pipeline failures, SQL query plan analysis, Airflow DAG errors, Docker container crashes.</p>
+  </div>
+
+  <div style="background:var(--card);border:1px solid var(--border);border-left:4px solid #a855f7;border-radius:10px;padding:20px;">
+    <div style="font-weight:800;color:#a855f7;margin-bottom:10px;">C. Writing Documentation</div>
+    <p style="font-size:0.84rem;color:var(--sub);margin-bottom:8px;">Paste your PySpark function → "write a Google-style docstring." Paste your Delta table schema → "write a data dictionary." Instantly professional-quality docs.</p>
+    <p style="font-size:0.84rem;color:var(--sub);">DE documentation is chronically under-written. AI removes the friction entirely.</p>
+  </div>
+
+  <div style="background:var(--card);border:1px solid var(--border);border-left:4px solid #f59e0b;border-radius:10px;padding:20px;">
+    <div style="font-weight:800;color:#f59e0b;margin-bottom:10px;">D. Designing Architecture</div>
+    <p style="font-size:0.84rem;color:var(--sub);margin-bottom:8px;">Describe your use case, constraints, and current stack → "design a streaming pipeline for X on Azure." You get a concrete starting point to refine, not a blank page.</p>
+    <p style="font-size:0.84rem;color:var(--sub);">Great for comparing options: "Delta Lake vs Iceberg for this use case — pros and cons" with your specific constraints.</p>
+  </div>
+
+  <div style="background:var(--card);border:1px solid var(--border);border-left:4px solid #10b981;border-radius:10px;padding:20px;">
+    <div style="font-weight:800;color:#10b981;margin-bottom:10px;">E. Learning New Tech Fast</div>
+    <p style="font-size:0.84rem;color:var(--sub);margin-bottom:8px;">Frame questions with your existing context: "Explain Databricks Unity Catalog to a senior DE moving from Azure Synapse." You get targeted answers, not generic intro material.</p>
+    <p style="font-size:0.84rem;color:var(--sub);">Ask for gotchas: "What are the common pitfalls with Redshift distribution keys that bite people from a Spark background?"</p>
+  </div>
+
+  <div style="background:var(--card);border:1px solid var(--border);border-left:4px solid #ef4444;border-radius:10px;padding:20px;">
+    <div style="font-weight:800;color:#ef4444;margin-bottom:10px;">F. Generating Test Data</div>
+    <p style="font-size:0.84rem;color:var(--sub);margin-bottom:8px;">Stop hand-crafting test fixtures. Ask AI to generate realistic synthetic data matching your schema. Instant, varied, edge-case-covering.</p>
+    <p style="font-size:0.84rem;color:var(--sub);">Also: generate PySpark unit test stubs, mock DataFrames, edge cases for your data quality checks.</p>
+  </div>
+
+</div>
+
+<!-- Prompt Examples -->
+<div style="margin-bottom:32px;">
+  <div style="font-weight:700;margin-bottom:14px;color:var(--sub);text-transform:uppercase;font-size:0.8rem;letter-spacing:0.08em;">📋 Copy-Paste Prompt Examples for DE Work</div>
+
+  <div style="background:rgba(63,185,80,0.06);border:1px solid #3fb950;border-radius:8px;padding:14px 16px;font-family:'Cascadia Code','Fira Code',monospace;font-size:0.82rem;margin-bottom:12px;line-height:1.7;">
+    <div style="color:var(--sub);margin-bottom:6px;font-family:-apple-system,sans-serif;font-size:0.75rem;font-weight:700;">WRITE CODE</div>
+    Write a PySpark job that:<br>
+    - Reads parquet files from ADLS Gen2 path: abfss://bronze@storageaccount.dfs.core.windows.net/orders/<br>
+    - Deduplicates on (order_id, updated_at), keeping the latest record<br>
+    - Writes to Delta table at silver layer with overwrite schema mode<br>
+    - Includes logging and basic error handling<br>
+    Use pyspark.sql.functions, avoid pandas. Target: Databricks Runtime 14.x
+  </div>
+
+  <div style="background:rgba(63,185,80,0.06);border:1px solid #3fb950;border-radius:8px;padding:14px 16px;font-family:'Cascadia Code','Fira Code',monospace;font-size:0.82rem;margin-bottom:12px;line-height:1.7;">
+    <div style="color:var(--sub);margin-bottom:6px;font-family:-apple-system,sans-serif;font-size:0.75rem;font-weight:700;">DEBUG AN ERROR</div>
+    I'm getting this Spark error in Databricks. Explain the root cause and give me a fix:<br>
+    [paste full stack trace here]<br>
+    Context: I'm reading ~500GB parquet, joining with a 2GB lookup table, writing to Delta.
+  </div>
+
+  <div style="background:rgba(63,185,80,0.06);border:1px solid #3fb950;border-radius:8px;padding:14px 16px;font-family:'Cascadia Code','Fira Code',monospace;font-size:0.82rem;line-height:1.7;">
+    <div style="color:var(--sub);margin-bottom:6px;font-family:-apple-system,sans-serif;font-size:0.75rem;font-weight:700;">GENERATE TEST DATA</div>
+    Generate 20 rows of realistic e-commerce order data as a Python list of dicts with these fields:<br>
+    order_id (UUID), user_id (int 1000-9999), order_date (last 90 days), order_value (5.0-500.0),<br>
+    status (placed/shipped/delivered/cancelled with realistic distribution),<br>
+    product_category (electronics/clothing/home/sports), country_code (IN/US/UK/DE/AU)
+  </div>
+</div>
+
+<!-- ═══ SECTION 8: AI in Each Cloud ═══ -->
+<div style="font-size:1.15rem;font-weight:800;margin:36px 0 16px;padding-bottom:8px;border-bottom:2px solid rgba(0,120,212,0.3);">☁️ 8. AI in Each Cloud — Where It Lives</div>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;margin-bottom:36px;">
+
+  <div style="background:var(--card);border:1px solid var(--border);border-left:4px solid var(--az);border-radius:10px;padding:20px;">
+    <div style="font-weight:800;color:var(--az);font-size:1rem;margin-bottom:12px;">☁️ Azure</div>
+    <ul style="list-style:none;padding:0;font-size:0.84rem;">
+      <li style="padding:5px 0;border-bottom:1px solid var(--border);">▸ <strong>Azure Machine Learning</strong> — full MLOps platform. Train, register, deploy, monitor models. Python SDK + UI.</li>
+      <li style="padding:5px 0;border-bottom:1px solid var(--border);">▸ <strong>Azure OpenAI Service</strong> — deploy GPT-4o, text-embedding-3-small, DALL-E. Private endpoint, enterprise SLA.</li>
+      <li style="padding:5px 0;border-bottom:1px solid var(--border);">▸ <strong>Copilot in Synapse / ADF</strong> — generate pipelines from plain English, explain transformations inline.</li>
+      <li style="padding:5px 0;border-bottom:1px solid var(--border);">▸ <strong>Azure AI Search</strong> — semantic search + vector search. Key component for RAG on Azure.</li>
+      <li style="padding:5px 0;">▸ <strong>Prompt Flow</strong> — visual LLM pipeline orchestration, built into Azure ML. Good for RAG app development.</li>
+    </ul>
+  </div>
+
+  <div style="background:var(--card);border:1px solid var(--border);border-left:4px solid var(--aw);border-radius:10px;padding:20px;">
+    <div style="font-weight:800;color:var(--aw);font-size:1rem;margin-bottom:12px;">🟠 AWS</div>
+    <ul style="list-style:none;padding:0;font-size:0.84rem;">
+      <li style="padding:5px 0;border-bottom:1px solid var(--border);">▸ <strong>SageMaker</strong> — full ML platform. Notebooks, training jobs, feature store, model registry, real-time endpoints.</li>
+      <li style="padding:5px 0;border-bottom:1px solid var(--border);">▸ <strong>Bedrock</strong> — managed LLM API. Access Claude, Llama, Titan, Mistral via one API. No GPU management.</li>
+      <li style="padding:5px 0;border-bottom:1px solid var(--border);">▸ <strong>Amazon Q</strong> — AI coding assistant (like Copilot), integrates with IDEs and AWS Console.</li>
+      <li style="padding:5px 0;border-bottom:1px solid var(--border);">▸ <strong>Comprehend</strong> — managed NLP. Entity detection, sentiment analysis, topic modelling — no ML expertise needed.</li>
+      <li style="padding:5px 0;">▸ <strong>Rekognition</strong> — managed computer vision. Object detection, face analysis, text in images from S3.</li>
+    </ul>
+  </div>
+
+  <div style="background:var(--card);border:1px solid var(--border);border-left:4px solid var(--gc);border-radius:10px;padding:20px;">
+    <div style="font-weight:800;color:var(--gc);font-size:1rem;margin-bottom:12px;">🔵 GCP</div>
+    <ul style="list-style:none;padding:0;font-size:0.84rem;">
+      <li style="padding:5px 0;border-bottom:1px solid var(--border);">▸ <strong>Vertex AI</strong> — unified ML platform. AutoML, custom training, Feature Store, Pipelines, Model Registry, Endpoint deployment.</li>
+      <li style="padding:5px 0;border-bottom:1px solid var(--border);">▸ <strong>Gemini API</strong> — access Gemini 1.5 Pro (1M context), Flash (fast/cheap), Ultra via Vertex AI.</li>
+      <li style="padding:5px 0;border-bottom:1px solid var(--border);">▸ <strong>BigQuery ML</strong> — train models in pure SQL inside BigQuery. Mind-blowing for DEs. No Python needed.</li>
+      <li style="padding:5px 0;border-bottom:1px solid var(--border);">▸ <strong>Duet AI in BigQuery</strong> — SQL autocomplete, data exploration assistance, query explanation, built into BQ console.</li>
+      <li style="padding:5px 0;">▸ <strong>Dataflow ML</strong> — run ML inference inside Dataflow streaming pipelines using RunInference transform.</li>
+    </ul>
+  </div>
+
+</div>
+
+<!-- BigQuery ML Code Example -->
+<div style="margin-bottom:32px;">
+  <div style="font-weight:700;margin-bottom:10px;color:var(--gc);">🔵 BigQuery ML — Train a Model in Pure SQL (This Blows People's Minds)</div>
+  <p style="color:var(--sub);font-size:0.85rem;margin-bottom:12px;">No Python. No Jupyter. No ML expertise. Train, evaluate, and predict entirely in SQL — inside BigQuery. Perfect for DEs who are SQL-native.</p>
+<div class="code-box">
+<span class="cmt">-- Step 1: train a logistic regression model to predict churn</span>
+<span class="kw">CREATE OR REPLACE MODEL</span> `my_project.ml_models.churn_model`
+<span class="kw">OPTIONS</span>(
+  model_type = <span class="str">'logistic_reg'</span>,
+  input_label_cols = [<span class="str">'churned'</span>],
+  auto_class_weights = <span class="kw">TRUE</span>,
+  data_split_method = <span class="str">'auto_split'</span>
+) <span class="kw">AS</span>
+<span class="kw">SELECT</span>
+  orders_30d, avg_order_value, days_since_last_order,
+  category_diversity, device_type, country_code,
+  churned  <span class="cmt">-- label: 1 = churned, 0 = active</span>
+<span class="kw">FROM</span> `my_project.features.user_features_gold`;
+
+<span class="cmt">-- Step 2: evaluate model performance</span>
+<span class="kw">SELECT</span> *
+<span class="kw">FROM</span> ML.<span class="fn">EVALUATE</span>(<span class="kw">MODEL</span> `my_project.ml_models.churn_model`);
+
+<span class="cmt">-- Step 3: predict on new data — results go straight to a table</span>
+<span class="kw">CREATE OR REPLACE TABLE</span> `my_project.predictions.churn_scores` <span class="kw">AS</span>
+<span class="kw">SELECT</span> user_id, predicted_churned, predicted_churned_probs
+<span class="kw">FROM</span> ML.<span class="fn">PREDICT</span>(<span class="kw">MODEL</span> `my_project.ml_models.churn_model`,
+  (<span class="kw">SELECT</span> * <span class="kw">FROM</span> `my_project.features.user_features_gold`
+   <span class="kw">WHERE</span> prediction_date = <span class="fn">CURRENT_DATE</span>()));</div>
+</div>
+
+<!-- ═══ SECTION 9: What AI Cannot Do ═══ -->
+<div style="font-size:1.15rem;font-weight:800;margin:36px 0 16px;padding-bottom:8px;border-bottom:2px solid rgba(248,81,73,0.3);">⚠️ 9. What AI CANNOT Do — Stay Grounded</div>
+
+<div style="background:rgba(248,81,73,0.05);border:1px solid rgba(248,81,73,0.2);border-radius:10px;padding:20px;margin-bottom:32px;">
+  <p style="font-size:0.88rem;color:var(--sub);margin-bottom:14px;">AI makes you faster — it doesn't make you smarter about YOUR system. Know the limits:</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;">
+    <div>
+      <ul style="list-style:none;padding:0;font-size:0.84rem;">
+        <li style="padding:6px 0;border-bottom:1px solid rgba(248,81,73,0.1);">❌ <strong>Can't understand your business logic</strong> — it doesn't know that "cancelled" orders in your system still need to be billed. You do.</li>
+        <li style="padding:6px 0;border-bottom:1px solid rgba(248,81,73,0.1);">❌ <strong>Can't know your schema</strong> — unless you paste it in every prompt. Always give AI your actual table structure.</li>
+        <li style="padding:6px 0;">❌ <strong>Hallucinates confidently</strong> — AI will write syntactically correct code that's logically wrong. Always test generated code in dev before promoting to prod.</li>
+      </ul>
+    </div>
+    <div>
+      <ul style="list-style:none;padding:0;font-size:0.84rem;">
+        <li style="padding:6px 0;border-bottom:1px solid rgba(248,81,73,0.1);">❌ <strong>Can't replace Spark internals knowledge</strong> — understanding partitioning, shuffle, broadcast joins, execution plans — that's still yours. AI can't optimize what it can't observe.</li>
+        <li style="padding:6px 0;border-bottom:1px solid rgba(248,81,73,0.1);">❌ <strong>Can't replace system design judgment</strong> — "use Kafka or Kinesis?" depends on your team, costs, infra — not a generic answer.</li>
+        <li style="padding:6px 0;">❌ <strong>Copy-paste without understanding = danger</strong> — AI-generated code in production, deployed by someone who doesn't understand it, is a ticking time bomb. Understand WHY before you run it.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="say" style="margin-top:14px;">
+    <h4>The right mindset</h4>
+    Use AI to remove drudgery — boilerplate, docs, test data, first drafts. Use your brain for judgment — architecture decisions, business logic, quality reviews, debugging production incidents. The engineers who thrive are those who use AI for the 70% of work that's mechanical, freeing their attention for the 30% that requires deep expertise.
+  </div>
+</div>
+
+<!-- ═══ SECTION 10: Interview Q&A ═══ -->
+<div class="iq" style="margin-bottom:24px;">
+  <h4>🎯 AI for DE — Interview Q&amp;A</h4>
+
+  <div class="qi"><strong>Q: What is the difference between AI, ML, Deep Learning, and Generative AI?</strong><span> AI is the broad field of making machines smart. ML is the dominant approach — machines learn from data instead of explicit rules. Deep Learning is a type of ML using multi-layer neural networks. Generative AI is a recent DL product that generates content (text, images, code) — GPT-4, Claude, Gemini are examples. Analogy: AI is vehicles, ML is cars, DL is electric cars, GenAI is Tesla.</span></div>
+
+  <div class="qi"><strong>Q: What is a Feature Store and why does a DE care?</strong><span> A Feature Store is a central repository of reusable, versioned feature tables. DEs care because they own the pipelines that compute and refresh those features. Without a feature store, every data scientist recomputes the same features differently — causing inconsistency between training (batch historical) and serving (real-time) data. Tools: Databricks Feature Store, Feast, Vertex AI Feature Store, Hopsworks.</span></div>
+
+  <div class="qi"><strong>Q: What is data leakage in ML and how do you prevent it as a DE?</strong><span> Data leakage = using future information to train a model, making it look accurate but fail in production. Prevent it by enforcing point-in-time joins — features for a label dated Jan 15 must only use data available before Jan 15. Implement as a timestamp filter: feature_date &lt; label_date. Databricks Feature Store's time travel join API handles this automatically.</span></div>
+
+  <div class="qi"><strong>Q: How would you build a real-time prediction pipeline?</strong><span> Event → Kafka/Event Hub → Spark Structured Streaming consumer → feature lookup in Redis/Delta (pre-computed rolling features) → call model REST API (Azure ML or Vertex endpoint) → write prediction to Cosmos DB or response topic → downstream app consumes result. Target SLA: under 200ms. DE owns everything except the model endpoint itself.</span></div>
+
+  <div class="qi"><strong>Q: What is RAG and what does a DE build for it?</strong><span> RAG (Retrieval-Augmented Generation) feeds an LLM with retrieved context from your private data at query time, avoiding expensive fine-tuning. DE builds: (1) document ingestion pipeline, (2) chunking logic (~500 tokens/chunk with overlap), (3) embedding pipeline (call OpenAI/Vertex API per chunk), (4) vector DB loader (Pinecone/Azure AI Search), (5) refresh pipeline so the index stays current as documents change. The LLM prompt construction is usually the app team's job.</span></div>
+
+  <div class="qi"><strong>Q: What is model drift / data drift and how do you monitor it?</strong><span> Model drift = predictions degrade over time because real-world patterns changed. Data drift = input feature distributions shift (e.g. average order value jumps after a promo). Monitor by writing model inputs + outputs to a Delta table, running daily statistical tests (PSI for categorical, KS test for numerical), and alerting when drift exceeds threshold. Tools: Evidently AI (open source), WhyLabs, Azure ML Monitoring, Vertex Model Monitoring.</span></div>
+
+  <div class="qi"><strong>Q: What is an embedding and why do we need vector databases?</strong><span> An embedding converts text/images into a dense list of floating-point numbers (e.g. 1536 dimensions) that captures semantic meaning. Similar content → similar vectors. We need vector DBs because "find the 5 most semantically similar chunks to this query" requires approximate nearest-neighbour search (ANN) across millions of high-dimensional vectors — something SQL DBs can't do efficiently. Vector DBs (Pinecone, Weaviate, pgvector) use HNSW or IVF indexing to do this in milliseconds.</span></div>
+
+  <div class="qi"><strong>Q: What is BigQuery ML and when would you use it?</strong><span> BigQuery ML lets you train and run ML models using SQL directly in BigQuery — no Python, no Jupyter, no separate compute. CREATE OR REPLACE MODEL trains a logistic regression, boosted tree, or deep neural network on a SELECT query. Best for DEs who are SQL-native and don't want to manage Python environments. Great for: churn prediction on BigQuery data, quick baselines before investing in Vertex AI, embedding generation using the built-in text-embedding model.</span></div>
+
+  <div class="qi"><strong>Q: When would you use RAG vs fine-tuning for an LLM?</strong><span> RAG: data changes frequently (daily/weekly), need real-time updates, budget is limited, DE team owns it. Fine-tuning: the model needs to adopt a specific writing style or respond in a proprietary format consistently, data is relatively static, you have budget for retraining. Most enterprise use cases start with RAG. Fine-tuning is added later for specific behaviours like generating SQL in your exact schema format. RAG + fine-tuning together = best of both worlds for large deployments.</span></div>
+
+  <div class="qi"><strong>Q: How do you use AI tools in your day-to-day DE work?</strong><span> GitHub Copilot / Cursor for autocompleting PySpark boilerplate and SQL in my IDE — describe intent in a comment, tab to accept. ChatGPT/Claude for debugging Spark stack traces (paste error → get root cause + fix), designing pipeline architectures, learning new tech fast, and generating synthetic test data. Databricks Assistant for inline notebook help. I still understand every line of code AI generates — AI removes typing, my judgment ensures correctness.</span></div>
+
+</div>
+
 </div>
 
 <!-- Mantras -->
