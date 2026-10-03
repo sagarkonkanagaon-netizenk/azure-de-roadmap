@@ -1,0 +1,2104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Multi-Cloud Data Engineering Mastery | Sagar Konkanagaon</title>
+<style>
+:root{--bg:#0d1117;--card:#161b22;--border:#30363d;--text:#e6edf3;--sub:#8b949e;--az:#0078d4;--aw:#ff9900;--gc:#4285f4;--green:#3fb950;--red:#f85149;--yellow:#d29922;}
+[data-theme="light"]{--bg:#f6f8fa;--card:#ffffff;--border:#d0d7de;--text:#1f2328;--sub:#636c76;--az:#0078d4;--aw:#e07b00;--gc:#1a73e8;--green:#1a7f37;--red:#cf222e;--yellow:#9a6700;}
+[data-theme="fun"]{--bg:#0a0015;--card:#12003a;--border:#5c20a0;--text:#f0e6ff;--sub:#b08aff;--az:#bf5fff;--aw:#ff6bba;--gc:#00e5ff;--green:#39ff14;--red:#ff2d55;--yellow:#ffe600;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.6;}
+a{color:inherit;text-decoration:none;}
+.author-bar{background:linear-gradient(135deg,#0078d4,#004e8c);color:white;text-align:center;padding:10px;font-size:0.85rem;font-weight:600;letter-spacing:0.05em;}
+.sticky-nav{position:sticky;top:0;z-index:100;background:rgba(13,17,23,0.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);padding:10px 0;}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;gap:6px;padding:0 16px;flex-wrap:wrap;align-items:center;}
+.nav-link{padding:6px 14px;border-radius:6px;font-size:0.82rem;font-weight:600;color:var(--sub);transition:all 0.2s;}
+.nav-link:hover{background:var(--card);color:var(--text);}
+.cloud-tabs-bar{background:var(--card);border-bottom:1px solid var(--border);padding:0;position:sticky;top:45px;z-index:99;}
+.cloud-tabs-inner{max-width:1200px;margin:0 auto;display:flex;padding:0 16px;}
+.cloud-tab{padding:14px 28px;font-weight:700;font-size:0.95rem;cursor:pointer;border-bottom:3px solid transparent;color:var(--sub);transition:all 0.2s;}
+.cloud-tab.az.active{color:var(--az);border-color:var(--az);}
+.cloud-tab.aw.active{color:var(--aw);border-color:var(--aw);}
+.cloud-tab.gc.active{color:var(--gc);border-color:var(--gc);}
+.cloud-tab:hover{color:var(--text);}
+.cloud-section{display:none;}
+#azure-section{display:block;}
+.hero{padding:60px 16px 40px;text-align:center;max-width:900px;margin:0 auto;}
+.hero h1{font-size:2.5rem;font-weight:800;margin-bottom:12px;}
+.hero p{color:var(--sub);font-size:1.1rem;max-width:600px;margin:0 auto 24px;}
+.hero-stats{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;}
+.stat-pill{background:var(--card);border:1px solid var(--border);border-radius:30px;padding:8px 20px;font-size:0.85rem;font-weight:700;}
+.wrap{max-width:1200px;margin:0 auto;padding:0 16px 60px;}
+.section-title{font-size:1.6rem;font-weight:800;margin-bottom:6px;}
+.section-sub{color:var(--sub);margin-bottom:28px;}
+.sec{padding:40px 0;}
+hr.div{border:none;border-top:1px solid var(--border);}
+/* Roadmap */
+.timeline{position:relative;padding-left:32px;}
+.timeline::before{content:'';position:absolute;left:14px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--az),var(--gc));}
+.phase-wrap{position:relative;margin-bottom:8px;}
+.tl-dot{position:absolute;left:-25px;top:18px;width:14px;height:14px;border-radius:50%;background:var(--az);border:2px solid var(--bg);}
+.phase-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px 20px;cursor:pointer;transition:all 0.2s;border-left:4px solid;}
+.phase-card:hover,.phase-card.open{background:rgba(255,255,255,0.04);}
+.phase-card h3{font-size:1rem;font-weight:700;margin-bottom:4px;}
+.phase-card p{color:var(--sub);font-size:0.85rem;}
+.detail-panel{display:none;padding:24px;background:var(--card);border:1px solid var(--border);border-top:none;border-radius:0 0 10px 10px;margin-bottom:16px;}
+.panel-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+@media(max-width:700px){.panel-grid{grid-template-columns:1fr;}}
+.ibox{background:rgba(0,0,0,0.25);border-radius:8px;padding:16px;}
+.ibox h4{font-size:0.9rem;font-weight:700;margin-bottom:10px;color:var(--sub);}
+.ibox ul{list-style:none;padding:0;}
+.ibox li{font-size:0.85rem;padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.04);}
+.ibox li::before{content:'▸ ';color:var(--green);}
+.code-box{background:#010409;border:1px solid var(--border);border-radius:8px;padding:16px;font-family:'Cascadia Code','Fira Code',monospace;font-size:0.8rem;overflow-x:auto;white-space:pre;line-height:1.7;margin-bottom:16px;}
+.cmt{color:#8b949e;} .kw{color:#ff7b72;} .fn{color:#d2a8ff;} .str{color:#a5d6ff;} .num{color:#79c0ff;}
+.iq{background:rgba(255,200,0,0.04);border:1px solid rgba(255,200,0,0.15);border-radius:8px;padding:16px;margin-top:12px;}
+.iq h4{font-size:0.9rem;font-weight:700;margin-bottom:10px;color:var(--yellow);}
+.qi{padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05);font-size:0.82rem;color:var(--sub);}
+.qi strong{color:var(--text);}
+.say{background:rgba(63,185,80,0.04);border-left:4px solid var(--green);border-radius:0 8px 8px 0;padding:16px;margin-top:12px;font-size:0.88rem;}
+.say h4{font-size:0.9rem;font-weight:700;margin-bottom:8px;color:var(--green);}
+/* Quiz */
+.quiz-controls{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:20px;}
+select{background:var(--card);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:8px 14px;font-size:0.9rem;cursor:pointer;}
+.quiz-start-btn{padding:10px 24px;background:var(--az);color:white;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:0.95rem;}
+.quiz-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;}
+.quiz-meta{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;align-items:center;}
+.qlevel{padding:3px 10px;border-radius:20px;font-size:0.75rem;font-weight:700;text-transform:uppercase;}
+.qlevel.easy{background:rgba(63,185,80,0.15);color:#3fb950;}
+.qlevel.medium{background:rgba(210,153,34,0.15);color:#d29922;}
+.qlevel.hard{background:rgba(248,81,73,0.15);color:#f85149;}
+.qtopic{background:rgba(255,255,255,0.06);padding:3px 10px;border-radius:20px;font-size:0.75rem;font-weight:600;}
+.qnum{margin-left:auto;color:var(--sub);font-size:0.82rem;}
+.qscore{color:var(--sub);font-size:0.85rem;margin-bottom:12px;}
+.qtext{font-size:1.05rem;font-weight:600;margin-bottom:20px;line-height:1.5;}
+.qopts{display:flex;flex-direction:column;gap:8px;}
+.qopt{text-align:left;padding:12px 16px;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,0.02);color:var(--text);cursor:pointer;font-size:0.9rem;transition:all 0.2s;}
+.qopt:hover:not(:disabled){background:rgba(255,255,255,0.06);border-color:var(--sub);}
+.qopt.correct{background:rgba(63,185,80,0.15)!important;border-color:#3fb950!important;color:#3fb950!important;}
+.qopt.wrong{background:rgba(248,81,73,0.15)!important;border-color:#f85149!important;color:#f85149!important;}
+.qopt:disabled{cursor:not-allowed;}
+.qexp{background:rgba(0,0,0,0.3);border-left:3px solid var(--az);border-radius:0 8px 8px 0;padding:12px 16px;margin-top:16px;font-size:0.88rem;color:var(--sub);}
+.qnext{margin-top:14px;padding:10px 24px;background:var(--green);color:white;border:none;border-radius:8px;cursor:pointer;font-weight:700;font-size:0.95rem;}
+.quiz-done{text-align:center;padding:40px;}
+.quiz-done h3{font-size:1.5rem;margin-bottom:12px;}
+.quiz-done p{color:var(--sub);margin-bottom:20px;}
+.quiz-done button{padding:12px 28px;background:var(--az);color:white;border:none;border-radius:8px;cursor:pointer;font-weight:700;}
+/* Timetable */
+.tt-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;}
+.tt-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;}
+.tt-card h3{font-size:1rem;font-weight:700;margin-bottom:14px;color:var(--az);}
+.tt-slot{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);}
+.tt-time{font-weight:700;font-size:0.78rem;color:var(--sub);min-width:90px;}
+.tt-act strong{display:block;font-size:0.88rem;}
+.tt-act span{font-size:0.8rem;color:var(--sub);}
+.week-tbl{width:100%;border-collapse:collapse;font-size:0.82rem;}
+.week-tbl th,.week-tbl td{padding:7px 10px;border-bottom:1px solid var(--border);text-align:left;}
+.week-tbl th{color:var(--sub);font-size:0.75rem;text-transform:uppercase;}
+/* Projects */
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;}
+.proj-card{background:var(--card);border-radius:10px;padding:20px;border:2px solid;}
+.proj-card h3{font-size:0.95rem;font-weight:700;margin-bottom:10px;}
+.proj-meta{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;}
+.proj-meta span{background:rgba(255,255,255,0.06);padding:3px 10px;border-radius:20px;font-size:0.75rem;font-weight:600;}
+.proj-card p{color:var(--sub);font-size:0.85rem;margin-bottom:10px;}
+.proj-steps{list-style:none;padding:0;}
+.proj-steps li{font-size:0.82rem;padding:4px 0;border-bottom:1px solid var(--border);}
+.proj-steps li::before{content:'→ ';color:var(--green);}
+/* Resources */
+.res-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;}
+.res-card{background:var(--card);border-radius:10px;padding:18px;border:1px solid var(--border);}
+.res-card h3{font-size:0.9rem;font-weight:700;margin-bottom:6px;}
+.by{font-size:0.78rem;color:var(--sub);margin-bottom:8px;}
+.res-card p{font-size:0.82rem;color:var(--sub);margin-bottom:10px;}
+.res-btn{display:inline-block;padding:7px 14px;border-radius:6px;font-weight:700;font-size:0.8rem;margin-top:4px;}
+.yt-btn{background:#cc0000;color:white;}
+.udemy-btn{background:#a435f0;color:white;}
+.free-btn{background:#238636;color:white;}
+.free-tag{background:#238636;color:white;padding:2px 7px;border-radius:10px;font-size:0.7rem;font-weight:700;margin-left:6px;}
+.paid-tag{background:#a435f0;color:white;padding:2px 7px;border-radius:10px;font-size:0.7rem;font-weight:700;margin-left:6px;}
+.res-section-title{font-size:1rem;font-weight:800;margin:24px 0 14px;display:flex;align-items:center;gap:8px;}
+/* Resumes */
+.rtabs{display:flex;gap:8px;margin-bottom:16px;}
+.rtab{padding:8px 20px;border-radius:8px;border:1px solid var(--border);cursor:pointer;font-weight:600;font-size:0.88rem;}
+.rtab.active{background:var(--az);color:white;border-color:var(--az);}
+.rviewer{background:var(--card);border:1px solid var(--border);border-radius:10px;height:600px;display:flex;align-items:center;justify-content:center;color:var(--sub);font-size:0.9rem;}
+/* Interview Accordion */
+.acc-item{background:var(--card);border:1px solid var(--border);border-radius:10px;margin-bottom:8px;overflow:hidden;}
+.acc-head{padding:16px 20px;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;align-items:center;}
+.acc-head:hover{background:rgba(255,255,255,0.03);}
+.acc-body{display:none;padding:16px 20px;border-top:1px solid var(--border);}
+.acc-q{padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.05);}
+.acc-q strong{display:block;font-size:0.88rem;margin-bottom:4px;}
+.acc-q span{font-size:0.82rem;color:var(--sub);}
+/* Certs */
+.cert-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;}
+.cert-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;text-align:center;}
+.cert-icon{font-size:2.5rem;margin-bottom:10px;}
+.cert-card h3,.cert-card h4{font-size:0.9rem;font-weight:700;margin-bottom:6px;}
+.cert-card p{font-size:0.8rem;color:var(--sub);}
+.cert-timing{display:inline-block;margin-top:10px;padding:4px 12px;border-radius:20px;font-size:0.76rem;font-weight:700;}
+/* Q&A details */
+details.qa{border:1px solid var(--border);border-radius:10px;margin-bottom:10px;overflow:hidden;}
+details.qa summary{padding:14px 18px;font-weight:700;cursor:pointer;list-style:none;background:var(--card);font-size:0.95rem;}
+details.qa summary::-webkit-details-marker{display:none;}
+details.qa[open] summary{border-bottom:1px solid var(--border);}
+.qa-content{padding:16px 20px;background:var(--bg);}
+.qa-content ul{list-style:none;padding:0;margin:0;}
+.qa-content li{padding:8px 0;border-bottom:1px solid var(--border);font-size:0.87rem;line-height:1.6;}
+.qa-content li:last-child{border-bottom:none;}
+/* Mantras */
+.mantra-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;}
+.mantra-card{border-radius:10px;padding:24px;border:1px solid var(--border);text-align:center;background:var(--card);}
+.mantra-card .mi{font-size:2rem;margin-bottom:12px;}
+.mantra-card p{font-size:0.95rem;font-style:italic;line-height:1.6;margin-bottom:10px;}
+.mantra-card .author{font-size:0.8rem;font-weight:700;color:var(--az);}
+.quote-strip{margin-top:32px;padding:28px;background:linear-gradient(135deg,rgba(0,120,212,0.08),rgba(63,185,80,0.08));border-radius:14px;border:1px solid var(--border);text-align:center;}
+.quote-strip p{font-size:1rem;line-height:1.7;font-style:italic;}
+.q-attr{margin-top:12px;font-size:0.82rem;font-weight:700;color:var(--sub);}
+footer{background:var(--card);border-top:1px solid var(--border);text-align:center;padding:30px;color:var(--sub);font-size:0.85rem;}
+footer .f-name{font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:6px;}
+footer a{color:var(--sub);}
+/* Mobile fixes */
+@media(max-width:600px){
+  .nav-inner{gap:4px;padding:0 10px;flex-wrap:wrap;}
+  .nav-link{padding:5px 9px;font-size:0.75rem;}
+  .cloud-tabs-inner{padding:0 8px;overflow-x:auto;}
+  .cloud-tab{padding:10px 16px;font-size:0.82rem;white-space:nowrap;}
+  .hero{padding:32px 14px 24px;}
+  .hero h1{font-size:1.6rem;}
+  .hero p{font-size:0.9rem;}
+  .hero-stats{gap:8px;}
+  .stat-pill{padding:6px 12px;font-size:0.75rem;}
+  .wrap{padding:0 12px 40px;}
+  .section-title{font-size:1.3rem;}
+  .quiz-controls{gap:8px;}
+  select{font-size:0.82rem;padding:7px 10px;}
+  .quiz-start-btn{padding:9px 18px;font-size:0.88rem;}
+  .qtext{font-size:0.95rem;}
+  .qopt{padding:14px 12px;font-size:0.85rem;}
+  .phase-card{padding:12px 14px;}
+  .panel-grid{grid-template-columns:1fr;}
+  .tt-grid{grid-template-columns:1fr;}
+  .proj-grid{grid-template-columns:1fr;}
+  .cert-grid{grid-template-columns:repeat(2,1fr);}
+  .mantra-grid{grid-template-columns:1fr;}
+  .res-grid{grid-template-columns:1fr;}
+  .rtabs{flex-wrap:wrap;}
+  .res-tmpl-tabs{gap:4px;}
+  .rt-btn{padding:6px 10px;font-size:0.72rem;}
+  .tmpl-box{font-size:0.75rem;padding:16px;}
+  details.qa summary{font-size:0.88rem;padding:12px 14px;}
+  .qa-content{padding:12px 14px;}
+  .theme-switcher{margin-left:0;width:100%;justify-content:center;margin-top:4px;}
+  .author-bar{font-size:0.75rem;padding:8px;}
+  .sticky-nav{padding:8px 0;}
+  .cloud-tabs-bar{top:38px;}
+  .quiz-card{padding:16px;}
+}
+/* Theme toggle */
+.theme-switcher{display:flex;gap:6px;margin-left:auto;}
+.theme-btn{padding:5px 12px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--sub);font-size:0.78rem;font-weight:700;cursor:pointer;transition:all 0.2s;}
+.theme-btn.active{background:var(--az);color:#fff;border-color:var(--az);}
+[data-theme="fun"] .theme-btn.active{background:var(--gc);border-color:var(--gc);}
+[data-theme="fun"] body{background-image:radial-gradient(ellipse at top,rgba(95,0,200,0.3),transparent 60%),radial-gradient(ellipse at bottom right,rgba(0,229,255,0.15),transparent 50%);}
+[data-theme="fun"] .hero h1{background:linear-gradient(90deg,#bf5fff,#ff6bba,#00e5ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+[data-theme="fun"] .phase-card,.phase-card:hover,[data-theme="fun"] .mantra-card{border-color:var(--border);}
+[data-theme="fun"] .cert-card{box-shadow:0 0 12px rgba(191,95,255,0.2);}
+[data-theme="fun"] details.qa summary{background:linear-gradient(90deg,rgba(191,95,255,0.1),rgba(0,229,255,0.05));}
+/* Resume templates */
+.res-tmpl-tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;}
+.rt-btn{padding:7px 14px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--sub);font-size:0.78rem;font-weight:700;cursor:pointer;transition:all 0.2s;}
+.rt-btn.active,.rt-btn:hover{background:var(--az);color:#fff;border-color:var(--az);}
+.tmpl-box{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:28px;font-family:'Courier New',monospace;font-size:0.82rem;line-height:1.9;white-space:pre-wrap;color:var(--text);min-height:400px;}
+.tmpl-box .th{font-size:1rem;font-weight:900;letter-spacing:0.05em;border-bottom:2px solid var(--text);padding-bottom:4px;margin-bottom:8px;font-family:inherit;}
+.tmpl-box .sec-h{font-weight:800;text-transform:uppercase;letter-spacing:0.08em;font-size:0.78rem;margin-top:14px;color:var(--az);}
+</style>
+</head>
+<body>
+<div class="author-bar">✨ Crafted by Sagar Konkanagaon | Senior Data Engineer, Bengaluru &nbsp;|&nbsp; Azure × AWS × GCP</div>
+
+<nav class="sticky-nav">
+  <div class="nav-inner">
+    <a class="nav-link" href="#roadmap">🗺️ Roadmap</a>
+    <a class="nav-link" href="#schedule">📅 Schedule</a>
+    <a class="nav-link" href="#projects">💼 Projects</a>
+    <a class="nav-link" href="#resources">📚 Resources</a>
+    <a class="nav-link" href="#resumes">📄 Resumes</a>
+    <a class="nav-link" href="#interview">🎯 Interview</a>
+    <a class="nav-link" href="#certs">🏆 Certs</a>
+    <a class="nav-link" href="#mantras">💪 Mantras</a>
+    <div class="theme-switcher">
+      <button class="theme-btn active" onclick="setTheme('dark',this)">🌙 Dark</button>
+      <button class="theme-btn" onclick="setTheme('light',this)">☀️ Light</button>
+      <button class="theme-btn" onclick="setTheme('fun',this)">🎨 Fun</button>
+    </div>
+  </div>
+</nav>
+
+<div class="cloud-tabs-bar">
+  <div class="cloud-tabs-inner">
+    <div class="cloud-tab az active" onclick="switchCloud('azure',this)">☁️ Azure</div>
+    <div class="cloud-tab aw" onclick="switchCloud('aws',this)">🟠 AWS</div>
+    <div class="cloud-tab gc" onclick="switchCloud('gcp',this)">🔵 GCP</div>
+  </div>
+</div>
+
+<!-- ══════════ AZURE SECTION ══════════ -->
+<div class="cloud-section" id="azure-section">
+<div class="hero">
+  <h1 style="color:var(--az)">☁️ Azure Data Engineering Mastery</h1>
+  <p>Your complete 12-week roadmap from foundations to job-ready — ADF, Databricks, Delta Lake, Synapse & more</p>
+  <div class="hero-stats">
+    <span class="stat-pill" style="border-color:var(--az)">⚡ 7 Learning Phases</span>
+    <span class="stat-pill" style="border-color:var(--az)">📝 60+ Quiz Questions</span>
+    <span class="stat-pill" style="border-color:var(--az)">🚀 6 Portfolio Projects</span>
+    <span class="stat-pill" style="border-color:var(--az)">🎯 12 Weeks to Job-Ready</span>
+  </div>
+</div>
+
+<div class="wrap" id="roadmap">
+<div class="sec">
+<div class="section-title">🗺️ Azure DE Learning Roadmap</div>
+<div class="section-sub">Click any phase to expand the full study guide, code examples, and interview Q&A</div>
+
+<div class="timeline">
+
+<!-- Phase 1 -->
+<div class="phase-wrap">
+<div class="tl-dot" style="background:var(--az)"></div>
+<div class="phase-card" style="border-color:var(--az)" onclick="toggle('az-p1')">
+  <h3>📌 Phase 1 (Week 1–2): SQL + Python Foundations</h3>
+  <p>Window functions · CTEs · Joins · pandas · File I/O · API calls</p>
+</div>
+<div class="detail-panel" id="az-p1">
+  <div class="panel-grid">
+    <div class="ibox"><h4>📚 SQL Study List</h4><ul>
+      <li>Window functions: ROW_NUMBER, RANK, DENSE_RANK, NTILE</li>
+      <li>LAG/LEAD for time-series comparisons</li>
+      <li>CTEs (WITH clause) for readable complex queries</li>
+      <li>PIVOT / UNPIVOT for data reshaping</li>
+      <li>Advanced JOINs: SELF, CROSS, FULL OUTER</li>
+      <li>Aggregation: GROUP BY, HAVING, ROLLUP, CUBE</li>
+      <li>Subqueries vs CTEs vs Window functions — when to use</li>
+      <li>Index types: clustered vs non-clustered</li>
+    </ul></div>
+    <div class="ibox"><h4>🐍 Python Study List</h4><ul>
+      <li>List comprehensions, generators, decorators</li>
+      <li>pandas: read_csv, merge, groupby, pivot_table</li>
+      <li>File I/O: read/write CSV, JSON, Parquet</li>
+      <li>API calls: requests library, error handling</li>
+      <li>Exception handling: try/except/finally</li>
+      <li>lambda functions and map/filter/reduce</li>
+      <li>OOP basics: classes, inheritance, @staticmethod</li>
+      <li>Date/time handling with datetime module</li>
+    </ul></div>
+  </div>
+  <div class="code-box"><span class="cmt">-- SQL: Top 3 salary per department</span>
+<span class="kw">WITH</span> ranked <span class="kw">AS</span> (
+  <span class="kw">SELECT</span> employee_id, dept, salary,
+         <span class="fn">DENSE_RANK</span>() <span class="kw">OVER</span> (<span class="kw">PARTITION BY</span> dept <span class="kw">ORDER BY</span> salary <span class="kw">DESC</span>) <span class="kw">AS</span> rnk
+  <span class="kw">FROM</span> employees
+)
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> ranked <span class="kw">WHERE</span> rnk &lt;= <span class="num">3</span>;
+
+<span class="cmt">-- Python: Read CSV, transform, write Parquet</span>
+<span class="kw">import</span> pandas <span class="kw">as</span> pd
+df = pd.<span class="fn">read_csv</span>(<span class="str">'data.csv'</span>)
+df[<span class="str">'salary_band'</span>] = pd.<span class="fn">cut</span>(df[<span class="str">'salary'</span>], bins=[<span class="num">0</span>,<span class="num">50000</span>,<span class="num">100000</span>,<span class="num">999999</span>],
+                          labels=[<span class="str">'L'</span>,<span class="str">'M'</span>,<span class="str">'H'</span>])
+df.<span class="fn">to_parquet</span>(<span class="str">'output.parquet'</span>, index=<span class="kw">False</span>)</div>
+  <div class="iq"><h4>🎯 Interview Questions — Phase 1</h4>
+    <div class="qi"><strong>Q: Difference between ROW_NUMBER, RANK, DENSE_RANK?</strong><span>ROW_NUMBER: always unique. RANK: gaps on ties (1,2,2,4). DENSE_RANK: no gaps on ties (1,2,2,3).</span></div>
+    <div class="qi"><strong>Q: When would you use a CTE vs subquery?</strong><span>CTE: when you need to reuse the result multiple times or when readability matters. Subquery: single use, simpler inline logic.</span></div>
+    <div class="qi"><strong>Q: What's the difference between WHERE and HAVING?</strong><span>WHERE filters rows before aggregation. HAVING filters groups after GROUP BY aggregation.</span></div>
+  </div>
+  <div class="say"><h4>💬 What to Say in an Interview</h4>
+    <p>"In my current role, I write complex SQL daily — window functions for running totals, LAG/LEAD for month-over-month comparison, CTEs for multi-step data transformation logic before loading into the warehouse layer."</p>
+  </div>
+</div>
+</div>
+
+<!-- Phase 2 -->
+<div class="phase-wrap">
+<div class="tl-dot" style="background:#7c3aed"></div>
+<div class="phase-card" style="border-color:#7c3aed" onclick="toggle('az-p2')">
+  <h3>⚡ Phase 2 (Week 3–4): Apache Spark + Databricks</h3>
+  <p>Spark architecture · DataFrames · Databricks workspace · Cluster config</p>
+</div>
+<div class="detail-panel" id="az-p2">
+  <div class="panel-grid">
+    <div class="ibox"><h4>⚡ Spark Core Concepts</h4><ul>
+      <li>Driver vs Executor vs Cluster Manager</li>
+      <li>RDD vs DataFrame vs Dataset</li>
+      <li>Lazy evaluation — transformations vs actions</li>
+      <li>DAG (Directed Acyclic Graph) execution plan</li>
+      <li>Partitioning: repartition vs coalesce</li>
+      <li>Shuffling — why it's expensive, how to minimize</li>
+      <li>Broadcast join vs Sort-merge join</li>
+      <li>AQE (Adaptive Query Execution) in Spark 3</li>
+    </ul></div>
+    <div class="ibox"><h4>🧱 Databricks Platform</h4><ul>
+      <li>Workspace: notebooks, repos, jobs, clusters</li>
+      <li>Job cluster vs interactive cluster — cost difference</li>
+      <li>Unity Catalog: data governance, access control</li>
+      <li>DBFS vs Unity Catalog volumes</li>
+      <li>%run vs dbutils.notebook.run — difference</li>
+      <li>Databricks Secrets for Key Vault integration</li>
+      <li>DLT (Delta Live Tables) — declarative pipelines</li>
+      <li>Workflows — multi-task jobs with dependencies</li>
+    </ul></div>
+  </div>
+  <div class="code-box"><span class="cmt"># PySpark: DataFrame API patterns</span>
+<span class="kw">from</span> pyspark.sql <span class="kw">import</span> SparkSession
+<span class="kw">from</span> pyspark.sql.functions <span class="kw">import</span> col, broadcast, sha2, concat_ws
+
+spark = SparkSession.<span class="fn">builder</span>.<span class="fn">appName</span>(<span class="str">"DE_Demo"</span>).<span class="fn">getOrCreate</span>()
+
+<span class="cmt"># Broadcast join (small table &lt; 200MB)</span>
+result = large_df.<span class="fn">join</span>(<span class="fn">broadcast</span>(small_df), <span class="str">"customer_id"</span>, <span class="str">"left"</span>)
+
+<span class="cmt"># Row hash for deduplication</span>
+df_with_hash = df.<span class="fn">withColumn</span>(<span class="str">"row_hash"</span>,
+    <span class="fn">sha2</span>(<span class="fn">concat_ws</span>(<span class="str">"||"</span>, *[<span class="fn">col</span>(c) <span class="kw">for</span> c <span class="kw">in</span> df.columns]), <span class="num">256</span>))
+
+<span class="cmt"># Repartition vs Coalesce</span>
+df_repartitioned = df.<span class="fn">repartition</span>(<span class="num">10</span>)  <span class="cmt"># full shuffle, use for skewed data</span>
+df_coalesced = df.<span class="fn">coalesce</span>(<span class="num">4</span>)         <span class="cmt"># no shuffle, only reduce partitions</span></div>
+  <div class="iq"><h4>🎯 Interview Questions — Phase 2</h4>
+    <div class="qi"><strong>Q: groupByKey vs reduceByKey in Spark?</strong><span>groupByKey shuffles all data to reduce side. reduceByKey does local aggregation first (combiner), then shuffle. reduceByKey is faster for aggregations.</span></div>
+    <div class="qi"><strong>Q: What is lazy evaluation in Spark?</strong><span>Transformations (map, filter, select) are not executed until an action (collect, count, write) is called. Spark builds a DAG and optimizes it.</span></div>
+    <div class="qi"><strong>Q: How do you handle data skew in Spark?</strong><span>Broadcast join for small tables, salting keys for skewed joins, AQE auto-optimization, repartition by a better key.</span></div>
+  </div>
+  <div class="say"><h4>💬 What to Say in an Interview</h4>
+    <p>"I use Databricks daily — I configure job clusters for production (cheaper, auto-terminates), use interactive clusters for dev only. For our 50GB daily ingestion, I tuned spark.sql.shuffle.partitions to match cluster cores, reducing job time by 40%."</p>
+  </div>
+</div>
+</div>
+
+<!-- Phase 3 -->
+<div class="phase-wrap">
+<div class="tl-dot" style="background:var(--az)"></div>
+<div class="phase-card" style="border-color:var(--az)" onclick="toggle('az-p3')">
+  <h3>🔄 Phase 3 (Week 5–6): Azure Data Factory + ADLS Gen2</h3>
+  <p>Pipelines · Triggers · Linked services · Metadata-driven · Self-Hosted IR</p>
+</div>
+<div class="detail-panel" id="az-p3">
+  <div class="panel-grid">
+    <div class="ibox"><h4>🔄 ADF Core Concepts</h4><ul>
+      <li>Linked services, datasets, pipelines, activities</li>
+      <li>Integration Runtime: Azure IR, Self-Hosted IR, SSIS IR</li>
+      <li>ForEach + Lookup metadata-driven pattern</li>
+      <li>Watermark-based incremental load pattern</li>
+      <li>Error handling: retry, fault tolerance, failure branches</li>
+      <li>Triggers: Schedule, Tumbling Window, Event-based</li>
+      <li>ADF Data Flows — visual Spark transformations</li>
+      <li>ARM template export for CI/CD deployment</li>
+    </ul></div>
+    <div class="ibox"><h4>🗄️ ADLS Gen2 Architecture</h4><ul>
+      <li>Hierarchical namespace enables folder-level ACLs</li>
+      <li>Container structure: landing/ bronze/ silver/ gold/</li>
+      <li>Access tiers: Hot, Cool, Archive for cost optimization</li>
+      <li>Service Principal for ADF authentication</li>
+      <li>Azure Key Vault for secret management</li>
+      <li>Managed Identity vs Service Principal differences</li>
+      <li>SAS tokens, RBAC roles: Storage Blob Contributor</li>
+      <li>Event Grid for blob-triggered pipelines</li>
+    </ul></div>
+  </div>
+  <div class="code-box"><span class="cmt"># ADF Metadata-driven pipeline pattern (conceptual)</span>
+<span class="cmt"># Config table in Azure SQL:</span>
+<span class="cmt"># SourceTable | TargetPath | WatermarkColumn | LastWatermark</span>
+
+<span class="cmt"># ADF Lookup → gets all table configs</span>
+<span class="cmt"># ForEach → iterates over each table</span>
+<span class="cmt"># Inside ForEach: Copy Activity (dynamic expressions)</span>
+
+<span class="str">@{item().SourceTable}</span>          <span class="cmt"># dynamic table name</span>
+<span class="str">@{item().TargetPath}</span>/<span class="str">@{utcnow('yyyy/MM/dd')}</span>   <span class="cmt"># partitioned path</span>
+
+<span class="cmt"># Watermark query (passed as parameter)</span>
+<span class="str">"SELECT * FROM @{item().SourceTable} WHERE @{item().WatermarkColumn} > '@{item().LastWatermark}'"</span>
+
+<span class="cmt"># After copy: Stored Procedure updates watermark</span>
+UPDATE dbo.config_table
+<span class="kw">SET</span> LastWatermark = <span class="fn">GETDATE</span>()
+<span class="kw">WHERE</span> SourceTable = <span class="str">'@{item().SourceTable}'</span></div>
+  <div class="iq"><h4>🎯 Interview Questions — Phase 3</h4>
+    <div class="qi"><strong>Q: Difference between Azure IR and Self-Hosted IR?</strong><span>Azure IR: connects to cloud resources (ADLS, Azure SQL). Self-Hosted IR: installed on-prem or private network to copy data from on-prem SQL Server, Oracle, etc.</span></div>
+    <div class="qi"><strong>Q: How do you implement incremental load in ADF?</strong><span>Watermark pattern: store last-loaded timestamp in config table, use it in source query WHERE clause, update after successful copy.</span></div>
+    <div class="qi"><strong>Q: How do you handle schema drift in ADF?</strong><span>Enable Schema drift in Data Flow mappings. Use dynamic column mapping. For Copy Activity, use binary copy or enable Allow schema drift in mapping.</span></div>
+  </div>
+  <div class="say"><h4>💬 What to Say in an Interview</h4>
+    <p>"I built a metadata-driven ADF framework that handles 40+ tables dynamically from a single pipeline. One pipeline, one config table, parameterized — adding a new table is just inserting a row. No new pipelines needed."</p>
+  </div>
+</div>
+</div>
+
+<!-- Phase 4 -->
+<div class="phase-wrap">
+<div class="tl-dot" style="background:#d97706"></div>
+<div class="phase-card" style="border-color:#d97706" onclick="toggle('az-p4')">
+  <h3>🔥 Phase 4 (Week 7–8): PySpark + Delta Lake</h3>
+  <p>MERGE INTO · SCD Type 1 & 2 · Time Travel · Z-ordering · OPTIMIZE</p>
+</div>
+<div class="detail-panel" id="az-p4">
+  <div class="panel-grid">
+    <div class="ibox"><h4>🔥 Delta Lake Fundamentals</h4><ul>
+      <li>Delta vs Parquet: ACID transactions, schema enforcement</li>
+      <li>Transaction log (_delta_log): every write = JSON entry</li>
+      <li>MERGE INTO for upsert (SCD Type 1)</li>
+      <li>SCD Type 2: add is_current, valid_from, valid_to</li>
+      <li>Time travel: VERSION AS OF, TIMESTAMP AS OF</li>
+      <li>OPTIMIZE + Z-ordering for read performance</li>
+      <li>VACUUM to remove old file versions</li>
+      <li>Schema evolution: mergeSchema, overwriteSchema</li>
+    </ul></div>
+    <div class="ibox"><h4>💡 PySpark Advanced</h4><ul>
+      <li>UDFs (user-defined functions) — avoid if possible</li>
+      <li>pandas_udf (vectorized) for performance</li>
+      <li>Window functions: LAG, LEAD, RANK, SUM OVER</li>
+      <li>Cache vs Persist: cache=MEMORY_ONLY, persist=configurable</li>
+      <li>Streaming: readStream, writeStream, trigger</li>
+      <li>Auto Loader (cloudFiles) for incremental file ingestion</li>
+      <li>Null handling: fillna, dropna, when/otherwise</li>
+      <li>Type casting and safe_cast patterns</li>
+    </ul></div>
+  </div>
+  <div class="code-box"><span class="cmt"># Delta Lake MERGE INTO — SCD Type 1</span>
+<span class="kw">from</span> delta.tables <span class="kw">import</span> DeltaTable
+
+delta_tbl = DeltaTable.<span class="fn">forPath</span>(spark, <span class="str">"/mnt/silver/customers"</span>)
+
+delta_tbl.<span class="fn">alias</span>(<span class="str">"target"</span>).<span class="fn">merge</span>(
+    source_df.<span class="fn">alias</span>(<span class="str">"source"</span>),
+    <span class="str">"target.customer_id = source.customer_id"</span>
+).<span class="fn">whenMatchedUpdateAll</span>().<span class="fn">whenNotMatchedInsertAll</span>().<span class="fn">execute</span>()
+
+<span class="cmt"># Time Travel</span>
+df_v2 = spark.<span class="fn">read</span>.<span class="fn">format</span>(<span class="str">"delta"</span>).<span class="fn">option</span>(<span class="str">"versionAsOf"</span>, <span class="num">2</span>).<span class="fn">load</span>(path)
+
+<span class="cmt"># OPTIMIZE + Z-ORDER (SQL)</span>
+<span class="fn">OPTIMIZE</span> silver.customers <span class="fn">ZORDER BY</span> (customer_id, created_date)
+
+<span class="cmt"># Auto Loader</span>
+df = (spark.readStream
+      .<span class="fn">format</span>(<span class="str">"cloudFiles"</span>)
+      .<span class="fn">option</span>(<span class="str">"cloudFiles.format"</span>, <span class="str">"csv"</span>)
+      .<span class="fn">option</span>(<span class="str">"cloudFiles.schemaLocation"</span>, schema_path)
+      .<span class="fn">load</span>(landing_path))</div>
+  <div class="iq"><h4>🎯 Interview Questions — Phase 4</h4>
+    <div class="qi"><strong>Q: What is the Delta transaction log?</strong><span>Every write to a Delta table creates a JSON file in _delta_log/. It records what files were added/removed, enabling ACID compliance, time travel, and concurrent reads.</span></div>
+    <div class="qi"><strong>Q: How do you handle incremental load without an updated_at column?</strong><span>Use row hashing (SHA2 of all columns). Compare hash of incoming data with existing. If hash differs, it's a new/changed record.</span></div>
+    <div class="qi"><strong>Q: What does VACUUM do?</strong><span>Removes data files no longer referenced by the Delta log (older than retention period, default 7 days). Required to free storage space.</span></div>
+  </div>
+  <div class="say"><h4>💬 What to Say in an Interview</h4>
+    <p>"We use Delta Lake for all Silver and Gold layers. MERGE INTO handles our daily SCD Type 1 upserts. For the financial data, we implemented row hashing since there's no updated_at column — SHA2 of all business key columns detects any change."</p>
+  </div>
+</div>
+</div>
+
+<!-- Phase 5 -->
+<div class="phase-wrap">
+<div class="tl-dot" style="background:var(--green)"></div>
+<div class="phase-card" style="border-color:var(--green)" onclick="toggle('az-p5')">
+  <h3>🏗️ Phase 5 (Week 8–9): Medallion Architecture + Data Modeling</h3>
+  <p>Bronze / Silver / Gold · Star Schema · Slowly Changing Dimensions · CDC</p>
+</div>
+<div class="detail-panel" id="az-p5">
+  <div class="panel-grid">
+    <div class="ibox"><h4>🏗️ Medallion Architecture</h4><ul>
+      <li>Bronze: raw landing, no transforms, audit columns added</li>
+      <li>Silver: cleaned, deduped, typed, merged via MERGE INTO</li>
+      <li>Gold: business aggregations, Star Schema, Power BI views</li>
+      <li>Audit columns: ingestion_ts, source_file, batch_id</li>
+      <li>Error record routing: bad records → error/ path</li>
+      <li>Idempotency: re-runnable pipelines without duplicates</li>
+      <li>Partition strategy: by ingestion_date for Bronze, by region for Silver</li>
+    </ul></div>
+    <div class="ibox"><h4>📐 Data Modeling</h4><ul>
+      <li>Star Schema: fact + dimension tables</li>
+      <li>Snowflake Schema: normalized dimensions</li>
+      <li>SCD Type 1: overwrite (no history)</li>
+      <li>SCD Type 2: add is_current, valid_from, valid_to columns</li>
+      <li>Surrogate keys vs natural keys</li>
+      <li>CDC (Change Data Capture) with Debezium / SQL Server CDC</li>
+      <li>Slowly Changing Dimensions in PySpark with Delta MERGE</li>
+    </ul></div>
+  </div>
+  <div class="code-box"><span class="cmt"># SCD Type 2 in PySpark with Delta</span>
+<span class="kw">from</span> pyspark.sql.functions <span class="kw">import</span> current_timestamp, lit
+
+<span class="cmt"># Step 1: Expire old records that changed</span>
+delta_tbl.<span class="fn">alias</span>(<span class="str">"t"</span>).<span class="fn">merge</span>(
+    new_data.<span class="fn">alias</span>(<span class="str">"s"</span>),
+    <span class="str">"t.cust_id=s.cust_id AND t.is_current=1 AND t.address != s.address"</span>
+).<span class="fn">whenMatchedUpdate</span>(set={
+    <span class="str">"is_current"</span>: <span class="fn">lit</span>(<span class="num">0</span>),
+    <span class="str">"valid_to"</span>: <span class="fn">current_timestamp</span>()
+}).<span class="fn">execute</span>()
+
+<span class="cmt"># Step 2: Insert new versions</span>
+new_records = new_data.<span class="fn">withColumn</span>(<span class="str">"is_current"</span>, <span class="fn">lit</span>(<span class="num">1</span>)) \
+                       .<span class="fn">withColumn</span>(<span class="str">"valid_from"</span>, <span class="fn">current_timestamp</span>()) \
+                       .<span class="fn">withColumn</span>(<span class="str">"valid_to"</span>, <span class="fn">lit</span>(<span class="kw">None</span>))
+new_records.<span class="fn">write</span>.<span class="fn">format</span>(<span class="str">"delta"</span>).<span class="fn">mode</span>(<span class="str">"append"</span>).<span class="fn">save</span>(path)</div>
+  <div class="iq"><h4>🎯 Interview Questions — Phase 5</h4>
+    <div class="qi"><strong>Q: What are the three layers in Medallion Architecture?</strong><span>Bronze: raw as-is with audit columns. Silver: cleaned, validated, merged/upserted. Gold: business-level aggregations and star schema for BI consumption.</span></div>
+    <div class="qi"><strong>Q: SCD Type 1 vs SCD Type 2?</strong><span>Type 1: overwrite old value, lose history. Type 2: keep history with is_current flag, valid_from/valid_to timestamps. Use Type 2 when historical changes matter (e.g., customer address changes).</span></div>
+  </div>
+  <div class="say"><h4>💬 What to Say in an Interview</h4>
+    <p>"We follow Medallion Architecture strictly. Bronze is immutable raw data with audit columns. Silver applies business rules — dedup, type casting, SCD merges. Gold is our serving layer — pre-aggregated Delta tables that Power BI reads directly."</p>
+  </div>
+</div>
+</div>
+
+<!-- Phase 6 -->
+<div class="phase-wrap">
+<div class="tl-dot" style="background:#dc2626"></div>
+<div class="phase-card" style="border-color:#dc2626" onclick="toggle('az-p6')">
+  <h3>🔒 Phase 6 (Week 10): CI/CD + Security + Governance</h3>
+  <p>Azure DevOps · ARM templates · Key Vault · Unity Catalog · RBAC</p>
+</div>
+<div class="detail-panel" id="az-p6">
+  <div class="panel-grid">
+    <div class="ibox"><h4>🔄 CI/CD for Data Pipelines</h4><ul>
+      <li>Git branching: feature → develop → main</li>
+      <li>ADF: publish to adf_publish branch, export ARM template</li>
+      <li>Azure Pipelines YAML: build + release stages</li>
+      <li>Databricks CLI for notebook/job deployment</li>
+      <li>Environment promotion: Dev → QA → Prod (approval gates)</li>
+      <li>Parameterize everything: no hardcoded values</li>
+      <li>Linked ARM templates for modular deployment</li>
+    </ul></div>
+    <div class="ibox"><h4>🔐 Security + Governance</h4><ul>
+      <li>Azure Key Vault: store connection strings, passwords</li>
+      <li>Managed Identity: service-to-service auth, no secrets</li>
+      <li>RBAC: Reader/Contributor/Owner at resource group level</li>
+      <li>ADLS Gen2 ACLs: directory-level access control</li>
+      <li>Unity Catalog: data governance, column-level security</li>
+      <li>Row-level security in Delta/Synapse</li>
+      <li>Collibra for data lineage and cataloging</li>
+      <li>Purview for enterprise-scale data governance</li>
+    </ul></div>
+  </div>
+  <div class="code-box"><span class="cmt"># Azure DevOps YAML Pipeline for ADF</span>
+<span class="kw">trigger</span>:
+  branches: {include: [main]}
+
+<span class="kw">stages</span>:
+- stage: Deploy_QA
+  <span class="kw">jobs</span>:
+  - <span class="kw">job</span>: DeployADF
+    <span class="kw">steps</span>:
+    - <span class="fn">task</span>: AzureResourceManagerTemplateDeployment@3
+      <span class="kw">inputs</span>:
+        deploymentScope: <span class="str">'Resource Group'</span>
+        resourceGroupName: <span class="str">'$(RG_QA)'</span>
+        templateLocation: <span class="str">'Linked artifact'</span>
+        csmFile: <span class="str">'$(System.DefaultWorkingDirectory)/ARMTemplateForFactory.json'</span>
+        csmParametersFile: <span class="str">'$(System.DefaultWorkingDirectory)/ARMTemplateParametersForFactory.json'</span>
+        overrideParameters: <span class="str">'-factoryName $(ADF_NAME_QA)'</span>
+
+<span class="cmt"># Databricks CLI notebook deploy</span>
+databricks workspace import_dir ./notebooks /Shared/project --overwrite</div>
+  <div class="iq"><h4>🎯 Interview Questions — Phase 6</h4>
+    <div class="qi"><strong>Q: How do you secure secrets in ADF pipelines?</strong><span>Store secrets in Azure Key Vault. ADF uses Managed Identity or Service Principal to access Key Vault. Reference secrets as @{linkedService().secretName} — never hardcoded.</span></div>
+    <div class="qi"><strong>Q: How does Unity Catalog differ from Hive metastore?</strong><span>Unity Catalog: centralized governance across workspaces, fine-grained access control (column-level, row-level), data lineage, attribute-based access. Hive metastore: per-workspace, no cross-workspace sharing.</span></div>
+  </div>
+  <div class="say"><h4>💬 What to Say in an Interview</h4>
+    <p>"Our entire pipeline deployment is automated through Azure DevOps. Feature branch → PR → develop merge → QA deployment (automatic) → approval gate → production ARM template deployment. Zero manual steps in prod."</p>
+  </div>
+</div>
+</div>
+
+<!-- Phase 7 -->
+<div class="phase-wrap">
+<div class="tl-dot" style="background:var(--yellow)"></div>
+<div class="phase-card" style="border-color:var(--yellow)" onclick="toggle('az-p7')">
+  <h3>🎯 Phase 7 (Week 11–12): Interview Preparation</h3>
+  <p>System design · Project narration · Mock interviews · Target companies</p>
+</div>
+<div class="detail-panel" id="az-p7">
+  <div class="panel-grid">
+    <div class="ibox"><h4>🎯 Target Companies</h4><ul>
+      <li>Tiger Analytics, Tredence, Deloitte</li>
+      <li>Infosys, Accenture, Cognizant, Wipro, Capgemini</li>
+      <li>KPMG, EY, PwC, LTIMindtree, Mphasis</li>
+      <li>HSBC, Barclays, Standard Chartered (BFSI)</li>
+      <li>Target package: 18–28 LPA for 4–7 yr exp</li>
+    </ul></div>
+    <div class="ibox"><h4>🏗️ System Design Framework</h4><ul>
+      <li>Always structure: Source → Ingest → Store → Process → Serve → Monitor</li>
+      <li>Mention: error handling, retry, audit, idempotency</li>
+      <li>Mention: security (Key Vault, RBAC, service principal)</li>
+      <li>Mention: CI/CD for deployment automation</li>
+      <li>Default answer: Medallion Architecture</li>
+      <li>Know: Synapse vs Databricks vs ADF-only tradeoffs</li>
+      <li>Cost optimization: autoscaling, spot instances, storage tiers</li>
+    </ul></div>
+  </div>
+  <div class="say" style="margin-bottom:14px">
+    <h4>💬 3-Minute Master Project Narration</h4>
+    <p>"I worked on an end-to-end Azure Data Engineering pipeline handling [domain]. Data ingested daily from [source] into Azure Data Lake Gen2 via parameterized, metadata-driven ADF pipelines — one pipeline handles all tables dynamically. From the landing zone, Auto Loader streamed new files into Bronze with audit columns: ingestion timestamp, source file path, and batch ID. Bronze to Silver applied deduplication via SHA2 row hashing, null handling, format standardization, and SCD Type 2 merge logic using Delta Lake's MERGE INTO. Gold layer materialized aggregated Delta tables in Star Schema for Power BI. Deployment automated through Azure DevOps — feature branches → develop → ARM template to QA → approval gate → production. All secrets managed via Azure Key Vault. Lineage tracked in Collibra."</p>
+  </div>
+  <div class="iq"><h4>🎯 Most Commonly Asked — All Tier-2 Companies</h4>
+    <div class="qi"><strong>PYSPARK:</strong><span>Lazy eval, groupByKey vs reduceByKey, repartition vs coalesce, broadcast join, UDFs, AQE, incremental without updated_at, caching, null handling, data skew</span></div>
+    <div class="qi"><strong>SQL:</strong><span>nth highest salary, top 3 per dept, LAG/LEAD, cumulative sum, manager comparison, gaps in sequence, deduplication, pivot</span></div>
+    <div class="qi"><strong>DATABRICKS:</strong><span>Job vs interactive cluster, Unity Catalog, Delta logs, SCD 1&amp;2 in PySpark, autoscaling, %run vs dbutils.notebook.run</span></div>
+    <div class="qi"><strong>ADF:</strong><span>Incremental load (watermark), IR types, 3TB file copy, error handling, binary copy, metadata-driven pipeline, Key Vault, schema drift</span></div>
+    <div class="qi"><strong>DELTA LAKE:</strong><span>Delta vs Parquet, MERGE INTO, time travel, Z-ordering, OPTIMIZE, VACUUM, schema evolution, DLT</span></div>
+  </div>
+</div>
+</div>
+
+</div><!-- /timeline -->
+</div><!-- /sec -->
+<!-- Azure Quiz -->
+<div class="sec" id="az-quiz">
+<div class="section-title" style="color:var(--az)">🧠 Azure Quiz</div>
+<div class="section-sub">Test your Azure DE knowledge — tracks your progress locally</div>
+<div class="quiz-controls">
+  <select id="azure-topic-filter" onchange="updateQCount('azure')">
+    <option value="all">All Topics</option>
+    <option value="SQL">SQL</option>
+    <option value="PySpark">PySpark</option>
+    <option value="ADF">ADF</option>
+    <option value="Delta Lake">Delta Lake</option>
+    <option value="Databricks">Databricks</option>
+    <option value="Architecture">Architecture</option>
+  </select>
+  <select id="azure-level-filter" onchange="updateQCount('azure')">
+    <option value="all">All Levels</option>
+    <option value="easy">Easy</option>
+    <option value="medium">Medium</option>
+    <option value="hard">Hard</option>
+  </select>
+  <span id="azure-qcount" style="color:var(--sub);font-size:0.85rem;"></span>
+  <button class="quiz-start-btn" style="background:var(--az)" onclick="startQuiz('azure')">▶ Start Quiz</button>
+  <button style="padding:8px 16px;background:rgba(248,81,73,0.1);color:var(--red);border:1px solid var(--red);border-radius:8px;cursor:pointer;font-weight:600;font-size:0.85rem;" onclick="resetScore('azure')">🔄 Reset Score</button>
+</div>
+<div id="azure-quiz-area"></div>
+</div>
+</div><!-- /wrap -->
+</div><!-- /azure-section -->
+
+<!-- ══════════ AWS SECTION ══════════ -->
+<div class="cloud-section" id="aws-section">
+<div class="hero">
+  <h1 style="color:var(--aw)">🟠 AWS Data Engineering Mastery</h1>
+  <p>S3 · Glue · Redshift · EMR · Kinesis · Athena · Step Functions — complete AWS DE roadmap</p>
+  <div class="hero-stats">
+    <span class="stat-pill" style="border-color:var(--aw)">⚡ 7 Learning Phases</span>
+    <span class="stat-pill" style="border-color:var(--aw)">📝 40+ Quiz Questions</span>
+    <span class="stat-pill" style="border-color:var(--aw)">🚀 AWS DE Certified Path</span>
+  </div>
+</div>
+<div class="wrap">
+<div class="sec" id="aws-roadmap">
+<div class="section-title">🗺️ AWS DE Learning Roadmap</div>
+<div class="section-sub">Click any phase to expand the full study guide</div>
+<div class="timeline">
+
+<div class="phase-wrap">
+<div class="tl-dot" style="background:var(--aw)"></div>
+<div class="phase-card" style="border-color:var(--aw)" onclick="toggle('aw-p1')">
+  <h3>🪣 Phase 1: S3 + AWS Glue — Storage & Catalog</h3>
+  <p>S3 storage classes · Glue crawler · Data Catalog · ETL jobs · Parquet/ORC</p>
+</div>
+<div class="detail-panel" id="aw-p1">
+  <div class="panel-grid">
+    <div class="ibox"><h4>🪣 Amazon S3 Concepts</h4><ul>
+      <li>Storage classes: Standard, IA, One Zone-IA, Glacier, Deep Archive</li>
+      <li>Lifecycle policies: auto-transition between tiers</li>
+      <li>Versioning: enable for data protection</li>
+      <li>S3 Select: query data within S3 objects (CSV, JSON, Parquet)</li>
+      <li>Cross-region replication (CRR) for disaster recovery</li>
+      <li>Requester Pays for large shared datasets</li>
+      <li>S3 event notifications → Lambda / SQS / SNS</li>
+      <li>Multipart upload for files > 100MB</li>
+    </ul></div>
+    <div class="ibox"><h4>🔍 AWS Glue</h4><ul>
+      <li>Glue Crawler: auto-discover schema, update Data Catalog</li>
+      <li>Glue Data Catalog: central metadata store (Hive-compatible)</li>
+      <li>Glue ETL jobs: PySpark on managed Spark</li>
+      <li>Glue Studio: visual ETL builder</li>
+      <li>Dynamic frames vs DataFrames: DynamicFrame handles schema inconsistencies</li>
+      <li>Job bookmarks: incremental processing</li>
+      <li>Glue DataBrew: visual data prep without code</li>
+      <li>Connection types: JDBC, S3, DynamoDB, Redshift</li>
+    </ul></div>
+  </div>
+  <div class="code-box"><span class="cmt"># AWS Glue ETL script (PySpark)</span>
+<span class="kw">import</span> sys
+<span class="kw">from</span> awsglue.context <span class="kw">import</span> GlueContext
+<span class="kw">from</span> awsglue.job <span class="kw">import</span> Job
+<span class="kw">from</span> pyspark.context <span class="kw">import</span> SparkContext
+
+sc = SparkContext()
+glueContext = GlueContext(sc)
+spark = glueContext.<span class="fn">spark_session</span>
+
+<span class="cmt"># Read from Glue Data Catalog</span>
+dyf = glueContext.<span class="fn">create_dynamic_frame</span>.<span class="fn">from_catalog</span>(
+    database=<span class="str">"my_db"</span>, table_name=<span class="str">"raw_orders"</span>
+)
+
+<span class="cmt"># Convert to DataFrame, transform, write Parquet to S3</span>
+df = dyf.<span class="fn">toDF</span>()
+df_clean = df.<span class="fn">dropDuplicates</span>().<span class="fn">na</span>.<span class="fn">drop</span>()
+df_clean.<span class="fn">write</span>.<span class="fn">mode</span>(<span class="str">"overwrite"</span>).<span class="fn">parquet</span>(<span class="str">"s3://my-bucket/silver/orders/"</span>)</div>
+  <div class="iq"><h4>🎯 AWS S3 + Glue Interview Questions</h4>
+    <div class="qi"><strong>Q: What's the difference between S3 Standard and S3-IA?</strong><span>Standard: frequent access, low latency. IA (Infrequent Access): 40% cheaper storage but retrieval fee. Use for data accessed less than once/month.</span></div>
+    <div class="qi"><strong>Q: Glue Dynamic Frame vs Spark DataFrame?</strong><span>DynamicFrame handles schema inconsistencies (mixed types in a column) gracefully. DataFrame requires strict schema. Use DynamicFrame for messy source data.</span></div>
+  </div>
+</div>
+</div>
+
+<div class="phase-wrap">
+<div class="tl-dot" style="background:#e25822"></div>
+<div class="phase-card" style="border-color:#e25822" onclick="toggle('aw-p2')">
+  <h3>⚡ Phase 2: EMR + Spark on AWS</h3>
+  <p>EMR clusters · Spot instances · EMRFS · PySpark on EMR · Bootstrap actions</p>
+</div>
+<div class="detail-panel" id="aw-p2">
+  <div class="panel-grid">
+    <div class="ibox"><h4>⚡ EMR Architecture</h4><ul>
+      <li>Master, Core, Task node types</li>
+      <li>Spot instances for Task nodes (70–90% savings)</li>
+      <li>EMRFS: S3-based HDFS replacement</li>
+      <li>Bootstrap actions: install libraries at startup</li>
+      <li>EMR Serverless: no cluster management</li>
+      <li>EMR Steps for batch job submission</li>
+      <li>Auto-scaling based on YARN metrics</li>
+    </ul></div>
+    <div class="ibox"><h4>💡 EMR Optimization</h4><ul>
+      <li>Instance fleet vs instance groups</li>
+      <li>Use Parquet/ORC columnar formats on S3</li>
+      <li>Partition data by date/region in S3</li>
+      <li>Glue Data Catalog as Hive Metastore</li>
+      <li>EMRFS consistent view for S3 eventual consistency</li>
+      <li>JVM tuning: executor memory, cores per executor</li>
+    </ul></div>
+  </div>
+  <div class="iq"><h4>🎯 EMR Interview Questions</h4>
+    <div class="qi"><strong>Q: When to use EMR vs Glue?</strong><span>EMR: full control over cluster config, large/complex jobs, custom libraries. Glue: serverless, simpler ETL, no cluster management, pay-per-DPU.</span></div>
+    <div class="qi"><strong>Q: How to reduce EMR costs?</strong><span>Use Spot instances for Task nodes, auto-terminate idle clusters, use EMR Serverless for unpredictable workloads, right-size instance types.</span></div>
+  </div>
+</div>
+</div>
+
+<div class="phase-wrap">
+<div class="tl-dot" style="background:#c0392b"></div>
+<div class="phase-card" style="border-color:#c0392b" onclick="toggle('aw-p3')">
+  <h3>🏭 Phase 3: Amazon Redshift — Data Warehouse</h3>
+  <p>Distribution keys · Sort keys · Spectrum · Vacuum · WLM · RA3 nodes</p>
+</div>
+<div class="detail-panel" id="aw-p3">
+  <div class="panel-grid">
+    <div class="ibox"><h4>🏭 Redshift Architecture</h4><ul>
+      <li>Leader node: query planning, coordination</li>
+      <li>Compute nodes: actual storage + processing</li>
+      <li>Distribution styles: KEY, EVEN, ALL, AUTO</li>
+      <li>Sort keys: COMPOUND vs INTERLEAVED</li>
+      <li>Columnar storage: best for aggregations</li>
+      <li>Redshift Spectrum: query S3 directly from Redshift</li>
+      <li>RA3 nodes: separate compute/storage, managed storage on S3</li>
+      <li>Redshift Serverless: auto-scaling, pay per use</li>
+    </ul></div>
+    <div class="ibox"><h4>⚡ Redshift Optimization</h4><ul>
+      <li>COPY command for bulk load (fastest)</li>
+      <li>Vacuum: reclaim space, resort rows</li>
+      <li>Analyze: update statistics for query optimizer</li>
+      <li>WLM (Workload Management): query queues + priorities</li>
+      <li>Concurrency Scaling: burst capacity for read queries</li>
+      <li>Materialized views for precomputed aggregations</li>
+    </ul></div>
+  </div>
+  <div class="iq"><h4>🎯 Redshift Interview Questions</h4>
+    <div class="qi"><strong>Q: What distribution key should you choose?</strong><span>Choose the column most used in JOINs to minimize data movement between nodes. Avoid columns with high cardinality or skewed values. Use EVEN if no clear join key.</span></div>
+    <div class="qi"><strong>Q: What does VACUUM do in Redshift?</strong><span>Recovers space from deleted rows (Redshift uses soft deletes), re-sorts unsorted rows according to sort key. Run VACUUM FULL periodically or use auto-vacuum.</span></div>
+  </div>
+</div>
+</div>
+
+<div class="phase-wrap">
+<div class="tl-dot" style="background:#27ae60"></div>
+<div class="phase-card" style="border-color:#27ae60" onclick="toggle('aw-p4')">
+  <h3>🌊 Phase 4: Kinesis — Real-Time Streaming</h3>
+  <p>Data Streams · Firehose · Analytics · Lambda consumer · Shard management</p>
+</div>
+<div class="detail-panel" id="aw-p4">
+  <div class="panel-grid">
+    <div class="ibox"><h4>🌊 Kinesis Family</h4><ul>
+      <li>Kinesis Data Streams: real-time, ordered, replay-capable</li>
+      <li>Kinesis Firehose: managed delivery to S3/Redshift/ES</li>
+      <li>Kinesis Data Analytics: SQL/Flink on streams</li>
+      <li>Shard: 1MB/s write, 2MB/s read per shard</li>
+      <li>Partition key determines shard assignment</li>
+      <li>Retention: 24h default, up to 7 days</li>
+      <li>Enhanced fan-out: dedicated throughput per consumer</li>
+    </ul></div>
+    <div class="ibox"><h4>💡 Streaming Patterns</h4><ul>
+      <li>Lambda consumer for event-driven processing</li>
+      <li>KCL (Kinesis Client Library) for complex consumers</li>
+      <li>Checkpointing via DynamoDB for fault tolerance</li>
+      <li>Firehose → S3 → Glue Crawler → Athena pattern</li>
+      <li>Kinesis vs SQS: Kinesis=ordered+replay, SQS=queue+delete</li>
+      <li>MSK (Managed Kafka) for Apache Kafka workloads</li>
+    </ul></div>
+  </div>
+  <div class="iq"><h4>🎯 Kinesis Interview Questions</h4>
+    <div class="qi"><strong>Q: Kinesis vs SQS — when to use each?</strong><span>Kinesis: ordered, replay-capable, multiple consumers, streaming analytics. SQS: simple queue, message deleted after consume, one consumer per message (unless SNS fan-out).</span></div>
+  </div>
+</div>
+</div>
+
+<div class="phase-wrap">
+<div class="tl-dot" style="background:#8e44ad"></div>
+<div class="phase-card" style="border-color:#8e44ad" onclick="toggle('aw-p5')">
+  <h3>🔍 Phase 5: Athena + Analytics Layer</h3>
+  <p>Serverless SQL on S3 · Partitioning · Workgroups · Lake Formation</p>
+</div>
+<div class="detail-panel" id="aw-p5">
+  <div class="panel-grid">
+    <div class="ibox"><h4>🔍 Amazon Athena</h4><ul>
+      <li>Serverless SQL on S3 using Presto/Trino engine</li>
+      <li>Pay per query (per TB scanned)</li>
+      <li>Partitioning reduces scan cost dramatically</li>
+      <li>Columnar formats (Parquet/ORC) save 90% vs CSV</li>
+      <li>Workgroups for cost control + query isolation</li>
+      <li>CTAS: CREATE TABLE AS SELECT to save results</li>
+      <li>Federated queries: query RDS, DynamoDB from Athena</li>
+    </ul></div>
+    <div class="ibox"><h4>🏛️ Lake Formation</h4><ul>
+      <li>Centralized permissions for S3 data lake</li>
+      <li>Column-level and row-level security</li>
+      <li>Tag-based access control (LF-TBAC)</li>
+      <li>Governed Tables with ACID support</li>
+      <li>Cross-account data sharing</li>
+      <li>Blueprints: pre-built ingestion workflows</li>
+    </ul></div>
+  </div>
+</div>
+</div>
+
+<div class="phase-wrap">
+<div class="tl-dot" style="background:var(--aw)"></div>
+<div class="phase-card" style="border-color:var(--aw)" onclick="toggle('aw-p6')">
+  <h3>🔧 Phase 6: Step Functions + Orchestration</h3>
+  <p>State machines · Lambda orchestration · Error handling · EventBridge</p>
+</div>
+<div class="detail-panel" id="aw-p6">
+  <div class="ibox"><h4>🔧 Step Functions</h4><ul>
+    <li>State machine: visual workflow for Lambda, Glue, EMR</li>
+    <li>Standard vs Express workflows (long-running vs fast)</li>
+    <li>Retry + catch blocks for error handling</li>
+    <li>Parallel state for concurrent tasks</li>
+    <li>Map state for dynamic fan-out</li>
+    <li>EventBridge Scheduler for cron triggers</li>
+    <li>MWAA (Managed Airflow) for complex DAG orchestration</li>
+  </ul></div>
+</div>
+</div>
+
+</div><!-- /timeline -->
+</div>
+
+<div class="sec">
+<div class="section-title" style="color:var(--aw)">🧠 AWS Quiz</div>
+<div class="quiz-controls">
+  <select id="aws-topic-filter" onchange="updateQCount('aws')">
+    <option value="all">All Topics</option>
+    <option value="S3">S3</option>
+    <option value="Glue">Glue</option>
+    <option value="Redshift">Redshift</option>
+    <option value="Kinesis">Kinesis</option>
+    <option value="Athena">Athena</option>
+    <option value="EMR">EMR</option>
+  </select>
+  <select id="aws-level-filter" onchange="updateQCount('aws')">
+    <option value="all">All Levels</option>
+    <option value="easy">Easy</option>
+    <option value="medium">Medium</option>
+    <option value="hard">Hard</option>
+  </select>
+  <span id="aws-qcount" style="color:var(--sub);font-size:0.85rem;"></span>
+  <button class="quiz-start-btn" style="background:var(--aw)" onclick="startQuiz('aws')">▶ Start Quiz</button>
+  <button style="padding:8px 16px;background:rgba(248,81,73,0.1);color:var(--red);border:1px solid var(--red);border-radius:8px;cursor:pointer;font-weight:600;font-size:0.85rem;" onclick="resetScore('aws')">🔄 Reset</button>
+</div>
+<div id="aws-quiz-area"></div>
+</div>
+</div>
+</div><!-- /aws-section -->
+<!-- ══════════ GCP SECTION ══════════ -->
+<div class="cloud-section" id="gcp-section">
+<div class="hero">
+  <h1 style="color:var(--gc)">🔵 GCP Data Engineering Mastery</h1>
+  <p>BigQuery · Dataflow · Pub/Sub · Dataproc · Cloud Composer — complete GCP DE roadmap</p>
+  <div class="hero-stats">
+    <span class="stat-pill" style="border-color:var(--gc)">⚡ 6 Learning Phases</span>
+    <span class="stat-pill" style="border-color:var(--gc)">📝 40+ Quiz Questions</span>
+    <span class="stat-pill" style="border-color:var(--gc)">🚀 Professional DE Cert Path</span>
+  </div>
+</div>
+<div class="wrap">
+<div class="sec">
+<div class="section-title">🗺️ GCP DE Learning Roadmap</div>
+<div class="timeline">
+
+<div class="phase-wrap">
+<div class="tl-dot" style="background:var(--gc)"></div>
+<div class="phase-card" style="border-color:var(--gc)" onclick="toggle('gc-p1')">
+  <h3>📊 Phase 1: BigQuery — Serverless Data Warehouse</h3>
+  <p>Partitioning · Clustering · Slots · BI Engine · BigQuery ML</p>
+</div>
+<div class="detail-panel" id="gc-p1">
+  <div class="panel-grid">
+    <div class="ibox"><h4>📊 BigQuery Architecture</h4><ul>
+      <li>Serverless, columnar, distributed storage (Colossus)</li>
+      <li>Dremel query engine: massively parallel SQL</li>
+      <li>Partitioning: by DATE, TIMESTAMP, or INTEGER range</li>
+      <li>Clustering: sort data by up to 4 columns within partitions</li>
+      <li>Slots: units of compute (on-demand vs reserved)</li>
+      <li>Storage: active vs long-term (90-day pricing)</li>
+      <li>External tables: query GCS, Drive, Cloud SQL directly</li>
+      <li>BigQuery Omni: multi-cloud queries (AWS S3, Azure)</li>
+    </ul></div>
+    <div class="ibox"><h4>⚡ BigQuery Optimization</h4><ul>
+      <li>Always partition + cluster to reduce bytes scanned</li>
+      <li>Avoid SELECT * — list only needed columns</li>
+      <li>Materialized views for precomputed aggregations</li>
+      <li>BI Engine: in-memory cache for sub-second queries</li>
+      <li>INFORMATION_SCHEMA for job metadata</li>
+      <li>BigQuery ML: train models with SQL</li>
+      <li>Reservations + Commitments for predictable workloads</li>
+    </ul></div>
+  </div>
+  <div class="code-box"><span class="cmt">-- BigQuery: Create partitioned + clustered table</span>
+<span class="kw">CREATE TABLE</span> project.dataset.sales_fact
+PARTITION BY DATE(transaction_date)
+CLUSTER BY customer_id, product_id
+<span class="kw">AS SELECT</span> * <span class="kw">FROM</span> project.dataset.raw_sales;
+
+<span class="cmt">-- Query with partition pruning (cost efficient)</span>
+<span class="kw">SELECT</span> customer_id, <span class="fn">SUM</span>(revenue) <span class="kw">AS</span> total
+<span class="kw">FROM</span> project.dataset.sales_fact
+<span class="kw">WHERE</span> DATE(transaction_date) <span class="kw">BETWEEN</span> <span class="str">'2024-01-01'</span> <span class="kw">AND</span> <span class="str">'2024-01-31'</span>
+  <span class="kw">AND</span> customer_id = <span class="str">'C123'</span>  <span class="cmt">-- cluster filter</span>
+<span class="kw">GROUP BY</span> <span class="num">1</span>;</div>
+  <div class="iq"><h4>🎯 BigQuery Interview Questions</h4>
+    <div class="qi"><strong>Q: Partitioning vs Clustering in BigQuery?</strong><span>Partitioning: divides table into segments (date ranges). Clustering: sorts data within partitions by column values. Use both together: partition first, cluster second for best performance.</span></div>
+    <div class="qi"><strong>Q: On-demand vs flat-rate pricing?</strong><span>On-demand: $5/TB scanned, good for variable workloads. Flat-rate (slots): reserved capacity, better for predictable high volume. Commitments give discounts.</span></div>
+  </div>
+</div>
+</div>
+
+<div class="phase-wrap">
+<div class="tl-dot" style="background:#e52d27"></div>
+<div class="phase-card" style="border-color:#e52d27" onclick="toggle('gc-p2')">
+  <h3>🌊 Phase 2: Cloud Dataflow — Stream & Batch Processing</h3>
+  <p>Apache Beam · Windowing · Streaming pipelines · Pub/Sub integration</p>
+</div>
+<div class="detail-panel" id="gc-p2">
+  <div class="panel-grid">
+    <div class="ibox"><h4>🌊 Dataflow Concepts</h4><ul>
+      <li>Built on Apache Beam (unified stream + batch)</li>
+      <li>Serverless: auto-scales, no cluster management</li>
+      <li>Windowing: Fixed, Sliding, Session, Global</li>
+      <li>Triggers: when to emit results from windows</li>
+      <li>Watermarks: handling late-arriving data</li>
+      <li>Shuffle service: optimized data redistribution</li>
+      <li>Dataflow templates: pre-built and custom templates</li>
+    </ul></div>
+    <div class="ibox"><h4>🔌 Pub/Sub Integration</h4><ul>
+      <li>Pub/Sub → Dataflow → BigQuery streaming insert</li>
+      <li>At-least-once delivery guarantee</li>
+      <li>Message deduplication with Pub/Sub Lite</li>
+      <li>Dead letter topics for failed messages</li>
+      <li>Seek for message replay (like Kinesis)</li>
+      <li>Push vs Pull subscriptions</li>
+    </ul></div>
+  </div>
+  <div class="code-box"><span class="cmt"># Apache Beam pipeline (Python)</span>
+<span class="kw">import</span> apache_beam <span class="kw">as</span> beam
+<span class="kw">from</span> apache_beam.options.pipeline_options <span class="kw">import</span> PipelineOptions
+
+<span class="kw">with</span> beam.<span class="fn">Pipeline</span>(options=PipelineOptions()) <span class="kw">as</span> p:
+    (p
+     | <span class="str">"Read Pub/Sub"</span> >> beam.io.<span class="fn">ReadFromPubSub</span>(subscription=<span class="str">"projects/proj/subscriptions/sub"</span>)
+     | <span class="str">"Parse JSON"</span>   >> beam.<span class="fn">Map</span>(<span class="kw">lambda</span> x: json.<span class="fn">loads</span>(x))
+     | <span class="str">"Filter Valid"</span>  >> beam.<span class="fn">Filter</span>(<span class="kw">lambda</span> r: r[<span class="str">'amount'</span>] > <span class="num">0</span>)
+     | <span class="str">"Write BQ"</span>     >> beam.io.<span class="fn">WriteToBigQuery</span>(
+         table=<span class="str">"project:dataset.table"</span>,
+         write_disposition=beam.io.BigQueryDisposition.WRITE_APPEND)
+    )</div>
+</div>
+</div>
+
+<div class="phase-wrap">
+<div class="tl-dot" style="background:#fbbc04"></div>
+<div class="phase-card" style="border-color:#fbbc04" onclick="toggle('gc-p3')">
+  <h3>⚙️ Phase 3: Dataproc — Managed Hadoop/Spark</h3>
+  <p>Cluster modes · Preemptible VMs · GCS connector · Hive on Dataproc</p>
+</div>
+<div class="detail-panel" id="gc-p3">
+  <div class="ibox"><h4>⚙️ Dataproc Architecture</h4><ul>
+    <li>Managed Hadoop, Spark, Hive, Pig on GCP</li>
+    <li>90-second cluster startup (vs hours for on-prem)</li>
+    <li>Ephemeral clusters: spin up, process, delete (cost saving)</li>
+    <li>Preemptible VMs: 60–80% cheaper for Task nodes</li>
+    <li>GCS as HDFS replacement (cloud-native)</li>
+    <li>Dataproc Serverless: no cluster needed for Spark batches</li>
+    <li>Dataproc Metastore: Hive-compatible metadata service</li>
+    <li>Initialization actions: install extra packages at startup</li>
+  </ul></div>
+</div>
+</div>
+
+<div class="phase-wrap">
+<div class="tl-dot" style="background:#34a853"></div>
+<div class="phase-card" style="border-color:#34a853" onclick="toggle('gc-p4')">
+  <h3>🎵 Phase 4: Cloud Composer — Orchestration</h3>
+  <p>Managed Airflow · DAGs · Operators · Connections · Variables</p>
+</div>
+<div class="detail-panel" id="gc-p4">
+  <div class="panel-grid">
+    <div class="ibox"><h4>🎵 Cloud Composer / Airflow</h4><ul>
+      <li>Managed Apache Airflow on GKE</li>
+      <li>DAG: directed acyclic graph of tasks</li>
+      <li>Operators: BigQueryOperator, DataflowOperator, PubSubOperator</li>
+      <li>Sensors: wait for a condition (file, event)</li>
+      <li>Connections: store credentials safely</li>
+      <li>Variables: store config values</li>
+      <li>XComs: pass data between tasks</li>
+      <li>Backfill: run historical DAG runs</li>
+    </ul></div>
+    <div class="ibox"><h4>🔄 Common DAG Patterns</h4><ul>
+      <li>GCS → Dataflow → BigQuery ETL DAG</li>
+      <li>Pub/Sub trigger → Dataflow → BQ pattern</li>
+      <li>Dynamic task generation with TaskGroups</li>
+      <li>SLA monitoring and alerting</li>
+      <li>Retry with exponential backoff</li>
+      <li>Task dependencies: >> and << operators</li>
+    </ul></div>
+  </div>
+</div>
+</div>
+
+<div class="phase-wrap">
+<div class="tl-dot" style="background:var(--gc)"></div>
+<div class="phase-card" style="border-color:var(--gc)" onclick="toggle('gc-p5')">
+  <h3>🏛️ Phase 5: Data Catalog + Security</h3>
+  <p>Dataplex · Data Catalog · VPC · IAM roles · Column-level security</p>
+</div>
+<div class="detail-panel" id="gc-p5">
+  <div class="ibox"><h4>🏛️ GCP Data Governance</h4><ul>
+    <li>Data Catalog: unified metadata management across GCP</li>
+    <li>Dataplex: lake management, data quality, discovery</li>
+    <li>IAM: project/dataset/table level permissions in BigQuery</li>
+    <li>Column-level security: policy tags + taxonomy</li>
+    <li>Row-level security in BigQuery with row access policies</li>
+    <li>CMEK: customer-managed encryption keys</li>
+    <li>VPC Service Controls: prevent data exfiltration</li>
+    <li>Audit logs: Cloud Audit Logs for compliance</li>
+  </ul></div>
+</div>
+</div>
+
+</div><!-- /timeline -->
+</div>
+
+<div class="sec">
+<div class="section-title" style="color:var(--gc)">🧠 GCP Quiz</div>
+<div class="quiz-controls">
+  <select id="gcp-topic-filter" onchange="updateQCount('gcp')">
+    <option value="all">All Topics</option>
+    <option value="BigQuery">BigQuery</option>
+    <option value="Dataflow">Dataflow</option>
+    <option value="Pub/Sub">Pub/Sub</option>
+    <option value="Dataproc">Dataproc</option>
+    <option value="Composer">Composer</option>
+  </select>
+  <select id="gcp-level-filter" onchange="updateQCount('gcp')">
+    <option value="all">All Levels</option>
+    <option value="easy">Easy</option>
+    <option value="medium">Medium</option>
+    <option value="hard">Hard</option>
+  </select>
+  <span id="gcp-qcount" style="color:var(--sub);font-size:0.85rem;"></span>
+  <button class="quiz-start-btn" style="background:var(--gc)" onclick="startQuiz('gcp')">▶ Start Quiz</button>
+  <button style="padding:8px 16px;background:rgba(248,81,73,0.1);color:var(--red);border:1px solid var(--red);border-radius:8px;cursor:pointer;font-weight:600;font-size:0.85rem;" onclick="resetScore('gcp')">🔄 Reset</button>
+</div>
+<div id="gcp-quiz-area"></div>
+</div>
+</div>
+</div><!-- /gcp-section -->
+<!-- ══════════ SHARED SECTIONS ══════════ -->
+<div class="wrap">
+
+<!-- Schedule -->
+<div class="sec" id="schedule">
+<hr class="div" style="margin-bottom:40px">
+<div class="section-title">📅 Realistic Daily & Weekly Timetable</div>
+<div class="section-sub">Designed for a working professional — 2–2.5 hrs/weekday, 5–6 hrs/weekend</div>
+<div class="tt-grid">
+  <div class="tt-card">
+    <h3>🌅 Weekday Schedule (Mon–Fri)</h3>
+    <div class="tt-slot"><div class="tt-time">6:00–7:00 AM</div><div class="tt-act"><strong>Theory + Concept</strong><span>Read notes, 1 concept video — warm up brain before coding</span></div></div>
+    <div class="tt-slot"><div class="tt-time">7:30–8:00 AM</div><div class="tt-act"><strong>Quick Drill</strong><span>1 SQL question or Python problem — timed, no hints</span></div></div>
+    <div class="tt-slot"><div class="tt-time">Work Day</div><div class="tt-act"><strong>Day Job</strong><span>Map current work to DE concepts wherever possible</span></div></div>
+    <div class="tt-slot"><div class="tt-time">8:30–10:00 PM</div><div class="tt-act"><strong>Hands-On Practice</strong><span>Code in Databricks / ADF / PySpark — follow weekly phase</span></div></div>
+    <div class="tt-slot"><div class="tt-time">10:00–10:30 PM</div><div class="tt-act"><strong>Interview Revision</strong><span>Review 3–5 Q&A flashcards from current phase</span></div></div>
+  </div>
+  <div class="tt-card">
+    <h3>📆 Weekend Schedule (Sat–Sun)</h3>
+    <div class="tt-slot"><div class="tt-time">9:00–11:00 AM</div><div class="tt-act"><strong>Project Build</strong><span>Build full notebook or pipeline component for the week</span></div></div>
+    <div class="tt-slot"><div class="tt-time">11:00–12:00</div><div class="tt-act"><strong>SQL Coding Sprint</strong><span>5 questions from interview bank — timed, no hints</span></div></div>
+    <div class="tt-slot"><div class="tt-time">1:30–3:30 PM</div><div class="tt-act"><strong>Deep-Dive Practice</strong><span>PySpark / ADF / BigQuery / Kinesis hands-on lab</span></div></div>
+    <div class="tt-slot"><div class="tt-time">3:30–4:30 PM</div><div class="tt-act"><strong>Mock Interview</strong><span>Wk 1–8: self-quiz. Wk 9–12: record yourself answering aloud</span></div></div>
+    <div class="tt-slot"><div class="tt-time">4:30–5:30 PM</div><div class="tt-act"><strong>Review & GitHub</strong><span>Consolidate notes, update cheat sheet, push code to GitHub</span></div></div>
+  </div>
+  <div class="tt-card">
+    <h3>📊 12-Week Phase Timeline</h3>
+    <table class="week-tbl">
+      <tr><th>Wk</th><th>Primary</th><th>Parallel</th></tr>
+      <tr><td>1</td><td>Advanced SQL</td><td>Python Core</td></tr>
+      <tr><td>2</td><td>SQL Coding Practice</td><td>pandas + File I/O</td></tr>
+      <tr><td>3</td><td>Spark Architecture</td><td>Databricks Setup</td></tr>
+      <tr><td>4</td><td>Databricks Platform</td><td>Delta Lake Basics</td></tr>
+      <tr><td>5</td><td>ADF Pipelines</td><td>ADLS Gen2 / S3</td></tr>
+      <tr><td>6</td><td>ADF Advanced</td><td>PySpark Basics</td></tr>
+      <tr><td>7</td><td>PySpark Deep Dive</td><td>Delta MERGE/SCD</td></tr>
+      <tr><td>8</td><td>Medallion Arch.</td><td>BigQuery / Redshift</td></tr>
+      <tr><td>9</td><td>Capstone Project</td><td>Data Modeling</td></tr>
+      <tr><td>10</td><td>CI/CD + DevOps</td><td>Security + Governance</td></tr>
+      <tr><td>11</td><td>Interview Drills</td><td>Project Narration</td></tr>
+      <tr><td>12</td><td>Mock Interviews</td><td>Apply + LinkedIn</td></tr>
+    </table>
+  </div>
+  <div class="tt-card">
+    <h3>⚡ Time Investment</h3>
+    <div class="tt-slot"><div class="tt-time">Weekday</div><div class="tt-act"><strong>~2.5 hours/day</strong><span>1h theory morning + 1.5h hands-on evening</span></div></div>
+    <div class="tt-slot"><div class="tt-time">Weekend</div><div class="tt-act"><strong>~5 hours/day</strong><span>Project builds + mocks + deep dives</span></div></div>
+    <div class="tt-slot"><div class="tt-time">Weekly</div><div class="tt-act"><strong>~22.5 hours/week</strong><span>Equivalent to a part-time bootcamp</span></div></div>
+    <div class="tt-slot"><div class="tt-time">12 Weeks</div><div class="tt-act"><strong>~270 hours total</strong><span>Entry-to-mid Cloud DE role readiness</span></div></div>
+    <div class="tt-slot" style="background:rgba(63,185,80,0.06);border-radius:8px;padding:10px;margin-top:8px;">
+      <div class="tt-time" style="color:var(--green);">Rule #1</div>
+      <div class="tt-act"><strong style="color:var(--green)">Code &gt; Watch &gt; Read</strong><span>80% of time must be hands-on. No passive video marathons.</span></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- Projects -->
+<div class="sec" id="projects">
+<hr class="div" style="margin-bottom:40px">
+<div class="section-title">💼 Hands-On Project Plan</div>
+<div class="section-sub">Build these 6 projects in order — each one adds to your portfolio and interview story</div>
+<div class="proj-grid">
+  <div class="proj-card" style="border-color:#e65100;">
+    <h3>🥇 Project 1 (Wk 5–8) · On-Prem to Azure Migration</h3>
+    <div class="proj-meta"><span>ADF</span><span>ADLS Gen2</span><span>Databricks</span><span>Synapse</span></div>
+    <p>Most commonly asked in interviews. Covers Self-Hosted IR, full medallion pipeline, ADF orchestration.</p>
+    <ul class="proj-steps">
+      <li>Set up Self-Hosted IR, connect local MySQL/SQL Server</li>
+      <li>ADF pipeline: ForEach + Lookup metadata pattern for all tables</li>
+      <li>Land raw files in ADLS Gen2 bronze/ with date partition</li>
+      <li>Databricks Bronze: audit columns, write Delta</li>
+      <li>Silver: dedup, null handle, type cast, MERGE INTO Delta</li>
+      <li>Gold: Star schema views for Power BI</li>
+    </ul>
+  </div>
+  <div class="proj-card" style="border-color:#6a1b9a;">
+    <h3>🥈 Project 2 (Wk 8–9) · Financial Data Lakehouse</h3>
+    <div class="proj-meta"><span>Delta Lake</span><span>SCD Type 2</span><span>PySpark</span><span>Row Hash</span></div>
+    <p>Advanced Delta Lake, SCD Type 2, row hash incremental — exactly what Tier-2 companies ask.</p>
+    <ul class="proj-steps">
+      <li>Ingest customer, stock, transaction CSVs to Bronze via ADF</li>
+      <li>Silver: dedup on Customer_ID, normalize dates, clean nulls</li>
+      <li>Implement SCD Type 2 for customer dim — track address changes</li>
+      <li>Row Hash for stock data (no updated_at) — SHA2 merge</li>
+      <li>Gold: aggregated portfolio metrics as Delta tables</li>
+    </ul>
+  </div>
+  <div class="proj-card" style="border-color:var(--az);">
+    <h3>🥉 Project 3 (Wk 9–10) · Real-Time Traffic Analytics</h3>
+    <div class="proj-meta"><span>Auto Loader</span><span>Streaming</span><span>Unity Catalog</span><span>CI/CD</span></div>
+    <p>Shows Auto Loader, streaming, Unity Catalog governance — differentiates from SQL-only candidates.</p>
+    <ul class="proj-steps">
+      <li>Simulate streaming: drop files into ADLS landing/ folder</li>
+      <li>Auto Loader Bronze: cloudFiles, schema evolution enabled</li>
+      <li>Silver: filter invalid records, enrich with lookup join</li>
+      <li>Gold: real-time aggregations as Delta views for Power BI</li>
+      <li>Unity Catalog: catalog, schema, grant analyst access</li>
+    </ul>
+  </div>
+  <div class="proj-card" style="border-color:var(--green);">
+    <h3>Project 4 (Wk 10) · AWS S3 + Glue Data Pipeline</h3>
+    <div class="proj-meta"><span>AWS Glue</span><span>S3</span><span>Athena</span><span>Redshift</span></div>
+    <p>AWS ETL pipeline covering Glue catalog, Athena querying, Redshift loading — strong for AWS interviews.</p>
+    <ul class="proj-steps">
+      <li>Ingest raw CSVs to S3 with date partitions</li>
+      <li>Glue Crawler discovers schema, updates Data Catalog</li>
+      <li>Glue ETL: clean data, write Parquet to S3 silver layer</li>
+      <li>Athena: query silver layer for quick analytics</li>
+      <li>Redshift COPY for warehouse loading</li>
+    </ul>
+  </div>
+  <div class="proj-card" style="border-color:#f57f17;">
+    <h3>Project 5 (Wk 11) · GCP BigQuery Analytics Pipeline</h3>
+    <div class="proj-meta"><span>Pub/Sub</span><span>Dataflow</span><span>BigQuery</span><span>Composer</span></div>
+    <p>Full GCP streaming pipeline — perfect for GCP DE certification and portfolio showcase.</p>
+    <ul class="proj-steps">
+      <li>Publish events to Pub/Sub from simulated source</li>
+      <li>Dataflow (Apache Beam) processes and enriches stream</li>
+      <li>Write to BigQuery with partitioning + clustering</li>
+      <li>Cloud Composer DAG orchestrates daily batch loads</li>
+      <li>Looker Studio dashboard on Gold BigQuery tables</li>
+    </ul>
+  </div>
+  <div class="proj-card" style="border-color:#00897b;">
+    <h3>Project 6 (Wk 11) · COVID-19 Analytics (Portfolio)</h3>
+    <div class="proj-meta"><span>ADF HTTP</span><span>Databricks</span><span>Synapse</span><span>Power BI</span></div>
+    <p>Full E2E with public dataset — easy to explain, covers every layer. Perfect for GitHub portfolio.</p>
+    <ul class="proj-steps">
+      <li>Ingest public COVID-19 data via ADF HTTP connector</li>
+      <li>ADLS: raw → bronze → silver → gold structure</li>
+      <li>PySpark transformations in Databricks</li>
+      <li>Synapse: views on Gold layer, Power BI dashboard</li>
+    </ul>
+  </div>
+</div>
+</div>
+
+<!-- Resources -->
+<div class="sec" id="resources">
+<hr class="div" style="margin-bottom:40px">
+<div class="section-title">📚 Learning Resources</div>
+<div class="section-sub">Curated YouTube courses, Udemy paid courses, and free tools — everything you need</div>
+
+<div class="res-section-title" style="color:var(--red)">▶️ YouTube — Free Courses (Start Here)</div>
+<div class="res-grid" style="margin-bottom:28px">
+  <div class="res-card"><h3>SQL Full Course</h3><div class="by">Ansh Lamba <span class="free-tag">FREE</span></div><p>Complete SQL from scratch — joins, window functions, CTEs, aggregations.</p><a class="res-btn yt-btn" href="https://youtu.be/YimMzb0mHkI?si=mw8RF8OBpKGyJZlD" target="_blank">▶ Watch on YouTube</a></div>
+  <div class="res-card"><h3>Python for Data Engineers</h3><div class="by">Ansh Lamba <span class="free-tag">FREE</span></div><p>Python specifically for DE — pandas, file handling, APIs, automation scripts.</p><a class="res-btn yt-btn" href="https://youtu.be/ZvU7lupoXQE?si=PzWuVTtcB6JLzolC" target="_blank">▶ Watch on YouTube</a></div>
+  <div class="res-card"><h3>Azure Data Engineer Full Course</h3><div class="by">Ansh Lamba <span class="free-tag">FREE</span></div><p>End-to-end Azure DE — ADF, ADLS, Databricks, Delta Lake, Synapse.</p><a class="res-btn yt-btn" href="https://youtu.be/bSx3DbJNQk4?si=UACOZiTo_dkaeeaC" target="_blank">▶ Watch on YouTube</a></div>
+  <div class="res-card"><h3>PySpark Full Tutorial</h3><div class="by">Seattle Data Guy <span class="free-tag">FREE</span></div><p>PySpark from basics to advanced — DataFrame API, window functions, optimizations.</p><a class="res-btn yt-btn" href="https://www.youtube.com/@SeattleDataGuy" target="_blank">▶ Watch on YouTube</a></div>
+  <div class="res-card"><h3>Delta Lake Deep Dive</h3><div class="by">Databricks Official <span class="free-tag">FREE</span></div><p>Official Databricks channel — Delta Lake architecture, MERGE patterns, Z-ordering.</p><a class="res-btn yt-btn" href="https://www.youtube.com/@Databricks" target="_blank">▶ Watch on YouTube</a></div>
+  <div class="res-card"><h3>SQL Interview Questions</h3><div class="by">Ankit Bansal <span class="free-tag">FREE</span></div><p>Real interview SQL problems — window functions, analytical queries, deduplication solved live.</p><a class="res-btn yt-btn" href="https://www.youtube.com/@ankitbansal6" target="_blank">▶ Watch on YouTube</a></div>
+  <div class="res-card"><h3>Azure Data Factory Guide</h3><div class="by">WafaStudies <span class="free-tag">FREE</span></div><p>ADF from beginner to advanced — linked services, pipelines, triggers, parameterization.</p><a class="res-btn yt-btn" href="https://www.youtube.com/@WafaStudies" target="_blank">▶ Watch on YouTube</a></div>
+  <div class="res-card"><h3>BigQuery Masterclass</h3><div class="by">Google Cloud <span class="free-tag">FREE</span></div><p>Official GCP channel — BigQuery optimization, partitioning, Dataflow, Pub/Sub tutorials.</p><a class="res-btn yt-btn" href="https://www.youtube.com/@googlecloud" target="_blank">▶ Watch on YouTube</a></div>
+</div>
+
+<div class="res-section-title" style="color:#a435f0">🎓 Udemy — Paid Courses (Worth Every Rupee)</div>
+<div class="res-grid" style="margin-bottom:28px">
+  <div class="res-card"><h3>Data Engineering Essentials — SQL, Python & Spark</h3><div class="by">Udemy <span class="paid-tag">PAID</span></div><p>Core DE skills — SQL analytics, Python scripting, Spark fundamentals.</p><a class="res-btn udemy-btn" href="https://www.udemy.com/course/data-engineering-essentials-sql-python-and-spark/" target="_blank">🎓 View on Udemy</a></div>
+  <div class="res-card"><h3>Azure Data Engineering End-to-End</h3><div class="by">Udemy <span class="paid-tag">PAID</span></div><p>Full Azure stack — ADF, ADLS, Databricks, Synapse, Delta Lake end-to-end.</p><a class="res-btn udemy-btn" href="https://www.udemy.com/course/azure-data-engineering-end-to-end-course-english/" target="_blank">🎓 View on Udemy</a></div>
+  <div class="res-card"><h3>Apache Spark with PySpark — Hands On</h3><div class="by">Udemy <span class="paid-tag">PAID</span></div><p>Deep PySpark — RDDs, DataFrames, optimizations, streaming, Delta Lake integration.</p><a class="res-btn udemy-btn" href="https://www.udemy.com/course/apache-spark-programming-in-python-for-beginners/" target="_blank">🎓 View on Udemy</a></div>
+  <div class="res-card"><h3>Databricks Certified DE Associate Prep</h3><div class="by">Udemy <span class="paid-tag">PAID</span></div><p>Exam-focused — Delta Lake, DLT, Unity Catalog, Workflows. Pairs with certification.</p><a class="res-btn udemy-btn" href="https://www.udemy.com/course/databricks-certified-data-engineer-associate/" target="_blank">🎓 View on Udemy</a></div>
+  <div class="res-card"><h3>AWS Data Analytics Specialty Prep</h3><div class="by">Udemy <span class="paid-tag">PAID</span></div><p>Full AWS DE stack — S3, Glue, Redshift, Kinesis, Athena, EMR for certification.</p><a class="res-btn udemy-btn" href="https://www.udemy.com/course/aws-data-analytics/" target="_blank">🎓 View on Udemy</a></div>
+  <div class="res-card"><h3>GCP Professional Data Engineer Prep</h3><div class="by">Udemy <span class="paid-tag">PAID</span></div><p>BigQuery, Dataflow, Pub/Sub, Dataproc — full GCP DE prep for certification exam.</p><a class="res-btn udemy-btn" href="https://www.udemy.com/course/google-cloud-professional-data-engineer-get-certified/" target="_blank">🎓 View on Udemy</a></div>
+</div>
+
+<div class="res-section-title" style="color:var(--green)">🆓 Free Practice Platforms</div>
+<div class="res-grid">
+  <div class="res-card"><h3>Databricks Community Edition</h3><div class="by">databricks.com <span class="free-tag">FREE</span></div><p>Free Databricks workspace — run PySpark, Delta Lake, notebooks. No credit card.</p><a class="res-btn free-btn" href="https://community.cloud.databricks.com" target="_blank">🚀 Sign Up Free</a></div>
+  <div class="res-card"><h3>Microsoft Learn — Azure DE Path</h3><div class="by">learn.microsoft.com <span class="free-tag">FREE</span></div><p>Official Microsoft learning paths — DP-203 aligned, sandboxed Azure exercises.</p><a class="res-btn free-btn" href="https://learn.microsoft.com/en-us/training/paths/azure-data-fundamentals-explore-data-warehouse-analytics/" target="_blank">📖 Start Learning</a></div>
+  <div class="res-card"><h3>StrataScratch — SQL Practice</h3><div class="by">stratascratch.com <span class="free-tag">FREE TIER</span></div><p>Real interview SQL questions from FAANG, MBB, data companies. Filter by difficulty.</p><a class="res-btn free-btn" href="https://www.stratascratch.com" target="_blank">💻 Practice SQL</a></div>
+  <div class="res-card"><h3>LeetCode — SQL + Python</h3><div class="by">leetcode.com <span class="free-tag">FREE TIER</span></div><p>SQL and Python coding problems — start with Easy, move to Medium. Focus on SQL Database.</p><a class="res-btn free-btn" href="https://leetcode.com/problemset/database/" target="_blank">💻 Practice Now</a></div>
+  <div class="res-card"><h3>Google BigQuery Sandbox</h3><div class="by">console.cloud.google.com <span class="free-tag">FREE</span></div><p>Free BigQuery sandbox — 1TB queries/month free. Practice on public datasets.</p><a class="res-btn free-btn" href="https://console.cloud.google.com/bigquery" target="_blank">🚀 Open BigQuery</a></div>
+  <div class="res-card"><h3>AWS Free Tier</h3><div class="by">aws.amazon.com <span class="free-tag">FREE</span></div><p>12 months free tier — S3, Glue, Athena, EMR limited access. Enough to practice.</p><a class="res-btn free-btn" href="https://aws.amazon.com/free/" target="_blank">🚀 Sign Up Free</a></div>
+</div>
+</div>
+
+<!-- Resumes -->
+<div class="sec" id="resumes">
+<hr class="div" style="margin-bottom:40px">
+<div class="section-title">📄 Resume Templates</div>
+<div class="section-sub">10 blank, copy-ready resume formats — pick the one that fits your role level and style</div>
+
+<div style="margin-bottom:14px;padding:14px 18px;background:rgba(0,120,212,0.07);border-radius:10px;font-size:0.85rem;border-left:3px solid var(--az);">
+  💡 <strong>Tip:</strong> Match the template to the JD. Read the JD → pick the closest format → mirror 2–3 JD keywords in your bullet points. Keep it 2 pages max.
+</div>
+
+<div class="res-tmpl-tabs">
+  <button class="rt-btn active" onclick="showTmpl(0,this)">1 · Classic</button>
+  <button class="rt-btn" onclick="showTmpl(1,this)">2 · Senior DE</button>
+  <button class="rt-btn" onclick="showTmpl(2,this)">3 · Multi-Cloud</button>
+  <button class="rt-btn" onclick="showTmpl(3,this)">4 · Fresher</button>
+  <button class="rt-btn" onclick="showTmpl(4,this)">5 · Lead/Manager</button>
+  <button class="rt-btn" onclick="showTmpl(5,this)">6 · Azure Focus</button>
+  <button class="rt-btn" onclick="showTmpl(6,this)">7 · AWS Focus</button>
+  <button class="rt-btn" onclick="showTmpl(7,this)">8 · GCP Focus</button>
+  <button class="rt-btn" onclick="showTmpl(8,this)">9 · ML/DE Hybrid</button>
+  <button class="rt-btn" onclick="showTmpl(9,this)">10 · Contract/Freelance</button>
+</div>
+
+<div id="tmpl-display" class="tmpl-box"></div>
+</div>
+
+<!-- Interview Q&A -->
+<div class="sec" id="interview">
+<hr class="div" style="margin-bottom:40px">
+<div class="section-title">🎯 Master Interview Q&A Bank</div>
+<div class="section-sub">Compiled from Tiger Analytics, Tredence, Deloitte, Infosys, Accenture, Capgemini, IBM, JPMorgan, PWC, EY, Cognizant, Wipro question banks</div>
+
+<details class="qa"><summary>⚡ PySpark — Core Concepts</summary><div class="qa-content"><ul>
+  <li><strong>Lazy Evaluation:</strong> Transformations build a logical plan; actions execute it. Enables Catalyst optimizer to reorder, push down, and optimize before running.</li>
+  <li><strong>groupByKey vs reduceByKey:</strong> reduceByKey = combines locally per partition before shuffle (map-side reduce). groupByKey = sends all to reducer. Always use reduceByKey.</li>
+  <li><strong>repartition vs coalesce:</strong> repartition = full shuffle, increase or decrease. coalesce = no shuffle, decrease only. Use coalesce before write to reduce output files.</li>
+  <li><strong>Broadcast join:</strong> Copies small table (&lt;10MB default) to all executors. Eliminates shuffle on large table. Use broadcast() hint.</li>
+  <li><strong>Jobs/Stages/Tasks:</strong> 1 Action = 1 Job. Wide transform = new Stage boundary. Tasks = partition count per stage.</li>
+  <li><strong>AQE:</strong> Adaptive Query Execution — dynamically adjusts plan at runtime: coalesces small partitions, changes join strategy, handles skew. Default in Databricks.</li>
+  <li><strong>Incremental without updated_at:</strong> SHA2 row hash → merge on key + hash mismatch. No hash change = no update.</li>
+  <li><strong>Data Skew:</strong> Salting — add random prefix to skewed key, repartition, process, aggregate. AQE handles automatically in Databricks.</li>
+</ul></div></details>
+
+<details class="qa"><summary>🗄️ SQL — Coding &amp; Concepts</summary><div class="qa-content"><ul>
+  <li><strong>nth highest salary:</strong> DENSE_RANK() OVER (ORDER BY salary DESC) = n, or OFFSET (n-1) ROWS FETCH NEXT 1 ROW ONLY</li>
+  <li><strong>Top 3 per dept:</strong> DENSE_RANK() OVER (PARTITION BY dept ORDER BY salary DESC) &lt;= 3</li>
+  <li><strong>Cumulative sum:</strong> SUM(salary) OVER (PARTITION BY dept ORDER BY hire_date ROWS UNBOUNDED PRECEDING)</li>
+  <li><strong>More than manager:</strong> Self-join employees e1 JOIN employees e2 ON e1.manager_id = e2.emp_id WHERE e1.salary > e2.salary</li>
+  <li><strong>TRUNCATE vs DELETE:</strong> TRUNCATE = DDL, no WHERE, no rollback, resets identity, faster. DELETE = DML, supports WHERE, can rollback.</li>
+  <li><strong>Union vs Union All:</strong> Union removes dupes (slower sort). Union All keeps all rows (faster). Use Union All unless dedup required.</li>
+  <li><strong>Star vs Snowflake:</strong> Star = denormalized dims, faster queries. Snowflake = normalized dims, less storage, more joins. Use Star for BI.</li>
+  <li><strong>Gaps in sequence:</strong> LAG() to find where current_id - prev_id > 1</li>
+</ul></div></details>
+
+<details class="qa"><summary>🔷 Azure Data Factory — Patterns</summary><div class="qa-content"><ul>
+  <li><strong>Incremental load:</strong> Lookup watermark → Copy WHERE updated_at > watermark → Update watermark table with new max</li>
+  <li><strong>Metadata-driven pipeline:</strong> Config table with source/target mapping → Lookup activity reads it → ForEach loops → Copy with dynamic parameters</li>
+  <li><strong>IR types:</strong> Azure IR (cloud-to-cloud), Self-Hosted IR (on-prem/private network), Azure-SSIS IR (SSIS package execution)</li>
+  <li><strong>3TB from on-prem:</strong> Self-Hosted IR + binary copy + staging blob + parallel copy settings + schedule off-peak</li>
+  <li><strong>Error handling:</strong> On Failure path → error folder + retry policy + skip incompatible rows + Logic App email alert</li>
+  <li><strong>Schema drift:</strong> Enable "Allow schema drift" in Data Flow source + dynamic column mappings using patterns</li>
+  <li><strong>Key Vault:</strong> Create AKV Linked Service → reference secret using @{linkedService().secretName} in linked service definition</li>
+</ul></div></details>
+
+<details class="qa"><summary>🏭 Databricks — Platform &amp; Unity Catalog</summary><div class="qa-content"><ul>
+  <li><strong>Job vs Interactive cluster:</strong> Interactive = long-running, shared, for dev. Job cluster = spun up per job, terminates after, cheaper, for production.</li>
+  <li><strong>Unity Catalog:</strong> 3-level: catalog.schema.table. Cross-workspace data sharing. Row/column security. Automated lineage. Centralized governance.</li>
+  <li><strong>%run vs dbutils.notebook.run():</strong> %run = inline in same session (shares vars). dbutils.notebook.run() = separate session, returns string, supports timeout.</li>
+  <li><strong>Delta Log:</strong> _delta_log/ = JSON per transaction + checkpoint every 10 commits. Enables ACID, time travel, schema history.</li>
+  <li><strong>cache() vs persist():</strong> cache() = MEMORY_ONLY. persist() = specify level: MEMORY_AND_DISK for large data.</li>
+  <li><strong>Autoscaling:</strong> Min/max workers based on pending tasks. ~2min to scale up — don't use for time-critical streaming.</li>
+  <li><strong>DLT (Delta Live Tables):</strong> Declarative pipelines with @dlt.table decorator. Auto-handles dependencies, errors, monitoring.</li>
+</ul></div></details>
+
+<details class="qa"><summary>💾 Delta Lake — Advanced Patterns</summary><div class="qa-content"><ul>
+  <li><strong>Delta vs Parquet:</strong> Parquet = columnar format only. Delta = file format + transaction log + ACID + time travel + schema enforcement + MERGE + streaming.</li>
+  <li><strong>MERGE INTO:</strong> Atomic upsert — insert new, update changed, optionally delete. Single atomic operation. Uses matched/not-matched conditions.</li>
+  <li><strong>Time Travel:</strong> SELECT * FROM table VERSION AS OF 5 or TIMESTAMP AS OF '2024-01-01'. Used for auditing and debugging.</li>
+  <li><strong>Z-Ordering:</strong> Co-locates related data in same files. OPTIMIZE table ZORDER BY (column). Enables file skipping on high-cardinality filter columns.</li>
+  <li><strong>OPTIMIZE:</strong> Compacts many small files → ~1GB files. Improves read performance. Run periodically, not after every write.</li>
+  <li><strong>VACUUM:</strong> Physically deletes unreferenced files. Default 7-day retention. Running removes time travel ability beyond retention.</li>
+  <li><strong>SCD Type 2:</strong> On change: update old record (set end_date=today, is_current=False) → insert new record (start_date=today, is_current=True)</li>
+</ul></div></details>
+
+<details class="qa"><summary>🐍 Python — Coding Questions</summary><div class="qa-content"><ul>
+  <li><strong>Palindrome:</strong> s == s[::-1]</li>
+  <li><strong>Word count:</strong> from collections import Counter; Counter(s.split())</li>
+  <li><strong>Fibonacci:</strong> generator: a,b=0,1; while True: yield a; a,b=b,a+b</li>
+  <li><strong>Split name:</strong> df['first']=df['name'].str.split().str[0]; df['last']=df['name'].str.split().str[-1]</li>
+  <li><strong>Duplicates in list:</strong> [x for x,c in Counter(lst).items() if c>1]</li>
+  <li><strong>Replace vowels:</strong> import re; re.sub('[aeiouAEIOU]', ' ', s)</li>
+  <li><strong>Merge dicts:</strong> {**d1, **d2} or d1|d2 (Python 3.9+)</li>
+  <li><strong>List vs Tuple vs Set:</strong> List=ordered mutable. Tuple=ordered immutable. Set=unordered no dupes.</li>
+</ul></div></details>
+
+<details class="qa"><summary>🗄️ Data Modeling — Concepts &amp; Patterns</summary><div class="qa-content"><ul>
+  <li><strong>Star vs Snowflake Schema:</strong> Star = denormalized dims (one join to fact). Snowflake = normalized dims (multiple joins). Star wins for BI query speed; Snowflake saves storage and avoids update anomalies.</li>
+  <li><strong>Fact vs Dimension table:</strong> Fact = measurable events (sales, clicks, transactions) with FKs + metrics. Dimension = descriptive context (customer, product, date). Fact is tall; Dim is wide.</li>
+  <li><strong>Grain of a fact table:</strong> The lowest level of detail one row represents. Always define grain first — e.g., "one row per order line item per day". Determines what can and cannot be measured.</li>
+  <li><strong>SCD Type 1 vs 2 vs 3:</strong> Type 1 = overwrite (no history). Type 2 = new row per change (full history, valid_from/to, is_current). Type 3 = previous_value column (only tracks 1 change). Type 2 is standard for most DW dimensions.</li>
+  <li><strong>Junk dimension:</strong> Groups low-cardinality flags/indicators (is_promo, is_online, channel_code) into a single dimension to avoid multiple tiny FK columns in the fact table.</li>
+  <li><strong>Degenerate dimension:</strong> A dim attribute that lives in the fact table with no separate dim table — e.g., invoice_number, order_id. No lookup needed.</li>
+  <li><strong>Conformed dimension:</strong> A dimension shared across multiple fact tables (e.g., Date dim used in Sales fact AND Inventory fact). Enables drill-across reports.</li>
+  <li><strong>Data Vault vs Kimball:</strong> Data Vault = Hub (business key) + Link (relationships) + Satellite (attributes with history). Audit-friendly, parallelizable loads. Kimball = Star schema, BI-optimized. Many orgs use Data Vault in raw/staging and Kimball in gold/serving layer.</li>
+</ul></div></details>
+
+<details class="qa"><summary>🧑‍💼 Manager Round — Behavioural &amp; Leadership</summary><div class="qa-content"><ul>
+  <li><strong>"Tell me about yourself" structure:</strong> 60 seconds max — Current role + years → one key achievement → why you're looking → why this company. Rehearse it. Never read from memory.</li>
+  <li><strong>Conflict with a team member:</strong> STAR format — Situation (what was the disagreement), Task (your role), Action (you listened, found common ground, escalated if needed), Result (project succeeded, relationship intact). Never badmouth the person.</li>
+  <li><strong>Handling tight deadlines:</strong> Prioritize by impact, communicate blockers early, break into MVPs, ask for help without ego. Show you managed expectations — not that you quietly burnt out.</li>
+  <li><strong>"What's your biggest failure?":</strong> Choose a real one. Show what you learned and what you changed. Avoid disguised positives ("I work too hard"). Interviewers see through them.</li>
+  <li><strong>Ownership vs Collaboration:</strong> Show both — "I drove X end-to-end" AND "I pulled in Y team for Z expertise." Senior DE roles want someone who leads AND works across teams.</li>
+  <li><strong>Handling ambiguous requirements:</strong> Ask clarifying questions, document assumptions, deliver a v1 with explicit caveats, get feedback early. Shows engineering maturity.</li>
+  <li><strong>Why do you want to leave?:</strong> Focus forward — bigger scope, multi-cloud exposure, leadership opportunity — not current problems. Keep it positive and honest.</li>
+  <li><strong>Salary negotiation:</strong> Give a range, not a point. Research market first. Never anchor below your current CTC. Counter with value: "Given my experience with X and impact on Y, I was expecting Z."</li>
+  <li><strong>Questions to ask the interviewer:</strong> "What does a successful first 90 days look like?" / "What's the biggest data challenge the team is solving this year?" / "How is the data team structured?" Shows you're evaluating them too.</li>
+  <li><strong>3-minute project narration:</strong> Problem → My role → Tech choices (and WHY) → Challenges faced → Business impact (numbers if possible) → What I'd do differently. Practice this for all 3 major projects.</li>
+</ul></div></details>
+
+</div>
+
+<!-- Certifications -->
+<div class="sec" id="certs">
+<hr class="div" style="margin-bottom:40px">
+<div class="section-title">🏆 Certifications — Priority Order</div>
+<div class="section-sub">Target DP-900 first (quick win in Week 4), then DP-203 and Databricks during Week 8–12</div>
+<div class="cert-grid">
+  <div class="cert-card"><div class="cert-icon">☁️</div><h4>AZ-900: Azure Fundamentals</h4><p>Baseline Azure — cloud concepts, services overview. Easy 1-week prep.</p><span class="cert-timing" style="background:#e3f2fd;color:#0d47a1;">Week 3–4</span></div>
+  <div class="cert-card"><div class="cert-icon">🌐</div><h4>DP-900: Azure Data Fundamentals</h4><p>Data concepts, Azure storage, analytics services. 2–3 days prep, easy pass.</p><span class="cert-timing" style="background:#e8f5e9;color:#1b5e20;">Week 4 — Quick Win</span></div>
+  <div class="cert-card"><div class="cert-icon">🔷</div><h4>DP-203: Azure Data Engineer Associate</h4><p>The main certification — ADF, ADLS, Synapse, Databricks, Stream Analytics.</p><span class="cert-timing" style="background:#fff3e0;color:#bf360c;">Week 8–10 — High Value</span></div>
+  <div class="cert-card"><div class="cert-icon">✴️</div><h4>Databricks Certified Data Engineer</h4><p>PySpark, Delta Lake, Medallion, DLT, Workflows. Very respected in DE interviews.</p><span class="cert-timing" style="background:#f3e5f5;color:#4a148c;">Week 10–12 — Differentiator</span></div>
+  <div class="cert-card"><div class="cert-icon">🟡</div><h4>Google Cloud — BigQuery / Composer</h4><p>GCP hands-on badges — useful for multi-cloud roles and broadens your appeal.</p><span class="cert-timing" style="background:#fff8e1;color:#e65100;">Bonus — After Core</span></div>
+  <div class="cert-card"><div class="cert-icon">❄️</div><h4>Snowflake SnowPro Core</h4><p>Snowflake architecture, virtual warehouses, data sharing. Valued at finance firms.</p><span class="cert-timing" style="background:#e0f2f1;color:#004d40;">Bonus — After Core</span></div>
+</div>
+</div>
+
+<!-- Mantras -->
+<div class="sec" id="mantras">
+<hr class="div" style="margin-bottom:40px">
+<div class="section-title">🔥 Mindset Mantras</div>
+<div class="section-sub">Words to live by — from Sagar to every aspiring Data Engineer</div>
+<div class="mantra-grid">
+  <div class="mantra-card">
+    <div class="mi">🎭</div>
+    <p>"Don't be an imposter or live in imposter syndrome — whether at work or in your regular lifestyle. You belong in the room. Own it."</p>
+    <div class="author">— Sagar Konkanagaon</div>
+  </div>
+  <div class="mantra-card">
+    <div class="mi">🎯</div>
+    <p>"Be compact and precise — know your priority and don't drag the things which are good to be left behind. Clarity beats complexity."</p>
+    <div class="author">— Sagar Konkanagaon</div>
+  </div>
+  <div class="mantra-card">
+    <div class="mi">🌱</div>
+    <p>"Learn the roots of problems before you think to pluck the fruits of success. Deep understanding always outlasts surface knowledge."</p>
+    <div class="author">— Sagar Konkanagaon</div>
+  </div>
+  <div class="mantra-card">
+    <div class="mi">📢</div>
+    <p>"Learn to talk — Raise your voice. Your ideas don't count if they stay in your head. Speak up in meetings, write, share, teach."</p>
+    <div class="author">— Sagar Konkanagaon</div>
+  </div>
+  <div class="mantra-card">
+    <div class="mi">⭐</div>
+    <p>"Everybody has their own perspective — don't try to be unique in others' way. Make a standout uniqueness for yourself."</p>
+    <div class="author">— Sagar Konkanagaon</div>
+  </div>
+  <div class="mantra-card">
+    <div class="mi">🏆</div>
+    <p>"Winners never imagine about winning — they just give their bestest best. Focus on the work, not the outcome."</p>
+    <div class="author">— Sagar Konkanagaon</div>
+  </div>
+  <div class="mantra-card">
+    <div class="mi">🔄</div>
+    <p>"Upgrade your self versions to fix the bugs and add a feature for yourself. You are software — keep shipping improvements."</p>
+    <div class="author">— Sagar Konkanagaon</div>
+  </div>
+  <div class="mantra-card">
+    <div class="mi">🤝</div>
+    <p>"Don't keep isolating yourself. The best engineers learn from others, collaborate openly, and build together. Community is strength."</p>
+    <div class="author">— Sagar Konkanagaon</div>
+  </div>
+</div>
+<div class="quote-strip">
+  <p>"The best time to start was yesterday. The second best time is now. Stop waiting for the perfect moment — open your laptop, fire up Databricks, write one PySpark line, and begin. Every expert was once a complete beginner who simply refused to quit."</p>
+  <div class="q-attr">— A message from Sagar to every Data Engineer starting their journey 🚀</div>
+</div>
+</div>
+
+</div><!-- /wrap -->
+
+<footer>
+  <div class="f-name">Sagar Konkanagaon</div>
+  <p>Senior Data Engineer · Bengaluru, Karnataka, India</p>
+  <p>📧 <a href="mailto:sagarkonkanagaon@gmail.com" style="color:inherit">sagarkonkanagaon@gmail.com</a> &nbsp;|&nbsp; 📱 +91 7975461728</p>
+  <p style="margin-top:12px;font-size:.78rem;">Multi-Cloud Data Engineering Mastery Guide · Built with ❤️ for the DE Community · 2026</p>
+  <p style="margin-top:6px;font-size:.75rem;">🏊 State-Level Swimming Champion · 📸 Photography Enthusiast</p>
+</footer>
+<script>
+// ══════════ QUIZ DATA ══════════
+const QUIZ_DATA = {
+  azure: [
+    {id:"az1",topic:"SQL",level:"easy",q:"What does DENSE_RANK() do differently from RANK()?",a:["Has gaps after ties","No gaps after ties","Same as ROW_NUMBER","Skips next number on tie"],c:1,exp:"DENSE_RANK() gives consecutive ranks with no gaps (1,2,2,3), whereas RANK() skips numbers after ties (1,2,2,4)."},
+    {id:"az2",topic:"SQL",level:"easy",q:"What is a CTE in SQL?",a:["A table constraint","A temporary named result set","A clustered table expression","A column type extension"],c:1,exp:"CTE (Common Table Expression) is a temporary named result set defined with WITH clause, making complex queries more readable and reusable within the same query."},
+    {id:"az3",topic:"SQL",level:"medium",q:"How do you find the 2nd highest salary without using LIMIT/TOP?",a:["SELECT MAX(salary) FROM emp WHERE salary != MAX(salary)","SELECT MAX(salary) FROM emp WHERE salary < (SELECT MAX(salary) FROM emp)","SELECT salary FROM emp ORDER BY salary DESC","SELECT RANK() salary FROM emp"],c:1,exp:"Use a nested MAX: SELECT MAX(salary) FROM employees WHERE salary < (SELECT MAX(salary) FROM employees). This returns the 2nd highest value."},
+    {id:"az4",topic:"SQL",level:"medium",q:"What does LAG() function do in SQL?",a:["Returns the next row's value","Returns the previous row's value","Returns the last row in the partition","Groups rows by a lag factor"],c:1,exp:"LAG(column, offset) returns the value from a previous row within the same partition. Used for period-over-period comparisons like month-over-month sales."},
+    {id:"az5",topic:"SQL",level:"hard",q:"How would you detect duplicates and keep only the latest record?",a:["DELETE FROM table WHERE id IN (SELECT MIN(id) FROM table GROUP BY key)","WITH cte AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY key ORDER BY updated_at DESC) AS rn FROM t) DELETE FROM cte WHERE rn > 1","SELECT DISTINCT * FROM table","GROUP BY key ORDER BY MAX(updated_at)"],c:1,exp:"Use ROW_NUMBER() OVER (PARTITION BY key ORDER BY updated_at DESC) to rank duplicates, then delete rows where rn > 1 — keeps the latest record per key."},
+    {id:"az6",topic:"PySpark",level:"easy",q:"What is lazy evaluation in Spark?",a:["Spark delays loading data","Transformations are not executed until an action is called","Spark uses caching for all operations","Jobs run during off-peak hours"],c:1,exp:"Lazy evaluation means Spark builds a DAG of transformations but doesn't execute them until an action (collect, count, write) is called. This allows Catalyst to optimize the entire plan."},
+    {id:"az7",topic:"PySpark",level:"easy",q:"What's the difference between repartition() and coalesce()?",a:["repartition reduces, coalesce increases","repartition does full shuffle + can increase/decrease; coalesce only reduces without full shuffle","Both do the same thing","coalesce does full shuffle, repartition doesn't"],c:1,exp:"repartition(n): full shuffle, can increase or decrease partitions. coalesce(n): avoids full shuffle, only reduces partitions. Use coalesce after heavy filtering."},
+    {id:"az8",topic:"PySpark",level:"medium",q:"When should you use broadcast join in Spark?",a:["Always — it's faster","When both tables are large","When one table is small enough to fit in executor memory (< 200MB default)","When tables have the same schema"],c:2,exp:"Broadcast join sends a small DataFrame to all executors, avoiding shuffle. Best when one table is < 200MB (configurable via spark.sql.autoBroadcastJoinThreshold)."},
+    {id:"az9",topic:"PySpark",level:"medium",q:"What does groupByKey vs reduceByKey mean for performance?",a:["groupByKey is faster because it groups first","reduceByKey is faster because it does local aggregation before shuffle","Both have same performance","groupByKey uses less memory"],c:1,exp:"reduceByKey performs local aggregation (combiner) on each partition before shuffling, dramatically reducing data movement. groupByKey shuffles all data then aggregates — much slower for large datasets."},
+    {id:"az10",topic:"PySpark",level:"hard",q:"How do you handle incremental load in PySpark when there's no updated_at column?",a:["Full reload every time","Use CDC from source","Use row hashing (SHA2 of all columns) to detect changes","Use timestamp from file metadata"],c:2,exp:"Create a row hash: sha2(concat_ws('||', col1, col2, ...), 256). Compare with existing hashes in Delta. If hash differs → new or changed record. Insert new, update changed."},
+    {id:"az11",topic:"ADF",level:"easy",q:"What is an Integration Runtime in ADF?",a:["A data transformation engine","The compute infrastructure used by ADF for data movement and transformation","A type of pipeline trigger","A linked service connector"],c:1,exp:"Integration Runtime (IR) is the compute infrastructure ADF uses to perform data integration. Types: Azure IR (cloud-to-cloud), Self-Hosted IR (on-prem or private network), SSIS IR."},
+    {id:"az12",topic:"ADF",level:"easy",q:"What activity in ADF is used to loop over a list of items?",a:["Until activity","Switch activity","ForEach activity","Loop activity"],c:2,exp:"ForEach activity iterates over a list (array). Combined with Lookup activity (to get table list from a config table), it powers metadata-driven pipelines."},
+    {id:"az13",topic:"ADF",level:"medium",q:"How do you implement incremental load in ADF?",a:["Copy all data every run","Use watermark: store last-loaded timestamp, filter source query, update watermark after success","Use event-based trigger","Use tumbling window trigger only"],c:1,exp:"Watermark pattern: store last-loaded value in a config table, use it in source query WHERE clause (WHERE updated_at > @LastWatermark), update watermark in Stored Procedure activity after successful copy."},
+    {id:"az14",topic:"ADF",level:"hard",q:"What's the best way to handle schema drift in ADF Copy Activity?",a:["Always define explicit mappings","Enable 'Allow schema drift' in column mapping, or use binary copy for unknown schemas","Use Data Flow instead","Manually map each column"],c:1,exp:"For Copy Activity, enable 'Allow schema drift' in column mapping to pass through unknown columns. Binary copy copies file as-is (no schema needed). Data Flows have built-in schema drift support."},
+    {id:"az15",topic:"Delta Lake",level:"easy",q:"What file format does Delta Lake use for storage?",a:["JSON","CSV","Parquet with a transaction log","ORC"],c:2,exp:"Delta Lake stores data as Parquet files plus a transaction log (_delta_log/) containing JSON commit files that record every change — enabling ACID compliance and time travel."},
+    {id:"az16",topic:"Delta Lake",level:"easy",q:"What does MERGE INTO do in Delta Lake?",a:["Merges two Delta tables into one file","Performs upsert: update matching rows, insert new rows","Combines schema of two tables","Compresses Delta files"],c:1,exp:"MERGE INTO performs an upsert operation — when a row matches the condition, update it; when no match, insert it. Core operation for SCD Type 1 and incremental Delta Lake patterns."},
+    {id:"az17",topic:"Delta Lake",level:"medium",q:"What is Delta Lake time travel?",a:["Scheduling jobs to run at specific times","Querying previous versions of a Delta table using VERSION AS OF or TIMESTAMP AS OF","Auto-optimizing query execution over time","Cross-region data replication"],c:1,exp:"Time travel lets you query historical versions: df = spark.read.format('delta').option('versionAsOf', 5).load(path). Every write creates a new version in _delta_log/. Data retained per VACUUM settings."},
+    {id:"az18",topic:"Delta Lake",level:"hard",q:"What does OPTIMIZE with ZORDER BY do?",a:["Removes old files and sorts columns alphabetically","Compacts small files into larger ones AND co-locates related data by the specified columns for faster range queries","Only compacts files without reordering","Creates an index on the specified columns"],c:1,exp:"OPTIMIZE compacts small Parquet files (reduces file count). ZORDER BY additionally reorganizes data so records with similar column values are stored close together — dramatically speeds up range/filter queries on those columns."},
+    {id:"az19",topic:"Databricks",level:"easy",q:"What's the difference between Job cluster and Interactive cluster in Databricks?",a:["Job cluster: for notebooks; Interactive: for jobs","Job cluster: spins up for a specific job, auto-terminates; Interactive: persistent for development","Both are the same","Interactive clusters are cheaper"],c:1,exp:"Job clusters: created for a specific job, auto-terminate when done, cheaper. Interactive clusters: persistent, shared for development. Never use interactive clusters in production — too expensive."},
+    {id:"az20",topic:"Databricks",level:"medium",q:"What is Unity Catalog in Databricks?",a:["A file organization system","Centralized data governance layer with fine-grained access control across all workspaces","A type of cluster","A pipeline monitoring tool"],c:1,exp:"Unity Catalog is Databricks' data governance solution providing: centralized permissions across workspaces, table/column/row-level security, data lineage tracking, and attribute-based access control."},
+    {id:"az21",topic:"Architecture",level:"easy",q:"What are the three layers in Medallion Architecture?",a:["Input/Process/Output","Raw/Staged/Aggregated","Bronze/Silver/Gold","Landing/Staging/Production"],c:2,exp:"Bronze: raw data with audit columns added. Silver: cleaned, validated, deduplicated, merged via MERGE INTO. Gold: business aggregations, star schema, BI-ready — what analysts and Power BI consume."},
+    {id:"az22",topic:"Architecture",level:"medium",q:"What is SCD Type 2?",a:["Overwrite the existing record","Keep history by adding valid_from, valid_to, is_current columns; new row for each change","Delete old record and insert new one","Use a separate audit table"],c:1,exp:"SCD Type 2 preserves full history. When a dimension attribute changes (e.g., customer address), expire the old row (set is_current=0, valid_to=now) and insert a new row (is_current=1, valid_from=now). Allows point-in-time historical analysis."},
+    {id:"az23",topic:"Architecture",level:"hard",q:"How do you make a pipeline idempotent?",a:["Run it only once","Design so re-running produces the same result: use MERGE instead of INSERT, overwrite with mode='overwrite', partition-based overwrites","Add a lock mechanism","Use unique job IDs"],c:1,exp:"Idempotency means re-running a pipeline gives the same result. Use MERGE INTO instead of blind INSERTs, overwrite partitions (not append), check-before-insert patterns, and watermark-based incremental loads that don't re-process old data."},
+    {id:"az24",topic:"PySpark",level:"medium",q:"What is AQE (Adaptive Query Execution) in Spark 3?",a:["A new query language","Runtime optimization that adapts the query plan based on actual data statistics during execution","Automatic query caching","A new scheduling algorithm"],c:1,exp:"AQE dynamically optimizes queries at runtime: coalesces shuffle partitions based on actual data size, converts sort-merge joins to broadcast joins when one side is small, and handles data skew automatically."},
+    {id:"az25",topic:"Delta Lake",level:"medium",q:"What is the purpose of VACUUM in Delta Lake?",a:["Optimize query performance","Remove data files no longer referenced by the transaction log to free storage space","Create a backup of Delta files","Compress Delta files"],c:1,exp:"VACUUM removes Parquet files that are no longer tracked by the Delta transaction log. Default retention is 7 days (don't set lower — breaks time travel). After VACUUM, you lose access to those historical versions."}
+  ],
+  aws: [
+    {id:"aw1",topic:"S3",level:"easy",q:"Which S3 storage class is designed for infrequently accessed data?",a:["S3 Standard","S3 Standard-IA","S3 Glacier","S3 One Zone-IA"],c:1,exp:"S3 Standard-IA (Infrequent Access) offers lower storage cost but charges a retrieval fee. Best for data accessed less than once a month. Still multi-AZ replicated unlike One Zone-IA."},
+    {id:"aw2",topic:"S3",level:"easy",q:"What is S3 versioning used for?",a:["Encrypt data at rest","Keep multiple versions of an object to protect against accidental deletion or overwrites","Replicate to another region","Speed up uploads"],c:1,exp:"S3 versioning preserves all versions of an object. When enabled, deleting an object adds a 'delete marker' instead of permanently removing it. Enables recovery from accidental deletes and overwrites."},
+    {id:"aw3",topic:"Glue",level:"easy",q:"What does an AWS Glue Crawler do?",a:["Transforms data","Auto-discovers schema of data in S3/databases and updates the Glue Data Catalog","Schedules ETL jobs","Creates IAM roles"],c:1,exp:"Glue Crawler connects to a data source, scans it, infers schema and data types, and creates or updates table definitions in the Glue Data Catalog — making data queryable by Athena and other services."},
+    {id:"aw4",topic:"Glue",level:"medium",q:"What is a DynamicFrame in AWS Glue vs a Spark DataFrame?",a:["DynamicFrame is slower","DynamicFrame handles schema inconsistencies (mixed types in a column) gracefully without requiring a fixed schema","They are identical","DataFrame supports more operations"],c:1,exp:"Glue DynamicFrame is Glue's extension of Spark DataFrame. It handles 'schema inconsistencies' — e.g., a column that is string in some records and int in others. Use resolveChoice() to handle mixed types."},
+    {id:"aw5",topic:"Redshift",level:"easy",q:"What is the fastest way to load data into Redshift?",a:["INSERT INTO statements","COPY command from S3","JDBC batch insert","Data API"],c:1,exp:"COPY command loads data from S3 in parallel using all Redshift compute nodes simultaneously. It's 10-100x faster than row-by-row INSERT. Use Parquet format for best COPY performance."},
+    {id:"aw6",topic:"Redshift",level:"medium",q:"What is a Redshift distribution key used for?",a:["Sorting rows within a table","Distributing table rows across compute nodes to minimize data movement in JOINs","Encrypting table data","Compressing column data"],c:1,exp:"Distribution key determines which compute node stores each row. Choose the column most used in JOINs — matching distribution keys between joined tables keeps data co-located, eliminating expensive inter-node data movement."},
+    {id:"aw7",topic:"Kinesis",level:"easy",q:"What is the difference between Kinesis Data Streams and Kinesis Firehose?",a:["Streams is managed, Firehose requires manual setup","Streams: real-time, ordered, replay-capable, custom consumer; Firehose: managed delivery to S3/Redshift/ES, no custom consumer","They are identical services","Firehose supports replay, Streams doesn't"],c:1,exp:"Kinesis Data Streams: real-time, durable (24h-7 days), multiple consumers, ordered within shard, supports replay. Firehose: fully managed delivery to destinations, ~60-900 second buffer, no replay, simpler setup."},
+    {id:"aw8",topic:"Athena",level:"easy",q:"How is Amazon Athena priced?",a:["Per query execution time","Per TB of data scanned","Per number of results returned","Flat monthly fee"],c:1,exp:"Athena charges $5 per TB of data scanned. To minimize cost: use columnar formats (Parquet/ORC saves 90%), partition data (partition pruning reduces scan), and use compression."},
+    {id:"aw9",topic:"EMR",level:"medium",q:"What is the main cost optimization for EMR clusters?",a:["Use only On-Demand instances","Use Spot instances for Task nodes (70-90% cheaper), right-size cluster, auto-terminate when done","Never auto-terminate","Use only smallest instance types"],c:1,exp:"Spot instances for Task nodes can save 70-90% vs On-Demand. Core nodes should be On-Demand (Spot can be reclaimed mid-job, losing HDFS data). Auto-terminate idle clusters. Use EMR Serverless for unpredictable jobs."},
+    {id:"aw10",topic:"Glue",level:"medium",q:"What is Glue Job Bookmark?",a:["A Glue UI feature to save progress","Tracks which data has already been processed to enable incremental ETL","A scheduling mechanism","A version control for Glue scripts"],c:1,exp:"Glue Job Bookmark remembers which S3 objects/database rows were processed in the last run. On next run, only processes new/changed data. Enables incremental ETL without custom watermark logic."},
+    {id:"aw11",topic:"S3",level:"medium",q:"What is S3 Lifecycle Policy used for?",a:["Monitoring S3 access patterns","Automatically transitioning objects between storage classes or expiring them based on age","Encrypting objects at rest","Replicating objects to another bucket"],c:1,exp:"S3 Lifecycle Policies automatically transition objects between tiers (e.g., Standard → IA after 30 days → Glacier after 90 days → delete after 365 days) to optimize storage costs without manual intervention."},
+    {id:"aw12",topic:"Athena",level:"medium",q:"How do partitions help reduce Athena query cost?",a:["They compress data","They allow Athena to skip scanning entire S3 prefixes that don't match the filter","They index the data","They cache frequently accessed data"],c:1,exp:"When you query WHERE year='2024' AND month='01', Athena only scans the s3://bucket/year=2024/month=01/ prefix. Without partitioning, it scans all data. Partitioning can reduce scanned bytes by 99%+."},
+    {id:"aw13",topic:"Redshift",level:"hard",q:"What does VACUUM do in Redshift and when should you run it?",a:["Backs up the database","Recovers space from deleted rows and re-sorts unsorted rows according to sort key; run periodically or enable auto-vacuum","Compresses all table data","Creates statistics for query optimizer"],c:1,exp:"VACUUM FULL: reclaims disk space from deleted/updated rows AND re-sorts data by sort key. Redshift uses soft deletes (marks rows as deleted). Auto-vacuum runs in background but manual VACUUM ensures freshness for large tables."},
+    {id:"aw14",topic:"Kinesis",level:"medium",q:"What determines which shard a Kinesis record goes to?",a:["Round-robin across shards","The partition key: a hash of the partition key maps to a specific shard","The producer that sends it","The message size"],c:1,exp:"Partition key is hashed (MD5) and the result determines the shard. Use a high-cardinality key (e.g., user_id) to distribute evenly. Low-cardinality keys cause shard hot spots where one shard gets all traffic."},
+    {id:"aw15",topic:"EMR",level:"easy",q:"What storage does EMR use instead of HDFS for a cloud-native architecture?",a:["EFS (Elastic File System)","Amazon S3 via EMRFS (EMR File System)","EBS volumes","DynamoDB"],c:1,exp:"EMRFS allows EMR to use S3 as if it were HDFS. Benefits: data persists after cluster termination (unlike HDFS which is lost when cluster is deleted), cheaper storage, shared between clusters."}
+  ],
+  gcp: [
+    {id:"gc1",topic:"BigQuery",level:"easy",q:"What type of database is BigQuery?",a:["Relational OLTP database","Serverless, columnar, distributed data warehouse (OLAP)","A message queue","A NoSQL document store"],c:1,exp:"BigQuery is Google's serverless, fully managed data warehouse. It uses columnar storage (Capacitor) and the Dremel query engine for massively parallel SQL analytics on petabytes of data."},
+    {id:"gc2",topic:"BigQuery",level:"easy",q:"What is table partitioning in BigQuery?",a:["Splitting a table into multiple tables","Dividing a table into segments based on a column value (date/timestamp/integer range) to reduce query scan cost","Distributing table across multiple projects","Compressing table columns"],c:1,exp:"Partitioning divides a BigQuery table into segments. When you filter on the partition column in a WHERE clause, BigQuery scans only matching partitions — dramatically reducing bytes scanned and cost."},
+    {id:"gc3",topic:"BigQuery",level:"medium",q:"What does clustering do in BigQuery?",a:["Partitions the table by multiple columns","Sorts data within each partition by the specified columns, reducing scan for filter/sort queries","Creates an index like traditional databases","Groups rows for aggregation"],c:1,exp:"Clustering co-locates related data. When querying on clustered columns, BigQuery skips blocks that don't match. Best combined with partitioning: partition by date, cluster by customer_id and product_id."},
+    {id:"gc4",topic:"BigQuery",level:"medium",q:"BigQuery on-demand vs flat-rate pricing?",a:["On-demand is always cheaper","On-demand: $5/TB scanned, pay per query; Flat-rate: reserved slots for predictable high-volume workloads","Flat-rate doesn't exist","On-demand charges for compute only"],c:1,exp:"On-demand: $5/TB scanned — good for variable/unpredictable workloads. Flat-rate (Reservations): fixed slots (units of compute) for predictable budgets. Annual commitments get 25-50% discount."},
+    {id:"gc5",topic:"Dataflow",level:"easy",q:"What programming model does Cloud Dataflow use?",a:["MapReduce","Apache Beam unified stream/batch programming model","Apache Spark","Custom Google-only API"],c:1,exp:"Dataflow is the managed execution engine for Apache Beam pipelines. Beam's unified model means the same code runs on both streaming and batch data — write once, run anywhere."},
+    {id:"gc6",topic:"Pub/Sub",level:"easy",q:"What is Google Cloud Pub/Sub used for?",a:["Querying data in GCS","Asynchronous message passing — publish messages to topics, subscribers consume them","Real-time SQL analytics","Object storage"],c:1,exp:"Pub/Sub is Google's asynchronous messaging service. Publishers send messages to Topics. Subscribers pull from Subscriptions. Decouples producers from consumers. Scales automatically, guarantees at-least-once delivery."},
+    {id:"gc7",topic:"Dataflow",level:"medium",q:"What are windowing operations in Apache Beam/Dataflow?",a:["Splitting DataFrames","Grouping streaming data into finite time buckets for aggregation: Fixed, Sliding, Session, Global","Partitioning data by column","Filtering based on timestamp"],c:1,exp:"Windows group unbounded streaming data into finite chunks. Fixed: 5-min windows. Sliding: 10-min window every 5 min. Session: inactivity-based windows. Required before aggregating streaming data."},
+    {id:"gc8",topic:"BigQuery",level:"hard",q:"What is BigQuery BI Engine?",a:["A separate analytics database","In-memory analysis service that caches frequently accessed BigQuery data for sub-second query response times","A visualization tool","A data export service"],c:1,exp:"BI Engine is an in-memory cache layer for BigQuery. Reservations pre-allocate memory per project. Queries hitting cached data return in milliseconds without scanning storage. Great for interactive dashboards with Power BI, Looker, or Data Studio."},
+    {id:"gc9",topic:"Dataproc",level:"easy",q:"What is Google Cloud Dataproc?",a:["A managed BigQuery competitor","Managed Hadoop/Spark/Hive service on GCP — 90-second cluster startup, ephemeral clusters","A streaming service","A data cataloging service"],c:1,exp:"Dataproc provides managed Hadoop, Spark, Hive, Pig clusters. Key advantage: 90-second startup (vs hours on-prem), ephemeral clusters (create-process-delete), GCS as HDFS replacement, Dataproc Serverless for no cluster management."},
+    {id:"gc10",topic:"Composer",level:"easy",q:"What is Cloud Composer?",a:["A music creation tool on GCP","Fully managed Apache Airflow service for workflow orchestration","A data transformation service","A real-time streaming platform"],c:1,exp:"Cloud Composer is Google's managed Apache Airflow. You define DAGs (Directed Acyclic Graphs) of tasks. Built-in operators for BigQuery, Dataflow, Pub/Sub, Dataproc. Runs on GKE, scales automatically."},
+    {id:"gc11",topic:"BigQuery",level:"medium",q:"How do you query external data in BigQuery without loading it?",a:["You cannot — data must be loaded first","External tables: create a table definition pointing to GCS, Drive, or Cloud SQL — query directly","Use BigQuery Transfer Service","Use Dataflow to stream into BigQuery first"],c:1,exp:"BigQuery External Tables let you query data in GCS (CSV, JSON, Parquet, ORC, Avro), Google Drive, or Cloud SQL without loading it. Great for ad-hoc analysis. Slower than native BQ tables but zero ETL."},
+    {id:"gc12",topic:"Pub/Sub",level:"medium",q:"What is the difference between Pub/Sub push and pull subscriptions?",a:["Both are identical","Pull: consumer calls Pub/Sub API to retrieve messages; Push: Pub/Sub delivers messages to a configured HTTPS endpoint (webhook)","Push is faster","Pull requires more configuration"],c:1,exp:"Pull: subscribers actively call the Pub/Sub API to receive messages — good for batch consumers. Push: Pub/Sub sends messages to a configured endpoint (Cloud Run, App Engine) — good for event-driven serverless architectures."},
+    {id:"gc13",topic:"Dataproc",level:"medium",q:"What is the advantage of using GCS instead of HDFS on Dataproc?",a:["GCS is faster than HDFS","Data persists after cluster deletion; separate storage from compute; share data between clusters; no cluster needed for storage","HDFS is always better","GCS has better security"],c:1,exp:"Using GCS as storage (instead of HDFS) decouples storage from compute. You can delete the cluster without losing data, share data between multiple clusters, and spin up ephemeral clusters just for processing — major cost savings."},
+    {id:"gc14",topic:"BigQuery",level:"hard",q:"What is BigQuery Omni?",a:["A BigQuery monitoring tool","Multi-cloud analytics: run BigQuery SQL against data in AWS S3 or Azure ADLS without moving data","A BigQuery ML feature","A data replication service"],c:1,exp:"BigQuery Omni uses Anthos to run BigQuery compute engines near data stored in AWS S3 or Azure ADLS Gen2. You write standard BigQuery SQL; results come back to GCP. Enables cross-cloud analytics without data egress costs."},
+    {id:"gc15",topic:"Composer",level:"medium",q:"What is XCom in Apache Airflow/Cloud Composer?",a:["Cross-container orchestration","Cross-communication mechanism to pass small data values between tasks in a DAG","An external connector for Composer","A monitoring metric"],c:1,exp:"XCom (cross-communication) allows tasks to pass small amounts of data between each other. Task A pushes a value (xcom_push), Task B pulls it (xcom_pull). Not for large data — use GCS for that."}
+  ]
+};
+Object.keys(QUIZ_DATA).forEach(cloud => {
+  QUIZ_DATA[cloud] = QUIZ_DATA[cloud].map(q => ({...q, cloud}));
+});
+
+// ══════════ STATE ══════════
+let currentCloud = 'azure';
+let currentQ = null;
+let qPool = [];
+let qIndex = 0;
+let score = {azure:{right:0,wrong:0},aws:{right:0,wrong:0},gcp:{right:0,wrong:0}};
+
+// ══════════ INIT ══════════
+window.onload = function(){
+  loadScore();
+  updateQCount('azure');
+};
+
+function loadScore(){
+  try{ const s=localStorage.getItem('de_mastery_score'); if(s) score=JSON.parse(s); }catch(e){}
+}
+function saveScore(){
+  try{ localStorage.setItem('de_mastery_score',JSON.stringify(score)); }catch(e){}
+}
+function resetScore(cloud){
+  score[cloud]={right:0,wrong:0};
+  saveScore();
+  document.getElementById(cloud+'-quiz-area').innerHTML='';
+  updateQCount(cloud);
+  alert('Score reset for '+cloud.toUpperCase()+'!');
+}
+
+// ══════════ CLOUD SWITCHING ══════════
+function switchCloud(cloud, el){
+  currentCloud=cloud;
+  document.querySelectorAll('.cloud-section').forEach(s=>s.style.display='none');
+  document.getElementById(cloud+'-section').style.display='block';
+  document.querySelectorAll('.cloud-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  setTimeout(()=>updateQCount(cloud),0);
+}
+
+// ══════════ QUIZ ENGINE ══════════
+function getFilteredQs(cloud){
+  const tf=document.getElementById(cloud+'-topic-filter');
+  const lf=document.getElementById(cloud+'-level-filter');
+  const topic=tf?tf.value:'all';
+  const level=lf?lf.value:'all';
+  return QUIZ_DATA[cloud].filter(q=>(topic==='all'||q.topic===topic)&&(level==='all'||q.level===level));
+}
+function updateQCount(cloud){
+  try{
+    const qs=getFilteredQs(cloud);
+    const el=document.getElementById(cloud+'-qcount');
+    if(el) el.textContent=qs.length+' questions available';
+  }catch(e){}
+}
+function startQuiz(cloud){
+  qPool=getFilteredQs(cloud).sort(()=>Math.random()-0.5);
+  qIndex=0;
+  if(qPool.length===0){
+    document.getElementById(cloud+'-quiz-area').innerHTML='<p style="color:var(--sub);padding:20px">No questions match your filter. Try changing the topic or level.</p>';
+    return;
+  }
+  showQuestion(cloud);
+}
+function showQuestion(cloud){
+  const el=document.getElementById(cloud+'-quiz-area');
+  if(!el) return;
+  if(qIndex>=qPool.length){
+    const s=score[cloud];
+    const total=s.right+s.wrong;
+    const pct=total>0?Math.round(s.right/total*100):0;
+    el.innerHTML=`<div class="quiz-done"><h3>🎉 Quiz Complete!</h3><p>Score: ${s.right}/${total} (${pct}%)</p>${pct>=80?'<p style="color:var(--green)">🌟 Excellent! You\'re interview-ready on this topic.</p>':pct>=60?'<p style="color:var(--yellow)">👍 Good progress! Review wrong answers and try again.</p>':'<p style="color:var(--red)">📚 Keep studying! Use the roadmap above for guidance.</p>'}<button onclick="startQuiz('${cloud}')">🔄 Try Again</button></div>`;
+    return;
+  }
+  const q=qPool[qIndex];
+  currentQ=q;
+  const s=score[cloud];
+  const opts=q.a.map((a,i)=>`<button class="qopt" onclick="answer(this,${i},'${cloud}')">${a}</button>`).join('');
+  el.innerHTML=`<div class="quiz-card"><div class="quiz-meta"><span class="qlevel ${q.level}">${q.level.toUpperCase()}</span><span class="qtopic">${q.topic}</span><span class="qnum">Q ${qIndex+1}/${qPool.length}</span></div><div class="qscore">✅ ${s.right} correct &nbsp; ❌ ${s.wrong} wrong</div><p class="qtext">${q.q}</p><div class="qopts">${opts}</div><div class="qexp" id="${cloud}-exp" style="display:none"><strong>💡 Explanation:</strong> ${q.exp}</div><button class="qnext" id="${cloud}-next" style="display:none" onclick="nextQ('${cloud}')">Next Question →</button></div>`;
+}
+function answer(btn,idx,cloud){
+  const q=currentQ;
+  document.querySelectorAll('#'+cloud+'-quiz-area .qopt').forEach(b=>b.disabled=true);
+  if(idx===q.c){btn.classList.add('correct');score[cloud].right++;}
+  else{btn.classList.add('wrong');document.querySelectorAll('#'+cloud+'-quiz-area .qopt')[q.c].classList.add('correct');score[cloud].wrong++;}
+  saveScore();
+  const expEl=document.getElementById(cloud+'-exp');
+  const nxtEl=document.getElementById(cloud+'-next');
+  if(expEl) expEl.style.display='block';
+  if(nxtEl) nxtEl.style.display='block';
+  const scoreEl=document.querySelector('#'+cloud+'-quiz-area .qscore');
+  if(scoreEl){const s=score[cloud];scoreEl.textContent='✅ '+s.right+' correct   ❌ '+s.wrong+' wrong';}
+}
+function nextQ(cloud){qIndex++;showQuestion(cloud);}
+
+// ══════════ PHASE TOGGLE ══════════
+function toggle(id){
+  const el=document.getElementById(id);
+  if(!el) return;
+  const isOpen=el.style.display==='block';
+  document.querySelectorAll('.detail-panel').forEach(p=>p.style.display='none');
+  document.querySelectorAll('.phase-card').forEach(c=>c.classList.remove('open'));
+  if(!isOpen){
+    el.style.display='block';
+    const prev=el.previousElementSibling;
+    if(prev) prev.classList.add('open');
+  }
+}
+
+// ══════════ ACCORDION ══════════
+function toggleAcc(head){
+  const body=head.nextElementSibling;
+  const arrow=head.querySelector('span:last-child');
+  if(body.style.display==='block'){body.style.display='none';arrow.textContent='▼';}
+  else{body.style.display='block';arrow.textContent='▲';}
+}
+
+function setTheme(t,btn){
+  document.documentElement.setAttribute('data-theme',t==='dark'?'':t);
+  document.querySelectorAll('.theme-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  try{localStorage.setItem('de_theme',t);}catch(e){}
+}
+// Load saved theme
+(function(){
+  try{
+    const t=localStorage.getItem('de_theme');
+    if(t&&t!=='dark'){
+      const btn=document.querySelector(`.theme-btn[onclick*="'${t}'"]`);
+      if(btn){document.documentElement.setAttribute('data-theme',t);btn.classList.add('active');document.querySelectorAll('.theme-btn').forEach(b=>b!==btn&&b.classList.remove('active'));}
+    }
+  }catch(e){}
+})();
+
+// ══════════ RESUME TEMPLATES ══════════
+const TEMPLATES=[
+{name:"Classic — Chronological DE",content:`[YOUR NAME]
+[City, State] · [Email] · [Phone] · linkedin.com/in/[handle] · github.com/[handle]
+
+SUMMARY
+Data Engineer with [X] years of experience designing and building scalable ETL/ELT pipelines, data lakehouses, and real-time streaming solutions. Proven ability to deliver end-to-end data solutions on cloud platforms. Seeking [Target Role] at [Target Company Type].
+
+TECHNICAL SKILLS
+Languages   : Python (PySpark, pandas), SQL (advanced), Scala (basic)
+Frameworks  : Apache Spark, Delta Lake, dbt, Apache Airflow
+Cloud       : Azure (ADF, ADLS Gen2, Databricks, Synapse) | AWS (Glue, S3, Redshift, Kinesis) | GCP (BigQuery, Dataflow, Pub/Sub)
+DevOps      : Git, Azure DevOps, Jenkins, Docker, Terraform
+Databases   : Azure SQL, PostgreSQL, MySQL, Snowflake, MongoDB
+
+PROFESSIONAL EXPERIENCE
+
+[JOB TITLE] — [Company Name], [City]                                    [Month Year – Present]
+• [Achievement bullet: led / built / optimized + what + business impact + scale]
+• [Achievement bullet: reduced / improved / automated + metric (%, ms, TB)]
+• [Achievement bullet: designed / architected + solution + why it mattered]
+• [Achievement bullet: collaborated + cross-team context + outcome]
+
+[JOB TITLE] — [Company Name], [City]                               [Month Year – Month Year]
+• [Achievement bullet]
+• [Achievement bullet]
+• [Achievement bullet]
+
+PROJECTS
+[Project Name] — [Tech stack used]
+• [What you built, why, outcome / impact]
+
+EDUCATION
+[Degree], [Major] — [University Name], [Year]
+
+CERTIFICATIONS
+• [Cert Name] — [Issuer] ([Year])
+• [Cert Name] — [Issuer] ([Year])`},
+{name:"Senior Data Engineer",content:`[YOUR NAME] · Senior Data Engineer
+[City] · [Email] · [Phone] · [LinkedIn] · [GitHub]
+
+──────────────────────────────────────────────────
+PROFESSIONAL PROFILE
+──────────────────────────────────────────────────
+[X]+ years building enterprise-scale data platforms. Deep expertise in distributed computing (Spark/Databricks), Medallion Architecture, and real-time streaming. Track record of leading data migrations, platform re-architectures, and mentoring junior engineers.
+
+──────────────────────────────────────────────────
+CORE COMPETENCIES
+──────────────────────────────────────────────────
+Data Platform   │ Medallion Architecture · Delta Lake · Data Lakehouse · Data Vault
+Streaming       │ Kafka · Kinesis · Event Hubs · Pub/Sub · Spark Structured Streaming
+Orchestration   │ Apache Airflow · ADF · Cloud Composer · Step Functions
+Governance      │ Unity Catalog · AWS Glue Catalog · Dataplex · Great Expectations
+Performance     │ Z-Ordering · AQE · Broadcast Joins · Partitioning · Clustering
+
+──────────────────────────────────────────────────
+EXPERIENCE
+──────────────────────────────────────────────────
+Senior Data Engineer — [Company], [City]                       [Month Year – Present]
+▸ [Led / Architected] [platform/system] serving [X] TB of data for [N] downstream consumers
+▸ [Reduced pipeline latency / cost / failure rate] by [X]% by [approach]
+▸ [Mentored N engineers / conducted N code reviews / established standards for team]
+▸ [Migrated / Re-architected] from [old] to [new] with zero downtime
+
+Data Engineer — [Company], [City]                         [Month Year – Month Year]
+▸ [Key achievement with impact metrics]
+▸ [Key achievement]
+▸ [Key achievement]
+
+──────────────────────────────────────────────────
+CERTIFICATIONS  |  EDUCATION
+──────────────────────────────────────────────────
+[Cert 1] · [Cert 2] · [Cert 3]
+[Degree] — [University], [Year]`},
+{name:"Multi-Cloud DE",content:`[YOUR NAME]
+Multi-Cloud Data Engineer | Azure · AWS · GCP
+[Email] · [Phone] · [LinkedIn] · [GitHub] · [City]
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+MULTI-CLOUD EXPERTISE MATRIX
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+☁  AZURE   │ ADF · ADLS Gen2 · Databricks · Synapse · Event Hubs · Key Vault
+🟠 AWS     │ Glue · S3 · Redshift · Kinesis · EMR · Athena · Lake Formation
+🔵 GCP     │ BigQuery · Dataflow · Pub/Sub · Dataproc · Cloud Composer · GCS
+⚙  COMMON  │ Spark · Delta Lake · dbt · Airflow · Terraform · Git · Docker
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[X] years designing cloud-agnostic data platforms across Azure, AWS, and GCP. Experienced migrating on-prem workloads to cloud, building cross-cloud data pipelines, and optimizing cost across platforms.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EXPERIENCE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[Title] — [Company]                                              [Dates]
+Cloud: [Azure / AWS / GCP or multi]
+• [What you built on which cloud and why that cloud made sense]
+• [Cross-cloud data integration achievement]
+• [Cost or performance optimization with numbers]
+
+[Title] — [Company]                                              [Dates]
+Cloud: [Azure / AWS / GCP]
+• [Achievement]
+• [Achievement]
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CERTIFICATIONS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+☁  [Azure cert]          🟠 [AWS cert]          🔵 [GCP cert]
+
+EDUCATION
+[Degree] — [University], [Year]`},
+{name:"Fresher / 0–2 Yrs",content:`[YOUR NAME]
+Junior Data Engineer
+[Email] · [Phone] · [LinkedIn] · [GitHub] · [City]
+
+OBJECTIVE
+Motivated engineering graduate with hands-on experience in PySpark, SQL, and cloud data tools through self-projects and internships. Looking to contribute as a Junior Data Engineer and grow in a data-driven environment.
+
+TECHNICAL SKILLS
+Languages    : Python, SQL, Java (basic)
+Big Data     : Apache Spark (PySpark), Hadoop (basics), Hive
+Cloud        : Azure (Databricks Community, ADLS) · GCP (BigQuery Sandbox)
+Tools        : Git, Jupyter, VS Code, Postman, Linux CLI
+Databases    : MySQL, PostgreSQL, SQLite
+
+PROJECTS  (All code on github.com/[handle])
+
+[Project Name]                                               [Month Year]
+Stack: PySpark · Delta Lake · ADLS Gen2 · ADF
+• Problem: [What real-world problem you simulated or solved]
+• Solution: [What you built — pipeline, notebook, transformations]
+• Outcome: [What it produced — loaded X rows, reduced time by Y]
+
+[Project Name]                                               [Month Year]
+Stack: BigQuery · Cloud Composer · Python
+• [What you built and what you learned from it]
+
+INTERNSHIP / TRAINING
+[Role] — [Company / Institute]                               [Month Year – Month Year]
+• [What you did, what tools you used, what you delivered]
+
+EDUCATION
+[Degree], [Branch] — [College Name], [University]            [Year]
+CGPA: [X.X] / Relevant coursework: [Database Systems, Distributed Computing, etc.]
+
+CERTIFICATIONS / COURSES
+• [Course name] — [Platform] ([Year])
+• [Course name] — [Platform] ([Year])`},
+{name:"Lead / Engineering Manager",content:`[YOUR NAME]
+Data Engineering Lead / Manager
+[Email] · [Phone] · [LinkedIn] · [City]
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+LEADERSHIP SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[X] years in data engineering, [Y] years in tech leadership. Led teams of [N] engineers building enterprise-scale data platforms. Strong track record in hiring, mentoring, cross-functional collaboration, and delivering platform-level initiatives on time and budget.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+LEADERSHIP & IMPACT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Team Size Managed     : [N] engineers (ICs + [N] seniors)
+Platform Scale        : [X] TB data / [N] pipelines / [N] downstream consumers
+Cost Optimization     : Reduced infra cost by $[X]K/yr through [approach]
+Hiring                : Interviewed and hired [N] engineers in [timeframe]
+Mentoring             : [N] engineers promoted / upskilled to senior under your guidance
+OKR/Goal Setting      : Owned team OKRs for [quarter/year], achieved [X]%
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EXPERIENCE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Data Engineering Lead — [Company], [City]                  [Month Year – Present]
+▸ Led [N]-person team building [platform] on [cloud]
+▸ Drove [initiative: migration / modernization / re-architecture] delivering [outcome]
+▸ Established engineering standards: code reviews, testing framework, incident response
+▸ Partnered with [Product / Analytics / ML] to align data platform roadmap
+
+Senior Data Engineer — [Company], [City]             [Month Year – Month Year]
+▸ [IC achievement 1]
+▸ [IC achievement 2]
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TECH STACK  |  CERTIFICATIONS  |  EDUCATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[Core tech stack]
+[Certs]
+[Degree — University, Year]`},
+{name:"Azure-Focused DE",content:`[YOUR NAME]
+Azure Data Engineer
+[Email] · [Phone] · [LinkedIn] · [GitHub] · [City]
+
+──────────────────────────────────────────────────
+AZURE EXPERTISE
+──────────────────────────────────────────────────
+Ingest      │ ADF · Event Hubs · IoT Hub · API / HTTP connectors
+Store       │ ADLS Gen2 · Azure Blob · Azure SQL · Cosmos DB
+Transform   │ Databricks (PySpark) · Synapse Spark · Data Flows
+Serve       │ Synapse Analytics · Power BI · Azure Analysis Services
+Orchestrate │ ADF Triggers · Databricks Workflows · Azure Functions
+Security    │ Key Vault · RBAC · Private Endpoints · Unity Catalog
+
+──────────────────────────────────────────────────
+SUMMARY
+──────────────────────────────────────────────────
+Azure Data Engineer with [X] years building Medallion Architecture pipelines on Azure. Certified in [DP-203 / Databricks]. Experienced in metadata-driven ADF pipelines, Delta Lake, SCD Type 2, and real-time streaming with Event Hubs.
+
+──────────────────────────────────────────────────
+EXPERIENCE
+──────────────────────────────────────────────────
+Azure Data Engineer — [Company], [City]                    [Month Year – Present]
+• Built metadata-driven ADF pipelines loading [X] tables from [source] to ADLS Gen2 daily
+• Implemented Medallion Architecture (Bronze/Silver/Gold) with Delta Lake in Databricks
+• [SCD / incremental / streaming achievement]
+• [Cost or performance improvement with metric]
+
+[Previous Role] — [Company], [City]                   [Month Year – Month Year]
+• [Achievement]
+• [Achievement]
+
+──────────────────────────────────────────────────
+CERTIFICATIONS  |  EDUCATION
+──────────────────────────────────────────────────
+DP-203 Azure Data Engineer Associate — Microsoft ([Year])
+Databricks Certified Data Engineer — Databricks ([Year])
+[Degree] — [University], [Year]`},
+{name:"AWS-Focused DE",content:`[YOUR NAME]
+AWS Data Engineer
+[Email] · [Phone] · [LinkedIn] · [GitHub] · [City]
+
+══════════════════════════════════════════════════
+AWS DATA STACK
+══════════════════════════════════════════════════
+Storage     » S3 (Standard / IA / Glacier) · DynamoDB · RDS
+Catalog     » Glue Data Catalog · Lake Formation · Athena
+ETL         » AWS Glue (PySpark / Visual) · EMR · Lambda
+Streaming   » Kinesis Data Streams · Kinesis Firehose · MSK (Kafka)
+Warehouse   » Redshift · Redshift Spectrum · Athena
+Orchestrate » Step Functions · MWAA (Airflow) · EventBridge
+Security    » IAM · KMS · VPC Endpoints · Lake Formation tags
+
+══════════════════════════════════════════════════
+SUMMARY
+══════════════════════════════════════════════════
+AWS Data Engineer with [X] years building serverless and EMR-based data pipelines on AWS. Experienced in S3-based data lake design, Glue ETL, Kinesis streaming, Redshift warehouse optimization, and Athena cost control.
+
+══════════════════════════════════════════════════
+EXPERIENCE
+══════════════════════════════════════════════════
+AWS Data Engineer — [Company], [City]                      [Month Year – Present]
+» Designed S3 data lake with [partitioning strategy] reducing Athena scan cost by [X]%
+» Built Glue ETL jobs (DynamicFrame) processing [X] GB/day with Glue Job Bookmarks
+» [Kinesis / Redshift / EMR achievement with numbers]
+» [IAM / Lake Formation governance achievement]
+
+[Previous Role] — [Company], [City]                   [Month Year – Month Year]
+» [Achievement]
+» [Achievement]
+
+══════════════════════════════════════════════════
+CERTIFICATIONS  |  EDUCATION
+══════════════════════════════════════════════════
+AWS Certified Data Analytics Specialty ([Year])
+[Degree] — [University], [Year]`},
+{name:"GCP-Focused DE",content:`[YOUR NAME]
+GCP Data Engineer
+[Email] · [Phone] · [LinkedIn] · [GitHub] · [City]
+
+◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈
+GCP DATA STACK
+◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈
+Storage     ◈ GCS · BigQuery (native + external) · Bigtable · Firestore
+Ingest      ◈ Pub/Sub · Datastream · Transfer Service · Storage Transfer
+Transform   ◈ Dataflow (Apache Beam) · Dataproc (Spark/Hive) · dbt on BQ
+Warehouse   ◈ BigQuery (partitioned + clustered) · BI Engine · Looker
+Orchestrate ◈ Cloud Composer (Airflow) · Cloud Workflows · Cloud Scheduler
+Govern      ◈ Dataplex · Data Catalog · IAM · Column-level security
+
+◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈
+SUMMARY
+◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈
+GCP Data Engineer with [X] years building analytics pipelines on Google Cloud. Deep experience with BigQuery performance tuning (partitioning, clustering, BI Engine), Dataflow streaming pipelines (Apache Beam), and Cloud Composer DAG management.
+
+◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈
+EXPERIENCE
+◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈
+GCP Data Engineer — [Company], [City]                      [Month Year – Present]
+◦ Designed BigQuery tables with [partition/cluster strategy] reducing query cost by [X]%
+◦ Built Dataflow (Apache Beam) pipeline processing [X] events/sec from Pub/Sub to BigQuery
+◦ [Cloud Composer DAG / Dataproc / dbt achievement]
+◦ [Governance / cost / performance achievement]
+
+[Previous Role] — [Company], [City]                   [Month Year – Month Year]
+◦ [Achievement]
+◦ [Achievement]
+
+◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈
+CERTIFICATIONS  |  EDUCATION
+◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈
+Google Professional Data Engineer ([Year])
+[Degree] — [University], [Year]`},
+{name:"ML / Data Engineer Hybrid",content:`[YOUR NAME]
+ML Data Engineer / MLOps Engineer
+[Email] · [Phone] · [LinkedIn] · [GitHub] · [City]
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+HYBRID TECH STACK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Data Eng    │ Spark · Delta Lake · dbt · ADF / Glue / Dataflow
+ML Platform │ MLflow · Feature Store (Databricks / Feast) · Kubeflow
+Serving     │ Azure ML · SageMaker · Vertex AI · BentoML
+Languages   │ Python (PySpark, pandas, scikit-learn, TensorFlow/PyTorch basics)
+DevOps/CI   │ Docker · Kubernetes · GitHub Actions · MLflow Model Registry
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Data Engineer bridging the gap between raw data and ML production. [X] years building feature pipelines, training data infrastructure, and model serving pipelines. Comfortable owning the full data-to-model lifecycle.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EXPERIENCE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ML Data Engineer — [Company], [City]                       [Month Year – Present]
+▸ Built feature store pipeline computing [N] features for [X] ML models in production
+▸ Designed training data pipeline (PySpark → Delta → MLflow) reducing model training time by [X]%
+▸ [Model serving / batch inference pipeline achievement]
+▸ [Data quality / drift detection / monitoring achievement]
+
+Data Engineer — [Company], [City]                     [Month Year – Month Year]
+▸ [Core DE achievement]
+▸ [Core DE achievement]
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CERTIFICATIONS  |  EDUCATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[ML / DE Certs]
+[Degree] — [University], [Year]`},
+{name:"Contract / Freelance DE",content:`[YOUR NAME]
+Freelance Data Engineer | Contract Specialist
+[Email] · [Phone] · [LinkedIn] · [GitHub/Portfolio] · [City]
+
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+PROFESSIONAL PROFILE
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+Independent Data Engineer with [X] years of contract experience across [N] clients in [domains — fintech, e-commerce, healthcare, etc.]. Specialist in rapid onboarding, cloud-agnostic pipeline delivery, and clean handoffs with documentation.
+
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+ENGAGEMENTS (CONTRACT CLIENTS)
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+[Client / Employer], via [Vendor / Agency]               [Month Year – Month Year]
+Domain: [E-commerce / Finance / Healthcare / etc.]   Cloud: [Azure / AWS / GCP]
+• [Delivered: pipeline / platform / migration]
+• [Business outcome with numbers]
+• [Handoff / documentation quality highlight]
+
+[Client / Employer], via [Vendor / Agency]               [Month Year – Month Year]
+Domain: [Domain]   Cloud: [Platform]
+• [Key delivery]
+• [Key outcome]
+
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+SKILLS AVAILABLE FOR HIRE
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+✔ End-to-end pipeline design & delivery (4–12 week engagements)
+✔ Cloud migration: on-prem → Azure / AWS / GCP
+✔ Data quality framework setup (Great Expectations / custom)
+✔ Pipeline performance tuning & cost optimization
+✔ Documentation, runbooks, and team knowledge transfer
+
+TECH STACK : [List key technologies]
+AVAILABILITY: [Immediate / [Date] · Remote / [Location] · [Preferred contract type]]
+
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+CERTIFICATIONS  |  EDUCATION
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+[Cert 1] · [Cert 2]
+[Degree] — [University], [Year]`}
+];
+function showTmpl(i,btn){
+  document.querySelectorAll('.rt-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const t=TEMPLATES[i];
+  document.getElementById('tmpl-display').textContent=t.content;
+}
+// Init first template
+window.addEventListener('DOMContentLoaded',function(){
+  const d=document.getElementById('tmpl-display');
+  if(d) d.textContent=TEMPLATES[0].content;
+});
+</script>
+</body>
+</html>
