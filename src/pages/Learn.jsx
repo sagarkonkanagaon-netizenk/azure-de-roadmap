@@ -1,3 +1,4 @@
+import { pdfFor } from '../data/pdfs.jsx'
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import booksIndex from '../content/books-index.json'
@@ -20,6 +21,7 @@ export default function Library() {
           <div className="eyebrow">Learn</div>
           <h1>Handbooks</h1>
           <p>Four complete handbooks written from production experience, plus phase study guides for the Azure stack and short notes on real fixes. Mark chapters as read and your path updates.</p>
+          <Link to="/notes" className="btn btn-ghost btn-sm">↓ Download all 7 notes as PDF</Link>
         </div>
         <div className="grid g2">
           {booksIndex.map((b) => {
@@ -79,7 +81,10 @@ export function Book() {
           <div className="eyebrow">{ICON[b.icon]} Handbook</div>
           <h1>{b.title}</h1>
           <p>{b.subtitle}. {b.chapters.length} chapters, about {Math.round(b.minutes / 60)} hours of reading.</p>
-          <Link className="btn btn-primary" to={`/learn/${b.slug}/${next.slug}`}>{Object.keys(p.chapters).some((k) => k.startsWith(b.slug + '/')) ? 'Continue' : 'Start reading'}: {next.title}</Link>
+          <div className="row" style={{ gap: 10, flexWrap: 'wrap' }}>
+            <Link className="btn btn-primary" to={`/learn/${b.slug}/${next.slug}`}>{Object.keys(p.chapters).some((k) => k.startsWith(b.slug + '/')) ? 'Continue' : 'Start reading'}: {next.title}</Link>
+            {pdfFor(b.slug) && <a className="btn btn-ghost" href={pdfFor(b.slug).url} download target="_blank" rel="noreferrer">↓ Download PDF ({pdfFor(b.slug).pages} pages)</a>}
+          </div>
         </div>
         <div className="card">
           {b.chapters.map((c) => {
