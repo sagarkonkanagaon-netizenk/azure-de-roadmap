@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useProgress } from '../lib/progress.js'
 import { tally, levelOf, badgesOf, POINTS } from '../lib/xp.js'
 
-const LABEL = { chapter: 'Chapter read', sql: 'SQL question solved', py: 'Python question solved', spark: 'PySpark answer known', scenario: 'Scenario practised', drill: 'Incident resolved', project: 'Project shipped', check: 'Checklist item done', card: 'Flashcard learned' }
+const LABEL = { chapter: 'Chapter read', sql: 'SQL question solved', py: 'Python question solved', spark: 'PySpark answer known', scenario: 'Scenario practised', drill: 'Incident resolved', project: 'Project shipped', check: 'Checklist item done', card: 'Flashcard learned', daily: 'Daily challenge solved' }
 
 function confetti(big) {
   if (typeof window === 'undefined' || window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return

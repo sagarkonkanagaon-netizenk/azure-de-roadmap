@@ -1,7 +1,7 @@
 // XP, levels and badges are derived from saved progress, so they never drift from what you did.
 import { streak } from './progress.js'
 
-export const POINTS = { chapter: 10, sql: 20, py: 20, spark: 10, scenario: 15, drill: 50, project: 100, check: 5, card: 5 }
+export const POINTS = { chapter: 10, sql: 20, py: 20, spark: 10, scenario: 15, drill: 50, project: 100, check: 5, card: 5, daily: 30 }
 
 export const LEVELS = [
   { xp: 0, name: 'Curious', icon: '🌱' },
@@ -24,6 +24,7 @@ export function tally(p) {
     project: Object.keys(p.checks).filter((k) => /^proj\d+$/.test(k)).length,
     check: Object.keys(p.checks).filter((k) => /^w\d+:/.test(k)).length,
     card: Object.values(p.cards).filter((c) => c.box >= 3).length,
+    daily: Object.entries(p.checks).filter(([k, v]) => k.startsWith('daily:') && v && v.solved).length,
   }
   const quiz = Object.entries(p.checks).filter(([k]) => k.startsWith('quiz:')).reduce((a, [, v]) => a + Math.round(Number(v) / 2), 0)
   const xp = Object.entries(n).reduce((a, [k, v]) => a + v * POINTS[k], 0) + quiz
@@ -49,6 +50,8 @@ export const BADGES = [
   { id: 'storyteller', icon: '🎤', name: 'Storyteller', desc: 'Practise 10 scenario answers out loud', test: (t) => t.n.scenario >= 10 },
   { id: 'builder', icon: '🏗️', name: 'Builder', desc: 'Ship a portfolio project', test: (t) => t.n.project >= 1 },
   { id: 'streak-7', icon: '🔥', name: 'Week on fire', desc: 'Learn 7 days in a row', test: (t, p) => streak(p.days) >= 7 },
+  { id: 'daily-1', icon: '📅', name: 'Daily habit', desc: 'Solve your first daily SQL challenge', test: (t) => t.n.daily >= 1 },
+  { id: 'daily-7', icon: '🗓️', name: 'Seven dailies', desc: 'Solve 7 daily SQL challenges', test: (t) => t.n.daily >= 7 },
   { id: 'quiz-80', icon: '🎯', name: 'Sharp shooter', desc: 'Score 80% or more in a quiz round', test: (t, p) => Object.entries(p.checks).some(([k, v]) => k.startsWith('quiz:') && v >= 80) },
 ]
 
