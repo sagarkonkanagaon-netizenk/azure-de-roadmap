@@ -1,0 +1,626 @@
+[
+ {
+  "slug": "sql",
+  "title": "SQL for Data Engineering",
+  "subtitle": "From basics to modeling, loading patterns and performance",
+  "icon": "sql",
+  "chapters": [
+   {
+    "num": 1,
+    "slug": "1-where-sql-fits-in-data-engineering",
+    "title": "Where SQL fits in data engineering",
+    "minutes": 2
+   },
+   {
+    "num": 2,
+    "slug": "2-data-types-and-table-design",
+    "title": "Data types and table design",
+    "minutes": 3
+   },
+   {
+    "num": 3,
+    "slug": "3-querying-fundamentals",
+    "title": "Querying fundamentals",
+    "minutes": 2
+   },
+   {
+    "num": 4,
+    "slug": "4-null-handling",
+    "title": "NULL handling",
+    "minutes": 2
+   },
+   {
+    "num": 5,
+    "slug": "5-joins",
+    "title": "Joins",
+    "minutes": 3
+   },
+   {
+    "num": 6,
+    "slug": "6-aggregation",
+    "title": "Aggregation",
+    "minutes": 2
+   },
+   {
+    "num": 7,
+    "slug": "7-subqueries-and-ctes",
+    "title": "Subqueries and CTEs",
+    "minutes": 2
+   },
+   {
+    "num": 8,
+    "slug": "8-set-operations",
+    "title": "Set operations",
+    "minutes": 2
+   },
+   {
+    "num": 9,
+    "slug": "9-window-functions",
+    "title": "Window functions",
+    "minutes": 3
+   },
+   {
+    "num": 10,
+    "slug": "10-dates-and-times",
+    "title": "Dates and times",
+    "minutes": 2
+   },
+   {
+    "num": 11,
+    "slug": "11-string-functions-and-cleaning",
+    "title": "String functions and cleaning",
+    "minutes": 2
+   },
+   {
+    "num": 12,
+    "slug": "12-semi-structured-data-json-arrays-and-structs",
+    "title": "Semi-structured data: JSON, arrays and structs",
+    "minutes": 2
+   },
+   {
+    "num": 13,
+    "slug": "13-loading-data-dml-and-pipeline-patterns",
+    "title": "Loading data: DML and pipeline patterns",
+    "minutes": 4
+   },
+   {
+    "num": 14,
+    "slug": "14-data-modeling-for-analytics",
+    "title": "Data modeling for analytics",
+    "minutes": 3
+   },
+   {
+    "num": 15,
+    "slug": "15-views-materialized-views-and-temporary-objects",
+    "title": "Views, materialized views and temporary objects",
+    "minutes": 2
+   },
+   {
+    "num": 16,
+    "slug": "16-transactions-and-consistency",
+    "title": "Transactions and consistency",
+    "minutes": 2
+   },
+   {
+    "num": 17,
+    "slug": "17-query-performance",
+    "title": "Query performance",
+    "minutes": 2
+   },
+   {
+    "num": 18,
+    "slug": "18-data-quality-with-sql",
+    "title": "Data quality with SQL",
+    "minutes": 2
+   },
+   {
+    "num": 19,
+    "slug": "19-dialect-cheat-sheet",
+    "title": "Dialect cheat sheet",
+    "minutes": 2
+   },
+   {
+    "num": 20,
+    "slug": "20-pattern-library",
+    "title": "Pattern library",
+    "minutes": 3
+   }
+  ],
+  "minutes": 47
+ },
+ {
+  "slug": "pyspark",
+  "title": "PySpark",
+  "subtitle": "Architecture, DataFrames, joins, partitioning, internals and tuning",
+  "icon": "spark",
+  "chapters": [
+   {
+    "num": 1,
+    "slug": "1-how-to-use-this-handbook",
+    "title": "How to use this handbook",
+    "minutes": 2
+   },
+   {
+    "num": 2,
+    "slug": "2-what-spark-is-and-why-it-exists",
+    "title": "What Spark is and why it exists",
+    "minutes": 2
+   },
+   {
+    "num": 3,
+    "slug": "3-setting-up-and-your-first-program",
+    "title": "Setting up and your first program",
+    "minutes": 2
+   },
+   {
+    "num": 4,
+    "slug": "4-architecture",
+    "title": "Architecture",
+    "minutes": 3
+   },
+   {
+    "num": 5,
+    "slug": "5-core-concepts",
+    "title": "Core concepts",
+    "minutes": 7
+   },
+   {
+    "num": 6,
+    "slug": "6-sparksession-and-configuration",
+    "title": "SparkSession and configuration",
+    "minutes": 2
+   },
+   {
+    "num": 7,
+    "slug": "7-reading-data",
+    "title": "Reading data",
+    "minutes": 2
+   },
+   {
+    "num": 8,
+    "slug": "8-writing-data",
+    "title": "Writing data",
+    "minutes": 2
+   },
+   {
+    "num": 9,
+    "slug": "9-schemas-and-data-types",
+    "title": "Schemas and data types",
+    "minutes": 2
+   },
+   {
+    "num": 10,
+    "slug": "10-dataframe-transformations",
+    "title": "DataFrame transformations",
+    "minutes": 2
+   },
+   {
+    "num": 11,
+    "slug": "11-built-in-functions",
+    "title": "Built-in functions",
+    "minutes": 3
+   },
+   {
+    "num": 12,
+    "slug": "12-aggregations",
+    "title": "Aggregations",
+    "minutes": 2
+   },
+   {
+    "num": 13,
+    "slug": "13-joins",
+    "title": "Joins",
+    "minutes": 3
+   },
+   {
+    "num": 14,
+    "slug": "14-window-functions",
+    "title": "Window functions",
+    "minutes": 2
+   },
+   {
+    "num": 15,
+    "slug": "15-spark-sql",
+    "title": "Spark SQL",
+    "minutes": 2
+   },
+   {
+    "num": 16,
+    "slug": "16-udfs-and-pandas-integration",
+    "title": "UDFs and pandas integration",
+    "minutes": 2
+   },
+   {
+    "num": 17,
+    "slug": "17-partitioning",
+    "title": "Partitioning",
+    "minutes": 2
+   },
+   {
+    "num": 18,
+    "slug": "18-caching-and-persistence",
+    "title": "Caching and persistence",
+    "minutes": 2
+   },
+   {
+    "num": 19,
+    "slug": "19-catalyst-tungsten-and-adaptive-query-execution",
+    "title": "Catalyst, Tungsten and Adaptive Query Execution",
+    "minutes": 2
+   },
+   {
+    "num": 20,
+    "slug": "20-memory-and-cluster-sizing",
+    "title": "Memory and cluster sizing",
+    "minutes": 2
+   },
+   {
+    "num": 21,
+    "slug": "21-performance-playbook",
+    "title": "Performance playbook",
+    "minutes": 2
+   },
+   {
+    "num": 22,
+    "slug": "22-reading-the-spark-ui",
+    "title": "Reading the Spark UI",
+    "minutes": 2
+   },
+   {
+    "num": 23,
+    "slug": "23-structured-streaming",
+    "title": "Structured Streaming",
+    "minutes": 4
+   },
+   {
+    "num": 24,
+    "slug": "24-testing-and-data-quality",
+    "title": "Testing and data quality",
+    "minutes": 2
+   },
+   {
+    "num": 25,
+    "slug": "25-common-pipeline-patterns",
+    "title": "Common pipeline patterns",
+    "minutes": 3
+   },
+   {
+    "num": 26,
+    "slug": "26-submitting-and-deploying-spark-jobs",
+    "title": "Submitting and deploying Spark jobs",
+    "minutes": 2
+   },
+   {
+    "num": 27,
+    "slug": "27-common-beginner-mistakes",
+    "title": "Common beginner mistakes",
+    "minutes": 2
+   },
+   {
+    "num": 28,
+    "slug": "28-cluster-sizing-scenarios-10-gb-to-2-tb-per-day",
+    "title": "Cluster sizing scenarios: 10 GB to 2 TB per day",
+    "minutes": 7
+   },
+   {
+    "num": 29,
+    "slug": "29-practice-project-an-end-to-end-mini-pipeline",
+    "title": "Practice project: an end-to-end mini pipeline",
+    "minutes": 3
+   },
+   {
+    "num": 30,
+    "slug": "30-pyspark-cheat-sheet",
+    "title": "PySpark cheat sheet",
+    "minutes": 5
+   },
+   {
+    "num": 31,
+    "slug": "31-remember-it-for-life-memory-hooks",
+    "title": "Remember it for life: memory hooks",
+    "minutes": 8
+   },
+   {
+    "num": 32,
+    "slug": "32-glossary",
+    "title": "Glossary",
+    "minutes": 3
+   }
+  ],
+  "minutes": 91
+ },
+ {
+  "slug": "databricks",
+  "title": "Databricks",
+  "subtitle": "Workspace, Unity Catalog, Delta Lake, Lakeflow, CI/CD and cost",
+  "icon": "lake",
+  "chapters": [
+   {
+    "num": 1,
+    "slug": "1-what-databricks-is",
+    "title": "What Databricks is",
+    "minutes": 2
+   },
+   {
+    "num": 2,
+    "slug": "2-workspace-objects",
+    "title": "Workspace objects",
+    "minutes": 2
+   },
+   {
+    "num": 3,
+    "slug": "3-compute",
+    "title": "Compute",
+    "minutes": 2
+   },
+   {
+    "num": 4,
+    "slug": "4-notebooks-and-dbutils",
+    "title": "Notebooks and dbutils",
+    "minutes": 2
+   },
+   {
+    "num": 5,
+    "slug": "5-storage-and-data-access",
+    "title": "Storage and data access",
+    "minutes": 2
+   },
+   {
+    "num": 6,
+    "slug": "6-unity-catalog",
+    "title": "Unity Catalog",
+    "minutes": 2
+   },
+   {
+    "num": 7,
+    "slug": "7-delta-lake",
+    "title": "Delta Lake",
+    "minutes": 5
+   },
+   {
+    "num": 8,
+    "slug": "8-medallion-architecture",
+    "title": "Medallion architecture",
+    "minutes": 2
+   },
+   {
+    "num": 9,
+    "slug": "9-ingestion",
+    "title": "Ingestion",
+    "minutes": 2
+   },
+   {
+    "num": 10,
+    "slug": "10-lakeflow-declarative-pipelines-formerly-delta-live-tables",
+    "title": "Lakeflow Declarative Pipelines (formerly Delta Live Tables)",
+    "minutes": 2
+   },
+   {
+    "num": 11,
+    "slug": "11-lakeflow-jobs-orchestration",
+    "title": "Lakeflow Jobs (orchestration)",
+    "minutes": 2
+   },
+   {
+    "num": 12,
+    "slug": "12-databricks-sql",
+    "title": "Databricks SQL",
+    "minutes": 2
+   },
+   {
+    "num": 13,
+    "slug": "13-performance-on-databricks",
+    "title": "Performance on Databricks",
+    "minutes": 2
+   },
+   {
+    "num": 14,
+    "slug": "14-security",
+    "title": "Security",
+    "minutes": 2
+   },
+   {
+    "num": 15,
+    "slug": "15-ci-cd-and-devops",
+    "title": "CI/CD and DevOps",
+    "minutes": 2
+   },
+   {
+    "num": 16,
+    "slug": "16-cost-management",
+    "title": "Cost management",
+    "minutes": 2
+   },
+   {
+    "num": 17,
+    "slug": "17-monitoring-and-troubleshooting",
+    "title": "Monitoring and troubleshooting",
+    "minutes": 2
+   },
+   {
+    "num": 18,
+    "slug": "18-end-to-end-example",
+    "title": "End-to-end example",
+    "minutes": 2
+   }
+  ],
+  "minutes": 39
+ },
+ {
+  "slug": "streaming",
+  "title": "Streaming",
+  "subtitle": "Time, windows, watermarks, state, exactly-once, Kafka and CDC",
+  "icon": "stream",
+  "chapters": [
+   {
+    "num": 1,
+    "slug": "1-how-to-use-this-handbook",
+    "title": "How to use this handbook",
+    "minutes": 2
+   },
+   {
+    "num": 2,
+    "slug": "2-what-streaming-is-and-when-to-use-it",
+    "title": "What streaming is and when to use it",
+    "minutes": 2
+   },
+   {
+    "num": 3,
+    "slug": "3-building-blocks-of-a-streaming-system",
+    "title": "Building blocks of a streaming system",
+    "minutes": 2
+   },
+   {
+    "num": 4,
+    "slug": "4-time-in-streaming",
+    "title": "Time in streaming",
+    "minutes": 2
+   },
+   {
+    "num": 5,
+    "slug": "5-windows",
+    "title": "Windows",
+    "minutes": 2
+   },
+   {
+    "num": 6,
+    "slug": "6-watermarks-and-late-data",
+    "title": "Watermarks and late data",
+    "minutes": 2
+   },
+   {
+    "num": 7,
+    "slug": "7-state-and-stateful-processing",
+    "title": "State and stateful processing",
+    "minutes": 2
+   },
+   {
+    "num": 8,
+    "slug": "8-delivery-guarantees-and-exactly-once",
+    "title": "Delivery guarantees and exactly-once",
+    "minutes": 2
+   },
+   {
+    "num": 9,
+    "slug": "9-joins-in-streaming",
+    "title": "Joins in streaming",
+    "minutes": 2
+   },
+   {
+    "num": 10,
+    "slug": "10-spark-structured-streaming-the-model",
+    "title": "Spark Structured Streaming: the model",
+    "minutes": 2
+   },
+   {
+    "num": 11,
+    "slug": "11-spark-structured-streaming-building-pipelines",
+    "title": "Spark Structured Streaming: building pipelines",
+    "minutes": 3
+   },
+   {
+    "num": 12,
+    "slug": "12-spark-structured-streaming-operations",
+    "title": "Spark Structured Streaming: operations",
+    "minutes": 2
+   },
+   {
+    "num": 13,
+    "slug": "13-other-engines-apache-flink",
+    "title": "Other engines: Apache Flink",
+    "minutes": 2
+   },
+   {
+    "num": 14,
+    "slug": "14-other-engines-kafka-streams-ksqldb-and-cloud-services",
+    "title": "Other engines: Kafka Streams, ksqlDB and cloud services",
+    "minutes": 2
+   },
+   {
+    "num": 15,
+    "slug": "15-streaming-transport-kafka-style-logs-in-brief",
+    "title": "Streaming transport: Kafka-style logs in brief",
+    "minutes": 2
+   },
+   {
+    "num": 16,
+    "slug": "16-change-data-capture-cdc",
+    "title": "Change Data Capture (CDC)",
+    "minutes": 2
+   },
+   {
+    "num": 17,
+    "slug": "17-streaming-architectures",
+    "title": "Streaming architectures",
+    "minutes": 2
+   },
+   {
+    "num": 18,
+    "slug": "18-common-streaming-pipeline-patterns",
+    "title": "Common streaming pipeline patterns",
+    "minutes": 2
+   },
+   {
+    "num": 19,
+    "slug": "19-data-quality-in-streaming",
+    "title": "Data quality in streaming",
+    "minutes": 2
+   },
+   {
+    "num": 20,
+    "slug": "20-monitoring-and-alerting",
+    "title": "Monitoring and alerting",
+    "minutes": 2
+   },
+   {
+    "num": 21,
+    "slug": "21-performance-tuning",
+    "title": "Performance tuning",
+    "minutes": 2
+   },
+   {
+    "num": 22,
+    "slug": "22-sizing-a-streaming-pipeline",
+    "title": "Sizing a streaming pipeline",
+    "minutes": 2
+   },
+   {
+    "num": 23,
+    "slug": "23-testing-streaming-pipelines",
+    "title": "Testing streaming pipelines",
+    "minutes": 2
+   },
+   {
+    "num": 24,
+    "slug": "24-troubleshooting",
+    "title": "Troubleshooting",
+    "minutes": 2
+   },
+   {
+    "num": 25,
+    "slug": "25-remember-it-memory-hooks-for-streaming",
+    "title": "Remember it: memory hooks for streaming",
+    "minutes": 2
+   },
+   {
+    "num": 26,
+    "slug": "26-interview-questions-and-answers",
+    "title": "Interview questions and answers",
+    "minutes": 3
+   },
+   {
+    "num": 27,
+    "slug": "27-streaming-coding-questions-with-answers",
+    "title": "Streaming coding questions with answers",
+    "minutes": 14
+   },
+   {
+    "num": 28,
+    "slug": "28-glossary",
+    "title": "Glossary",
+    "minutes": 2
+   }
+  ],
+  "minutes": 70
+ }
+]
