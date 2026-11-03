@@ -40,8 +40,8 @@ export default function Layout() {
       <header className="header">
         <div className="container">
           <Link to="/" className="brand" aria-label="Home">
-            <span className="brand-mark"><i /><i /><i /></span>
-            <span>{BRAND.name} <small>{BRAND.tagline}</small></span>
+            <img className="brand-mark" src="./favicon.svg" alt="" width="34" height="34" />
+            <span className="wordmark">data<b>dhaba</b> <small>{BRAND.tagline}</small></span>
           </Link>
           <nav className="topnav" aria-label="Main">
             {SECTIONS.map((sec) => (
@@ -93,7 +93,7 @@ export default function Layout() {
       <footer className="footer">
         <div className="container footer-grid">
           <div>
-            <Link to="/" className="brand"><span className="brand-mark"><i /><i /><i /></span><span>{BRAND.name}</span></Link>
+            <Link to="/" className="brand"><img className="brand-mark" src="./favicon.svg" alt="" width="34" height="34" /><span className="wordmark">data<b>dhaba</b></span></Link>
             <p style={{ marginTop: 12, maxWidth: 360 }}>A free, hands-on path into data engineering. Written by {BRAND.author}, {BRAND.authorRole}. Learning stays free, forever.</p>
           </div>
           {MENUS.map((sec) => <div key={sec.id} data-sec={sec.id}><h4>{sec.label}</h4>{sec.items.map((i) => <Link key={i.to} to={i.to}>{i.label === 'Overview' ? 'All of ' + sec.label : i.label}</Link>)}{sec.id === 'practice' && <Link to="/daily">Daily SQL challenge</Link>}</div>)}

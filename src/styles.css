@@ -149,11 +149,12 @@ main { flex: 1; }
 .header .container { height: 100%; display: flex; align-items: center; gap: 18px; }
 .brand { display: flex; align-items: center; gap: 10px; font-family: var(--font); font-weight: 700; letter-spacing: -.02em; color: var(--text); font-size: 1.05rem; white-space: nowrap; }
 .brand:hover { text-decoration: none; }
-.brand-mark { display: inline-flex; gap: 3px; padding: 7px 8px; border-radius: 10px; background: var(--primary); }
-.brand-mark i { width: 8px; height: 8px; border-radius: 50%; display: block; }
-.brand-mark i { background: #fff; }
-.brand-mark i:nth-child(2) { opacity: .7; }
-.brand-mark i:nth-child(3) { opacity: .45; }
+.brand-mark { display: block; width: 34px; height: 34px; border-radius: 9px; flex: none; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .wordmark b { color: #ff5c8f; } }
+:root[data-theme="dark"] .wordmark b { color: #ff5c8f; }
+.wordmark { font-family: 'Space Grotesk', var(--font); font-weight: 700; font-size: 1.28rem; letter-spacing: -.04em; color: var(--text); }
+.wordmark b { font-weight: 700; color: #e8366f; }
+.wordmark small { letter-spacing: 0; font-family: var(--font); }
 .brand small { color: var(--muted); font-weight: 400; font-family: var(--font); font-size: .68rem; letter-spacing: .02em;  margin-left: 4px; }
 .topnav { display: flex; gap: 4px; margin-left: 18px; }
 .topnav-link { position: relative; padding: 8px 14px; border-radius: 10px; color: var(--text-2); font-weight: 600; font-size: .95rem; white-space: nowrap; }

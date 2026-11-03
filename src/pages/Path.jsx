@@ -54,7 +54,7 @@ export default function Path() {
       <div className="container">
         <div className="page-head">
           <div className="eyebrow">The 12-week path</div>
-          <h1>Zero to hero in twelve weeks</h1>
+          <h1>Data engineer in twelve weeks</h1>
           <p>About 22 hours a week: two and a half hours on weekdays, five on weekends. Each week has reading, practice, one build task and a checklist. Code more than you watch: aim for 80% hands-on.</p>
         </div>
         <div className="stack">
