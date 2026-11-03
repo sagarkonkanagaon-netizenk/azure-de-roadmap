@@ -13,6 +13,7 @@ const NAV = [
   ['/visual', 'Visual SQL'],
   ['/practice/sql', 'SQL Lab'],
   ['/playground', 'Playground'],
+  ['/daily', 'Daily'],
   ['/practice/python', 'Python Lab'],
   ['/drills', 'Incidents'],
   ['/interview', 'Interview'],
@@ -85,7 +86,7 @@ export default function Layout() {
             <p style={{ marginTop: 12, maxWidth: 360 }}>A free, hands-on path into data engineering. Written by {BRAND.author}, {BRAND.authorRole}. Learning stays free, forever.</p>
           </div>
           <div><h4>Learn</h4><Link to="/path">12-week path</Link><Link to="/learn">Handbooks</Link><Link to="/visual">Visual SQL</Link><Link to="/notes">Notes</Link><Link to="/projects">Projects</Link><Link to="/resources">Resources</Link></div>
-          <div><h4>Practice</h4><Link to="/practice/sql">SQL lab</Link><Link to="/playground">SQL playground</Link><Link to="/practice/python">Python lab</Link><Link to="/drills">Incident drills</Link><Link to="/interview">Interview prep</Link><Link to="/interview/quiz">Quiz</Link></div>
+          <div><h4>Practice</h4><Link to="/practice/sql">SQL lab</Link><Link to="/playground">SQL playground</Link><Link to="/daily">Daily SQL challenge</Link><Link to="/practice/python">Python lab</Link><Link to="/drills">Incident drills</Link><Link to="/interview">Interview prep</Link><Link to="/interview/quiz">Quiz</Link></div>
           <div><h4>About</h4><Link to="/about">About and mantras</Link><Link to="/pro">Pro</Link><a href={BRAND.portfolio} target="_blank" rel="noreferrer">Author's portfolio</a><a href={`mailto:${BRAND.email}`}>Contact</a></div>
         </div>
       </footer>

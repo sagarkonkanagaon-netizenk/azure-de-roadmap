@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Mission, { Onboarding, getProfile, startWeek } from '../components/Mission.jsx'
+import DailyBanner from '../components/DailyBanner.jsx'
 import Machine from '../components/Machine.jsx'
 import Console from '../components/Console.jsx'
 import booksIndex from '../content/books-index.json'
@@ -56,6 +57,7 @@ export default function Home() {
 
       {onboard && <Onboarding onClose={() => setOnboard(false)} />}
       {(started || profile) && <Mission />}
+      <DailyBanner />
 
       <div className="marquee" aria-hidden="true">
         <div className="marquee-track">

@@ -5,6 +5,7 @@ import Path, { Week } from './pages/Path.jsx'
 import Library, { Book, Chapter, GuidePhase } from './pages/Learn.jsx'
 import SqlLab from './pages/SqlLab.jsx'
 import Playground from './pages/Playground.jsx'
+import Daily from './pages/Daily.jsx'
 import PyLab from './pages/PyLab.jsx'
 import Drills, { Drill } from './pages/Drills.jsx'
 import Interview, { Scenarios, PySparkQs, Playbook } from './pages/Interview.jsx'
@@ -42,6 +43,8 @@ export default function App() {
           <Route path="quiz" element={<Quiz />} />
           <Route path="visual" element={<Visual />} />
           <Route path="playground" element={<Playground />} />
+          <Route path="daily" element={<Daily />} />
+          <Route path="daily/:n" element={<Daily />} />
           <Route path="notes" element={<Notes />} />
           <Route path="notes/:slug" element={<Note />} />
           <Route path="projects" element={<Projects />} />
