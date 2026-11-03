@@ -6,32 +6,9 @@ import Search from './Search.jsx'
 import Celebrate from './Celebrate.jsx'
 import { useProgress } from '../lib/progress.js'
 import { tally, levelOf } from '../lib/xp.js'
-import { SECTIONS, sectionOf, itemOf } from '../data/sections.js'
-import { SectionArt } from './DataArt.jsx'
+import { SECTIONS, sectionOf, itemOf, HOME_OF } from '../data/sections.js'
 
 const MENUS = SECTIONS.filter((x) => x.id !== 'daily')
-
-function Menu({ sec, open, setOpen, here }) {
-  const active = here?.id === sec.id
-  return (
-    <div className={'nav-group' + (open ? ' open' : '')} onMouseEnter={() => setOpen(sec.id)} onMouseLeave={() => setOpen(null)} data-sec={sec.id}>
-      <button className={'nav-btn' + (active ? ' active' : '')} aria-expanded={open} onClick={() => setOpen(open ? null : sec.id)}>
-        <span className="nav-ico" aria-hidden="true">{sec.icon}</span>{sec.label}<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
-      </button>
-      <div className="mega" role="menu">
-        <div className="mega-head"><b>{sec.icon} {sec.label}</b><span>{sec.lead}</span></div>
-        <div className="mega-grid">
-          {sec.items.map((i) => (
-            <NavLink key={i.to} to={i.to} end className="mega-item" role="menuitem" onClick={() => setOpen(null)}>
-              <span className="mega-ico" aria-hidden="true">{i.icon}</span>
-              <span><b>{i.label}</b><small>{i.desc}</small></span>
-            </NavLink>
-          ))}
-        </div>
-      </div>
-    </div>
-  )
-}
 
 export default function Layout() {
   const { isDark, toggle } = useTheme()
@@ -41,11 +18,9 @@ export default function Layout() {
   const [search, setSearch] = useState(false)
   const [menu, setMenu] = useState(false)
   const loc = useLocation()
-  const [open, setOpen] = useState(null)
   const here = sectionOf(loc.pathname)
   const crumb = itemOf(loc.pathname, here)
-  const bigArt = here && !/^\/(playground|daily|practice|drills\/)/.test(loc.pathname) && loc.pathname.split('/').filter(Boolean).length <= 2
-  useEffect(() => { setMenu(false); setOpen(null); if (!loc.hash) window.scrollTo(0, 0) }, [loc.pathname])
+  useEffect(() => { setMenu(false); if (!loc.hash) window.scrollTo(0, 0) }, [loc.pathname])
   useEffect(() => {
     if (loc.hash) {
       const t = setTimeout(() => document.getElementById(decodeURIComponent(loc.hash.slice(1)))?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 120)
@@ -54,7 +29,6 @@ export default function Layout() {
   }, [loc.hash, loc.pathname])
   useEffect(() => {
     const onKey = (e) => {
-      if (e.key === 'Escape') setOpen(null)
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); setSearch(true) }
       if (e.key === '/' && !['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName) && !document.activeElement?.closest('.cm-editor')) { e.preventDefault(); setSearch(true) }
     }
@@ -69,9 +43,12 @@ export default function Layout() {
             <span className="brand-mark"><i /><i /><i /></span>
             <span>{BRAND.name} <small>{BRAND.tagline}</small></span>
           </Link>
-          <nav className="nav" aria-label="Main">
-            {MENUS.map((sec) => <Menu key={sec.id} sec={sec} here={here} open={open === sec.id} setOpen={setOpen} />)}
-            <NavLink to="/daily" className="nav-daily"><span aria-hidden="true">🔥</span>Daily</NavLink>
+          <nav className="topnav" aria-label="Main">
+            {SECTIONS.map((sec) => (
+              <NavLink key={sec.id} to={HOME_OF[sec.id]} data-sec={sec.id} className={() => 'topnav-link' + (here?.id === sec.id ? ' active' : '')}>
+                {sec.label}
+              </NavLink>
+            ))}
           </nav>
           <div className="header-right">
             <button className="icon-btn search-btn" onClick={() => setSearch(true)} aria-label="Search">
@@ -92,21 +69,23 @@ export default function Layout() {
         </div>
       </header>
       <nav className={'mobile-nav' + (menu ? ' open' : '')} aria-label="Mobile">
-        <NavLink to="/daily" className="m-daily">🔥 Today's SQL challenge</NavLink>
+        <NavLink to="/daily" className="m-daily">Today's SQL challenge</NavLink>
         {MENUS.map((sec) => (
           <div key={sec.id} className="m-sec" data-sec={sec.id}>
-            <div className="m-head">{sec.icon} {sec.label}</div>
-            <div className="m-items">{sec.items.map((i) => <NavLink key={i.to} to={i.to} end><span aria-hidden="true">{i.icon}</span>{i.label}</NavLink>)}</div>
+            <div className="m-head">{sec.label}</div>
+            <div className="m-items">{sec.items.map((i) => <NavLink key={i.to} to={i.to} end>{i.label}</NavLink>)}</div>
           </div>
         ))}
-        <div className="m-items m-extra"><NavLink to="/progress">⭐ My progress</NavLink><NavLink to="/pro">💎 Go Pro</NavLink></div>
+        <div className="m-items m-extra"><NavLink to="/progress">My progress</NavLink><NavLink to="/pro">Pro</NavLink></div>
       </nav>
       <main data-section={here?.id || 'home'}>
-        {here && (
-          <div className="container crumbs">
-            <span className="crumb-sec">{here.icon} {here.label}</span>
-            {crumb && <><span aria-hidden="true">›</span><span>{crumb.label}</span></>}
-            {bigArt && <span className="sec-art"><SectionArt id={here.id} size={92} /></span>}
+        {here && here.items.length > 1 && (
+          <div className="sec-bar" data-sec={here.id}>
+            <div className="container sec-tabs" role="navigation" aria-label={here.label + ' pages'}>
+              {here.items.map((i) => (
+                <Link key={i.to} to={i.to} className={'sec-tab' + (crumb?.to === i.to ? ' active' : '')} aria-current={crumb?.to === i.to ? 'page' : undefined}>{i.label}</Link>
+              ))}
+            </div>
           </div>
         )}
         <Outlet />
@@ -117,8 +96,8 @@ export default function Layout() {
             <Link to="/" className="brand"><span className="brand-mark"><i /><i /><i /></span><span>{BRAND.name}</span></Link>
             <p style={{ marginTop: 12, maxWidth: 360 }}>A free, hands-on path into data engineering. Written by {BRAND.author}, {BRAND.authorRole}. Learning stays free, forever.</p>
           </div>
-          {MENUS.map((sec) => <div key={sec.id} data-sec={sec.id}><h4>{sec.icon} {sec.label}</h4>{sec.items.map((i) => <Link key={i.to} to={i.to}>{i.label}</Link>)}{sec.id === 'practice' && <Link to="/daily">Daily SQL challenge</Link>}</div>)}
-          <div><h4>💛 About</h4><Link to="/progress">My progress</Link><Link to="/about">About and mantras</Link><Link to="/pro">Pro</Link><a href={BRAND.portfolio} target="_blank" rel="noreferrer">Author's portfolio</a><a href={`mailto:${BRAND.email}`}>Contact</a></div>
+          {MENUS.map((sec) => <div key={sec.id} data-sec={sec.id}><h4>{sec.label}</h4>{sec.items.map((i) => <Link key={i.to} to={i.to}>{i.label === 'Overview' ? 'All of ' + sec.label : i.label}</Link>)}{sec.id === 'practice' && <Link to="/daily">Daily SQL challenge</Link>}</div>)}
+          <div><h4>About</h4><Link to="/progress">My progress</Link><Link to="/about">About and mantras</Link><Link to="/pro">Pro</Link><a href={BRAND.portfolio} target="_blank" rel="noreferrer">Author's portfolio</a><a href={`mailto:${BRAND.email}`}>Contact</a></div>
         </div>
       </footer>
       {search && <Search onClose={() => setSearch(false)} />}

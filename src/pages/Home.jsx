@@ -1,116 +1,121 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Mission, { Onboarding, getProfile, startWeek } from '../components/Mission.jsx'
 import DailyBanner from '../components/DailyBanner.jsx'
 import Console from '../components/Console.jsx'
-import booksIndex from '../content/books-index.json'
 import sqlQ from '../content/sql-questions.json'
-import pyQ from '../content/py-questions.json'
-import scen from '../content/scenarios.json'
 import { WEEKS, PHASES } from '../data/path.js'
-import { QUIZ } from '../data/quiz.js'
 import { useProgress } from '../lib/progress.js'
 import { weekDone } from './Path.jsx'
-import { BRAND, MANTRAS } from '../data/extras.js'
-import { SECTIONS } from '../data/sections.js'
-import { SectionArt, DataRain } from '../components/DataArt.jsx'
 
-const chapters = booksIndex.reduce((a, b) => a + b.chapters.length, 0)
-const scenarios = scen.sections.reduce((a, s) => a + s.questions.length, 0)
-const COST = [['Live bootcamps', '₹60,000 – ₹2,50,000'], ['Self-paced platforms', '₹15,000 – ₹20,000 / yr'], ['Zero to Hero', '₹0']]
+// The basics, explained before any feature is shown.
+const BASICS = [
+  {
+    k: 'The job',
+    title: 'What does a data engineer do?',
+    body: 'Every app, shop and bank produces data all day. A data engineer builds the pipelines that collect it, clean it and put it in one place, so analysts and dashboards can trust the numbers.',
+    eg: 'Orders from an app → cleaned table → a sales dashboard by 9 AM.',
+  },
+  {
+    k: 'The scale',
+    title: 'What is big data?',
+    body: 'It is data too large for one laptop or one spreadsheet: millions or billions of rows arriving every day. You need tools like SQL engines and Spark that split the work across many machines.',
+    eg: 'Our Playground lets you query 2.6 million rows right in your browser.',
+  },
+  {
+    k: 'The payoff',
+    title: 'Why learn it?',
+    body: 'Every company that uses data needs people who can move it reliably. The core skills (SQL, Python, Spark and the cloud) stay useful for years, and you can learn them without paying for a bootcamp.',
+    eg: 'Start with SQL. Most data engineering interviews begin there.',
+  },
+]
 
-function Count({ to }) {
-  const [v, setV] = useState(0)
-  useEffect(() => {
-    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) { setV(to); return }
-    let raf, t0
-    const step = (t) => { t0 ??= t; const k = Math.min(1, (t - t0) / 1400); setV(Math.round(to * (1 - Math.pow(1 - k, 3)))); if (k < 1) raf = requestAnimationFrame(step) }
-    raf = requestAnimationFrame(step)
-    return () => cancelAnimationFrame(raf)
-  }, [to])
-  return v
-}
-
-function greet() {
-  const h = new Date().getHours()
-  return h < 5 ? 'Up late?' : h < 12 ? 'Good morning!' : h < 17 ? 'Good afternoon!' : 'Good evening!'
-}
+const STEPS = [
+  { n: 1, title: 'Learn', body: 'Follow the 12-week path. Each week has short reading, a little practice and a checklist.', to: '/learn', cta: 'Open Learn' },
+  { n: 2, title: 'Practise', body: 'Write real SQL and Python in the browser. Answers are checked instantly, no setup needed.', to: '/practice', cta: 'Open Practice' },
+  { n: 3, title: 'Get hired', body: 'Quizzes, flashcards and model answers for the questions interviewers actually ask.', to: '/interview', cta: 'Open Interview' },
+]
 
 export default function Home() {
   const p = useProgress()
   const started = Object.keys(p.chapters).length + Object.keys(p.sql).length + Object.keys(p.py).length + Object.keys(p.drills).length > 0
   const [onboard, setOnboard] = useState(false)
   const profile = getProfile()
+  const returning = started || profile
   const doneWeeks = WEEKS.filter((w) => weekDone(w, p)).length
-    const STAT = {
-    learn: `${chapters} chapters · ${Object.keys(p.chapters).length} read`,
-    practice: `${sqlQ.questions.length + pyQ.questions.length} problems · ${Object.values(p.sql).filter((v) => v === 'solved').length + Object.values(p.py).filter((v) => v === 'solved').length} solved`,
-    interview: `${QUIZ.length} quiz questions · ${scenarios} scenarios`,
-  }
   return (
     <>
-      <section className="hero2">
-        <div className="hero-grid-bg" aria-hidden="true" />
-        <DataRain />
-        <div className="container hero2-grid">
-          <div className="hero2-copy">
-            <div className="hello"><span className="wave" aria-hidden="true">👋</span>{greet()} Free forever · no signup</div>
-            <h1>Become a data engineer <em>by shipping</em> real pipelines.</h1>
-            <p className="lead">The full path from SQL to production lakehouses on Azure and Databricks. You write real SQL and Python in the browser, fix broken pipelines from a 3 AM page, and practise the interviews that decide offers.</p>
+      <section className="hero3">
+        <div className="container hero3-grid">
+          <div className="hero3-copy">
+            <span className="pill-note">Free · No signup · Works in your browser</span>
+            <h1>Learn data engineering <em>by doing it.</em></h1>
+            <p className="lead">A clear 12-week path from your first SQL query to real pipelines on the cloud. Read a little, practise a lot, and get ready for interviews.</p>
             <div className="hero-cta">
-              {started || profile
-                ? <Link to={`/path/${startWeek(profile)}`} className="btn btn-primary">Continue my path <span aria-hidden="true">→</span></Link>
-                : <button className="btn btn-primary" onClick={() => setOnboard(true)}>Find my starting point <span aria-hidden="true">→</span></button>}
-              <Link to="/playground" className="btn btn-ghost">Run any SQL now</Link>
+              {returning
+                ? <Link to={`/path/${startWeek(profile)}`} className="btn btn-primary btn-lg">Continue learning</Link>
+                : <button className="btn btn-primary btn-lg" onClick={() => setOnboard(true)}>Start learning free</button>}
+              <a href="#try" className="btn btn-ghost btn-lg">Try a SQL query</a>
             </div>
-            <dl className="ticker">
-              <div><dt>Chapters</dt><dd className="glow-num"><Count to={chapters} /></dd></div>
-              <div><dt>Runnable SQL</dt><dd className="glow-num"><Count to={sqlQ.questions.length} /></dd></div>
-              <div><dt>Interview Qs</dt><dd className="glow-num"><Count to={pyQ.questions.length + scenarios + QUIZ.length} /></dd></div>
-              <div><dt>Cost</dt><dd className="glow-num">₹0</dd></div>
-            </dl>
+            <p className="hero-note">{sqlQ.questions.length} SQL problems · 4 handbooks · 2.6M rows to explore</p>
           </div>
-          <Console />
+          <div id="try" className="hero3-try">
+            <Console />
+          </div>
         </div>
       </section>
 
       {onboard && <Onboarding onClose={() => setOnboard(false)} />}
-      {(started || profile) && <Mission />}
-      <DailyBanner />
+      {returning && <Mission />}
 
-      <section className="section steps-sec">
+      <section className="section">
         <div className="container">
           <div className="section-head center">
-            <div className="eyebrow">How it works</div>
-            <h2>Three steps. <em>One</em> habit.</h2>
-            <p>Read a little, do a lot, then prove it. Every part of the site sits in one of these three places.</p>
+            <div className="eyebrow">New here? Start with the basics</div>
+            <h2>Data engineering in three questions</h2>
+            <p>No jargon. If you can use a spreadsheet, you can start.</p>
           </div>
-          <div className="steps">
-            {SECTIONS.filter((x) => x.id !== 'daily').map((sec, i) => (
-              <div key={sec.id} className="step card" data-sec={sec.id}>
-                <div className="step-top"><span className="step-n">0{i + 1}</span><span className="step-ico" aria-hidden="true"><SectionArt id={sec.id} size={46} /></span></div>
-                <div className="step-k">{sec.blurb}</div>
-                <h3>{sec.label}</h3>
-                <p>{sec.lead}</p>
-                <div className="step-links">
-                  {sec.items.slice(0, 4).map((it) => <Link key={it.to} to={it.to}><span aria-hidden="true">{it.icon}</span>{it.label}<i aria-hidden="true">→</i></Link>)}
-                </div>
-                <div className="step-stat">{STAT[sec.id]}</div>
-              </div>
+          <div className="basics">
+            {BASICS.map((b) => (
+              <article key={b.k} className="card basic">
+                <span className="basic-k">{b.k}</span>
+                <h3>{b.title}</h3>
+                <p>{b.body}</p>
+                <p className="basic-eg">{b.eg}</p>
+              </article>
             ))}
           </div>
         </div>
       </section>
 
+      <section className="section section-alt">
+        <div className="container">
+          <div className="section-head center">
+            <div className="eyebrow">How it works</div>
+            <h2>Three steps, in order</h2>
+          </div>
+          <ol className="how">
+            {STEPS.map((s) => (
+              <li key={s.n} className="how-step">
+                <span className="how-n" aria-hidden="true">{s.n}</span>
+                <h3>{s.title}</h3>
+                <p>{s.body}</p>
+                <Link to={s.to} className="how-link">{s.cta} →</Link>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
       <section className="section">
         <div className="container">
-          <div className="spread" style={{ alignItems: 'flex-end', marginBottom: 22 }}>
+          <div className="spread path-head">
             <div className="section-head" style={{ margin: 0 }}>
-              <div className="eyebrow">The path · {doneWeeks}/12 weeks done</div>
-              <h2>Twelve weeks. <em>Seven</em> phases.</h2>
-              <p>Built for people with a job: two hours on weekdays, five on weekends. Each week has reading, practice, a build task and a checklist.</p>
+              <div className="eyebrow">The 12-week path · {doneWeeks}/12 done</div>
+              <h2>Seven phases, one week at a time</h2>
+              <p>About two hours on weekdays and five at weekends.</p>
             </div>
-            <Link to="/path" className="btn btn-ghost btn-sm">See the full plan →</Link>
+            <Link to="/path" className="btn btn-ghost btn-sm">See the full plan</Link>
           </div>
           <ol className="timeline">
             {PHASES.map((ph) => (
@@ -121,32 +126,33 @@ export default function Home() {
               </li>
             ))}
           </ol>
-          <div className="weekstrip" style={{ marginTop: 18 }}>
-            {WEEKS.map((w) => {
-              const ph = PHASES.find((x) => x.n === w.phase)
-              return <Link key={w.n} to={`/path/${w.n}`} className={weekDone(w, p) ? 'done' : ''} style={{ '--c': ph.color }} title={w.title}>W{String(w.n).padStart(2, '0')}</Link>
-            })}
-          </div>
         </div>
       </section>
 
+      <DailyBanner />
+
       <section className="section">
         <div className="container">
-          <div className="price-band">
-            <div>
-              <div className="eyebrow">Education should be cheap</div>
-              <h2>Learning stays free. <em>Always.</em></h2>
-              <p>Pro, coming soon, adds an AI mock interviewer, graded capstone reviews and a certificate for ₹299 a month. Nothing you need to learn ever goes behind a paywall.</p>
-              <div className="row"><Link to="/path/1" className="btn btn-primary">Start free</Link><Link to="/pro" className="btn btn-ghost">What Pro adds</Link></div>
+          <div className="plans">
+            <div className="plan card">
+              <span className="basic-k">Free, forever</span>
+              <h3>Everything you need to learn</h3>
+              <ul className="ticks">
+                <li>The full 12-week path and four handbooks</li>
+                <li>SQL Lab, Python Lab and the 2.6M-row Playground</li>
+                <li>Daily challenge, quizzes and flashcards</li>
+              </ul>
+              <Link to="/path/1" className="btn btn-primary">Start week 1</Link>
             </div>
-            <div className="cost">
-              {COST.map(([k, v], i) => (
-                <div key={k} className={'cost-row' + (i === COST.length - 1 ? ' us' : '')}><span>{k}</span><b>{v}</b></div>
-              ))}
-              <figure className="quote">
-                “{MANTRAS[2]}”
-                <figcaption>{BRAND.author}</figcaption>
-              </figure>
+            <div className="plan card plan-pro">
+              <span className="basic-k">Pro · coming soon · ₹299/month</span>
+              <h3>Extra help to get hired</h3>
+              <ul className="ticks">
+                <li>AI mock interviewer</li>
+                <li>Reviews of your capstone project</li>
+                <li>A certificate you can share</li>
+              </ul>
+              <Link to="/pro" className="btn btn-ghost">Join the waitlist</Link>
             </div>
           </div>
         </div>

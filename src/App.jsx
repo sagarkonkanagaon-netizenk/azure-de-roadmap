@@ -7,6 +7,7 @@ import SqlLab from './pages/SqlLab.jsx'
 import Playground from './pages/Playground.jsx'
 import Daily from './pages/Daily.jsx'
 import PyLab from './pages/PyLab.jsx'
+import Practice from './pages/Practice.jsx'
 import Drills, { Drill } from './pages/Drills.jsx'
 import Interview, { Scenarios, PySparkQs, Playbook } from './pages/Interview.jsx'
 import Flashcards from './pages/Flashcards.jsx'
@@ -28,6 +29,7 @@ export default function App() {
           <Route path="learn/azure/:phase" element={<GuidePhase />} />
           <Route path="learn/:book" element={<Book />} />
           <Route path="learn/:book/:chapter" element={<Chapter />} />
+          <Route path="practice" element={<Practice />} />
           <Route path="practice/sql" element={<SqlLab />} />
           <Route path="practice/sql/:n" element={<SqlLab />} />
           <Route path="practice/python" element={<PyLab />} />

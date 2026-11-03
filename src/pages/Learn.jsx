@@ -19,9 +19,32 @@ export default function Library() {
       <div className="container">
         <div className="page-head">
           <div className="eyebrow">Learn</div>
-          <h1>Handbooks</h1>
-          <p>Four complete handbooks written from production experience, plus phase study guides for the Azure stack and short notes on real fixes. Mark chapters as read and your path updates.</p>
-          <Link to="/notes" className="btn btn-ghost btn-sm">↓ Download all 7 notes as PDF</Link>
+          <h1>Learn the ideas, one step at a time</h1>
+          <p>Not sure where to begin? Follow the 12-week path. It tells you what to read and practise each week, using the handbooks below.</p>
+        </div>
+        <div className="grid g3 learn-ways">
+          <Link to="/path" className="card hub-card card-link hub-main">
+            <span className="basic-k">Recommended start</span>
+            <h3>The 12-week path</h3>
+            <p>A weekly plan from SQL basics to cloud pipelines, with a checklist for each week.</p>
+            <span className="hub-go">Open the path →</span>
+          </Link>
+          <Link to="/visual" className="card hub-card card-link">
+            <span className="basic-k">See it</span>
+            <h3>Visual SQL</h3>
+            <p>Watch joins and window functions work, row by row, before you write them.</p>
+            <span className="hub-go">Open →</span>
+          </Link>
+          <Link to="/notes" className="card hub-card card-link">
+            <span className="basic-k">Keep it</span>
+            <h3>Notes and PDFs</h3>
+            <p>Download the handbooks and notes as PDFs to read offline.</p>
+            <span className="hub-go">Open →</span>
+          </Link>
+        </div>
+        <div className="section-head" style={{ marginTop: 44 }}>
+          <h2>Handbooks</h2>
+          <p>Four complete handbooks written from production experience. Mark chapters as read and your path updates.</p>
         </div>
         <div className="grid g2">
           {booksIndex.map((b) => {
@@ -29,7 +52,7 @@ export default function Library() {
             return (
               <Link key={b.slug} to={`/learn/${b.slug}`} className="card card-pad card-link">
                 <div className="spread"><span style={{ fontSize: '1.8rem' }}>{ICON[b.icon]}</span><span className="chip">{b.chapters.length} chapters · ~{Math.round(b.minutes / 60)} h</span></div>
-                <h2 style={{ marginTop: 12 }}>{b.title}</h2>
+                <h3 style={{ marginTop: 12, fontSize: '1.3rem' }}>{b.title}</h3>
                 <p className="muted">{b.subtitle}</p>
                 <div className="row"><div className="progress" style={{ flex: 1 }}><i style={{ width: (100 * done / b.chapters.length) + '%' }} /></div><span className="small muted">{done}/{b.chapters.length}</span></div>
               </Link>

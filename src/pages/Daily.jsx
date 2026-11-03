@@ -147,7 +147,7 @@ export default function Daily() {
 
   return (
     <div className="page daily">
-      <div className="container wide">
+      <div className="container">
         <div className="daily-head">
           <div>
             <div className="eyebrow">Daily SQL challenge · #{n}{isToday ? ' · today' : ` · ${key}`}</div>

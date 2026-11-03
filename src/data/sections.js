@@ -4,8 +4,8 @@ export const SECTIONS = [
     id: 'learn', label: 'Learn', icon: '🎓', blurb: 'Understand it',
     lead: 'A 12-week path, four handbooks and animated SQL. Read a little every day.',
     items: [
+      { to: '/learn', icon: '📚', label: 'Overview', desc: 'Handbooks and where to start' },
       { to: '/path', icon: '🗺️', label: '12-week path', desc: 'Week by week, SQL to lakehouse' },
-      { to: '/learn', icon: '📚', label: 'Handbooks', desc: '98 chapters from real production work' },
       { to: '/visual', icon: '✨', label: 'Visual SQL', desc: 'Joins and window functions, animated' },
       { to: '/notes', icon: '📝', label: 'Notes & PDFs', desc: 'Download the handbooks to keep' },
       { to: '/projects', icon: '🏗️', label: 'Projects', desc: 'Portfolio builds you can show' },
@@ -16,6 +16,7 @@ export const SECTIONS = [
     id: 'practice', label: 'Practice', icon: '🛠️', blurb: 'Do it',
     lead: 'Real SQL and Python running in your browser, plus broken pipelines to fix.',
     items: [
+      { to: '/practice', icon: '🛠️', label: 'Overview', desc: 'Pick what to practise' },
       { to: '/practice/sql', icon: '🗄️', label: 'SQL Lab', desc: '78 questions, checked instantly' },
       { to: '/playground', icon: '🧪', label: 'SQL Playground', desc: 'Any query on 2.6M rows' },
       { to: '/practice/python', icon: '🐍', label: 'Python Lab', desc: 'Coding problems with auto-checks' },
@@ -26,7 +27,7 @@ export const SECTIONS = [
     id: 'interview', label: 'Interview', icon: '🎤', blurb: 'Get hired',
     lead: 'Quizzes, flashcards and model answers for the rounds that decide offers.',
     items: [
-      { to: '/interview', icon: '🎯', label: 'Interview hub', desc: 'Everything for interview day' },
+      { to: '/interview', icon: '🎯', label: 'Overview', desc: 'Everything for interview day' },
       { to: '/interview/quiz', icon: '🧠', label: 'Quiz', desc: '102 questions on Azure, AWS and GCP' },
       { to: '/interview/flashcards', icon: '🃏', label: 'Flashcards', desc: 'Five minutes of spaced repetition' },
       { to: '/interview/scenarios', icon: '🔥', label: 'Scenario questions', desc: 'Model answers and push-backs' },
@@ -57,3 +58,6 @@ export function itemOf(pathname, sec) {
   if (!sec) return null
   return [...sec.items].sort((a, b) => b.to.length - a.to.length).find((i) => pathname === i.to || pathname.startsWith(i.to + '/')) || null
 }
+
+// Where each top-menu link goes.
+export const HOME_OF = { learn: '/learn', practice: '/practice', interview: '/interview', daily: '/daily' }
