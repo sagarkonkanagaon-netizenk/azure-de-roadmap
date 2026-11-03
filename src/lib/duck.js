@@ -87,7 +87,34 @@ export function splitSql(sql) {
  * Run SQL in an isolated schema. Returns { result, error, ms }.
  * setup runs first; then user SQL (all statements, last result kept); then optional check query.
  */
-export async function runIsolated({ setup = '', sql = '', check = '' }) {
+// Wrap the last statement so a SELECT over a million rows only ships the first maxRows + 1 to the page.
+const QUERY_RE = /^(\s|--[^\n]*\n|\/\*[\s\S]*?\*\/)*(with|select|from|values|table|\()/i
+function capped(stmt, maxRows) {
+  if (!maxRows || !QUERY_RE.test(stmt)) return stmt
+  return `SELECT * FROM (\n${stmt}\n) AS _result LIMIT ${maxRows + 1}`
+}
+
+// Big practice datasets live in the main schema for the whole visit and are created on first use.
+let bigPromise = null
+export function ensureBig(stmts, { reset = false, names = [] } = {}) {
+  if (reset || !bigPromise) {
+    const prev = reset ? null : bigPromise
+    bigPromise = (async () => {
+      if (prev) await prev
+      const db = await getDb()
+      const c = await db.connect()
+      try {
+        if (reset) for (const n of names) await c.query(`DROP TABLE IF EXISTS main.${n}`)
+        for (const s of stmts) await c.query(s)
+      } finally { await c.close() }
+    })()
+    bigPromise.catch(() => { bigPromise = null })
+  }
+  return bigPromise
+}
+export function forgetBig() { bigPromise = null }
+
+export async function runIsolated({ setup = '', sql = '', check = '', maxRows = 0 }) {
   const db = await getDb()
   const conn = await db.connect()
   const schema = `lab_${Date.now().toString(36)}_${seq++}`
@@ -98,13 +125,17 @@ export async function runIsolated({ setup = '', sql = '', check = '' }) {
     let last = null
     let stage = 'your query'
     try {
-      for (const s of splitSql(pinClock(sql))) last = await conn.query(s)
+      const stmts = splitSql(pinClock(sql))
+      for (let k = 0; k < stmts.length; k++) last = await conn.query(k === stmts.length - 1 && !check ? capped(stmts[k], maxRows) : stmts[k])
       stage = 'check'
       if (check) last = await conn.query(pinClock(check))
     } catch (e) {
       return { error: cleanErr(e), stage, ms: performance.now() - t0 }
     }
-    return { result: toResult(last), ms: performance.now() - t0 }
+    const result = toResult(last)
+    let more = false
+    if (maxRows && result && result.rows.length > maxRows) { result.rows.length = maxRows; more = true }
+    return { result, more, ms: performance.now() - t0 }
   } catch (e) {
     return { error: cleanErr(e), stage: 'setup', ms: performance.now() - t0 }
   } finally {

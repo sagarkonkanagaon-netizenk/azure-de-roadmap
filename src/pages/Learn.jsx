@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import booksIndex from '../content/books-index.json'
 import guide from '../content/guide.json'
 import til from '../content/til.json'
@@ -118,7 +118,15 @@ export function Chapter() {
   const b = booksIndex.find((x) => x.slug === book)
   const [chs, setChs] = useState(null)
   const [side, setSide] = useState(false)
+  const [focus, setFocus] = useState(() => { try { return localStorage.getItem('z2h:focus') === '1' } catch (e) { return false } })
+  const [pct, setPct] = useState(0)
+  const navigate = useNavigate()
   const p = useProgress()
+  useEffect(() => { try { localStorage.setItem('z2h:focus', focus ? '1' : '0') } catch (e) { /* ignore */ } }, [focus])
+  useEffect(() => {
+    const on = () => { const h = document.documentElement; const max = h.scrollHeight - h.clientHeight; setPct(max > 0 ? Math.min(100, (100 * h.scrollTop) / max) : 0) }
+    on(); window.addEventListener('scroll', on, { passive: true }); return () => window.removeEventListener('scroll', on)
+  }, [chapter, chs])
   useEffect(() => { setChs(null); loadBook(book).then(setChs) }, [book])
   const idx = chs ? chs.findIndex((c) => c.slug === chapter) : -1
   const c = chs && idx >= 0 ? chs[idx] : null
@@ -134,7 +142,9 @@ export function Chapter() {
   const next = chs[idx + 1]
   return (
     <div className="container">
-      <div className="reader">
+      <ReaderKeys prev={prev && `/learn/${book}/${prev.slug}`} next={next && `/learn/${book}/${next.slug}`} onFocus={() => setFocus((f) => !f)} navigate={navigate} onNext={() => { if (!done) toggleIn('chapters', key) }} />
+      <div className="read-bar" style={{ width: pct + '%' }} />
+      <div className={'reader' + (focus ? ' focus' : '')}>
         <aside className={'side' + (side ? ' open' : '')}>
           <h4><Link to={`/learn/${book}`}>{b.title}</Link></h4>
           {chs.map((x) => (
@@ -146,7 +156,8 @@ export function Chapter() {
         <article>
           <div className="row small muted" style={{ marginBottom: 8 }}>
             <Link to={`/learn/${book}`}>{b.title}</Link><span>·</span><span>Chapter {c.num}</span><span>·</span><span>{c.minutes} min read</span>
-            <button className="btn btn-ghost btn-sm" onClick={() => setSide((s) => !s)} style={{ marginLeft: 'auto' }}>Chapters</button>
+            <button className="btn btn-ghost btn-sm" onClick={() => setFocus((f) => !f)} style={{ marginLeft: 'auto' }} title="Focus mode (F)">{focus ? 'Exit focus' : 'Focus'}</button>
+            <button className="btn btn-ghost btn-sm side-toggle" onClick={() => setSide((s) => !s)}>Chapters</button>
           </div>
           <div className="prose"><h1>{c.title}</h1></div>
           <Markdown md={c.md} />
@@ -195,4 +206,18 @@ export function GuidePhase() {
       </div>
     </div>
   )
+}
+
+function ReaderKeys({ prev, next, onFocus, navigate, onNext }) {
+  useEffect(() => {
+    const k = (e) => {
+      if (e.metaKey || e.ctrlKey || e.altKey || ['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName)) return
+      if (e.key === 'f' || e.key === 'F') onFocus()
+      else if (e.key === 'ArrowRight' && next) { onNext(); navigate(next) }
+      else if (e.key === 'ArrowLeft' && prev) navigate(prev)
+    }
+    window.addEventListener('keydown', k)
+    return () => window.removeEventListener('keydown', k)
+  }, [prev, next, onFocus, navigate, onNext])
+  return null
 }

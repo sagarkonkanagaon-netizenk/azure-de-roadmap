@@ -1,4 +1,6 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import Mission, { Onboarding, getProfile, startWeek } from '../components/Mission.jsx'
 import Machine from '../components/Machine.jsx'
 import Console from '../components/Console.jsx'
 import booksIndex from '../content/books-index.json'
@@ -20,7 +22,9 @@ const COST = [['Live bootcamps', '₹60,000 – ₹2,50,000'], ['Self-paced plat
 
 export default function Home() {
   const p = useProgress()
-  const started = Object.keys(p.chapters).length + Object.keys(p.sql).length + Object.keys(p.py).length > 0
+  const started = Object.keys(p.chapters).length + Object.keys(p.sql).length + Object.keys(p.py).length + Object.keys(p.drills).length > 0
+  const [onboard, setOnboard] = useState(false)
+  const profile = getProfile()
   const doneWeeks = WEEKS.filter((w) => weekDone(w, p)).length
   const drill = DRILLS[0]
   const sample = QUIZ.find((x) => x.id === 'sql7')
@@ -34,8 +38,10 @@ export default function Home() {
             <h1>Become a data engineer <em>by shipping</em> real pipelines.</h1>
             <p className="lead">The full path from SQL to production lakehouses on Azure and Databricks. You write real SQL and Python in the browser, fix broken pipelines from a 3 AM page, and practise the interviews that decide offers.</p>
             <div className="hero-cta">
-              <Link to={started ? '/progress' : '/path/1'} className="btn btn-primary">{started ? 'Continue where you left off' : 'Start week 1'} <span aria-hidden="true">→</span></Link>
-              <Link to="/practice/sql/1" className="btn btn-ghost">Open the SQL lab</Link>
+              {started || profile
+                ? <Link to={`/path/${startWeek(profile)}`} className="btn btn-primary">Continue my path <span aria-hidden="true">→</span></Link>
+                : <button className="btn btn-primary" onClick={() => setOnboard(true)}>Find my starting point <span aria-hidden="true">→</span></button>}
+              <Link to="/playground" className="btn btn-ghost">Run any SQL now</Link>
             </div>
             <dl className="ticker">
               <div><dt>Chapters</dt><dd>{chapters}</dd></div>
@@ -47,6 +53,9 @@ export default function Home() {
           <Console />
         </div>
       </section>
+
+      {onboard && <Onboarding onClose={() => setOnboard(false)} />}
+      {(started || profile) && <Mission />}
 
       <div className="marquee" aria-hidden="true">
         <div className="marquee-track">

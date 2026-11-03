@@ -7,6 +7,7 @@ import { WEEKS, PHASES } from '../data/path.js'
 import { DRILLS } from '../data/drills.js'
 import { useProgress, streak, exportProgress, importProgress, resetProgress } from '../lib/progress.js'
 import { weekStats } from './Path.jsx'
+import { tally, levelOf, badgesOf, LEVELS } from '../lib/xp.js'
 
 export default function ProgressPage() {
   const p = useProgress()
@@ -41,6 +42,7 @@ export default function ProgressPage() {
           <h1>{read + sql + py + drills === 0 ? 'Your journey starts here' : 'Keep the streak going'}</h1>
           <p>Saved on this device. Export it to move to another browser.</p>
         </div>
+        <LevelCard p={p} />
         <div className="grid g3" style={{ marginBottom: 18 }}>
           <div className="card card-pad kpi"><b>🔥 {s} day{s === 1 ? '' : 's'}</b><span>current streak</span>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(14, 1fr)', gap: 4, marginTop: 14 }}>
@@ -98,6 +100,34 @@ export default function ProgressPage() {
           <button className="btn btn-ghost btn-sm" onClick={() => { if (window.confirm('Reset all progress on this device?')) resetProgress() }}>Reset</button>
           {msg && <span className="small muted">{msg}</span>}
         </div>
+      </div>
+    </div>
+  )
+}
+
+function LevelCard({ p }) {
+  const t = tally(p)
+  const lv = levelOf(t.xp)
+  const badges = badgesOf(p)
+  return (
+    <div className="card card-pad levelcard" style={{ marginBottom: 18 }}>
+      <div className="levelcard-top">
+        <div className="lv-ico big">{lv.icon}</div>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div className="small muted">Level {lv.i + 1} of {LEVELS.length}</div>
+          <h2 style={{ margin: '2px 0 8px' }}>{lv.name}</h2>
+          <div className="progress"><i style={{ width: lv.pct + '%' }} /></div>
+          <div className="small muted" style={{ marginTop: 6 }}>{t.xp} XP{lv.next ? ` · ${lv.next.xp - t.xp} XP to ${lv.next.icon} ${lv.next.name}` : ' · top level reached'}</div>
+        </div>
+      </div>
+      <div className="ladder">{LEVELS.map((l, i) => <span key={l.name} className={i <= lv.i ? 'on' : ''} title={`${l.name} · ${l.xp} XP`}>{l.icon}</span>)}</div>
+      <h3 style={{ marginTop: 22 }}>Badges · {badges.filter((b) => b.earned).length}/{badges.length}</h3>
+      <div className="badges">
+        {badges.map((b) => (
+          <div key={b.id} className={'badge' + (b.earned ? ' on' : '')} title={b.desc}>
+            <span className="b-ico">{b.icon}</span><b>{b.name}</b><small>{b.desc}</small>
+          </div>
+        ))}
       </div>
     </div>
   )

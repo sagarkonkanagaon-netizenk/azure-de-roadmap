@@ -4,12 +4,12 @@ import data from '../content/sql-questions.json'
 import CodeEditor from '../components/CodeEditor.jsx'
 import ResultTable from '../components/ResultTable.jsx'
 import Markdown from '../components/Markdown.jsx'
+import Playground from './Playground.jsx'
 import { runIsolated, compareResults } from '../lib/duck.js'
 import { useProgress, setIn, getProgress } from '../lib/progress.js'
 
 const QS = data.questions
 const SECTIONS = [...new Set(QS.map((q) => q.section))]
-const SAMPLE_SETUP = QS.find((q) => q.n === 1).setup + '\n' + QS.find((q) => q.n === 8).setup + '\n' + QS.find((q) => q.n === 25).setup
 
 function storeKey(n) { return `z2h:code:sql:${n}` }
 function loadCode(q) {
@@ -37,7 +37,7 @@ export default function SqlLab() {
   const { n } = useParams()
   const navigate = useNavigate()
   const p = useProgress()
-  if (n === 'scratch') return <Scratch />
+  if (n === 'scratch') return <Playground />
   const q = QS.find((x) => String(x.n) === String(n)) || QS[0]
   const solved = Object.values(p.sql).filter((v) => v === 'solved').length
   return (
@@ -45,7 +45,7 @@ export default function SqlLab() {
       <div className="lab">
         <aside className="qlist card" style={{ padding: 8 }}>
           <div className="spread" style={{ padding: '6px 8px' }}><b>SQL lab</b><span className="chip chip-primary">{solved}/{QS.length}</span></div>
-          <div style={{ padding: '0 8px 6px' }}><Link to="/practice/sql/scratch" className="small">Open a blank playground →</Link></div>
+          <div style={{ padding: '0 8px 6px' }}><Link to="/playground" className="small">▶ SQL playground: run any query →</Link></div>
           {SECTIONS.map((s) => (
             <div key={s}>
               <div className="sec">{s}</div>
@@ -176,47 +176,5 @@ function Question({ q }) {
         {next ? <a href="#" className="next" onClick={(e) => { e.preventDefault(); navigate(`/practice/sql/${next.n}`) }}><small>{next.n} →</small>{next.title}</a> : <Link className="next" to="/drills"><small>Next →</small>Incident drills</Link>}
       </div>
     </section>
-  )
-}
-
-function Scratch() {
-  const [code, setCode] = useState(() => {
-    try { return sessionStorage.getItem('z2h:scratch') || localStorage.getItem('z2h:code:sql:scratch') || 'SELECT dept_id, COUNT(*) AS people, AVG(salary) AS avg_salary\nFROM emp\nGROUP BY dept_id\nORDER BY avg_salary DESC;' } catch (e) { return 'SELECT 42 AS answer;' }
-  })
-  const [withSample, setWithSample] = useState(true)
-  const [res, setRes] = useState(null)
-  const [busy, setBusy] = useState(false)
-  const [engine, setEngine] = useState(null)
-  const first = useRef(true)
-  useEffect(() => { try { sessionStorage.removeItem('z2h:scratch') } catch (e) { /* ignore */ } }, [])
-  useEffect(() => { try { localStorage.setItem('z2h:code:sql:scratch', code) } catch (e) { /* ignore */ } }, [code])
-  async function run() {
-    setBusy(true); if (first.current) setEngine('loading')
-    const r = await runIsolated({ setup: withSample ? SAMPLE_SETUP : '', sql: code })
-    first.current = false; setEngine(null); setRes(r); setBusy(false)
-  }
-  return (
-    <div className="page">
-      <div className="container narrow">
-        <Link to="/practice/sql" className="small">← SQL lab</Link>
-        <div className="page-head" style={{ marginTop: 10 }}>
-          <div className="eyebrow">Playground</div>
-          <h1>SQL playground</h1>
-          <p>A real DuckDB engine running in your browser. Sample tables: <code>emp</code>, <code>dept</code>, <code>customers</code>, <code>orders</code>, <code>daily_sales</code>. Handbook examples written for Spark or other dialects may need small changes.</p>
-        </div>
-        <CodeEditor value={code} onChange={setCode} onRun={run} minHeight={220} />
-        <div className="toolbar">
-          <button className="btn btn-primary" onClick={run} disabled={busy}>{busy ? 'Running…' : '▶ Run'}</button>
-          <label className="row small"><input type="checkbox" checked={withSample} onChange={(e) => setWithSample(e.target.checked)} /> Load sample tables</label>
-        </div>
-        <EngineStatus state={engine} />
-        {res && (
-          <div className="result" style={{ marginTop: 8 }}>
-            <div className="result-head"><span>{res.result ? `${res.result.rows.length} rows` : 'Result'}</span><span>{Math.round(res.ms)} ms</span></div>
-            {res.error ? <div className="err">{res.error}</div> : <ResultTable result={res.result} />}
-          </div>
-        )}
-      </div>
-    </div>
   )
 }
