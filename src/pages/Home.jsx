@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import Mission, { Onboarding, getProfile, startWeek } from '../components/Mission.jsx'
 import DailyBanner from '../components/DailyBanner.jsx'
 import Console from '../components/Console.jsx'
+import HeroMark from '../components/HeroMark.jsx'
 import sqlQ from '../content/sql-questions.json'
 import { WEEKS, PHASES } from '../data/path.js'
 import { useProgress } from '../lib/progress.js'
@@ -48,7 +49,7 @@ export default function Home() {
       <section className="hero3">
         <div className="container hero3-grid">
           <div className="hero3-copy">
-            <span className="pill-note">Free · No signup · Works in your browser</span>
+            <div className="hero-brand"><HeroMark /><div className="hero-brand-txt"><p className="hero-tagline">On your highway <em>to get hired</em></p><span className="pill-note">Free · No signup · Works in your browser</span></div></div>
             <h1>Learn data engineering <em>by doing it.</em></h1>
             <p className="lead">A clear 12-week path from your first SQL query to real pipelines on the cloud. Read a little, practise a lot, and get ready for interviews.</p>
             <div className="hero-cta">
