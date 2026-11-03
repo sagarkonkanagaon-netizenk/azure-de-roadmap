@@ -1,6 +1,8 @@
-# Zero to Hero · Data Engineering
+<p align="center"><img src=".github/banner.png" alt="Data Dhaba: on your highway to get hired" width="100%" /></p>
 
-A free, hands-on path into data engineering. Learn by doing, in the browser:
+# Data Dhaba
+
+**On your highway to get hired.** A free, hands-on path into data engineering. Learn by doing, in the browser:
 
 - **12-week path** from SQL to production pipelines on Azure and Databricks
 - **Four handbooks** (SQL, PySpark, Databricks, Streaming): 98 chapters
