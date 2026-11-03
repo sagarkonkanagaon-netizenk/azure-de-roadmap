@@ -16,7 +16,7 @@ function Node({ x, y, w = 62, h = 62, fill, label, sub, rx = 16 }) {
     <g>
       <rect x={x} y={y} width={w} height={h} rx={rx} fill={fill} opacity=".16" />
       <rect x={x} y={y} width={w} height={h} rx={rx} fill="none" stroke={fill} strokeWidth="2" />
-      <text x={x + w / 2} y={y + h / 2 + 1} textAnchor="middle" dominantBaseline="middle" fontFamily="Space Grotesk, sans-serif" fontWeight="700" fontSize="13" fill="currentColor">{label}</text>
+      <text x={x + w / 2} y={y + h / 2 + 1} textAnchor="middle" dominantBaseline="middle" fontFamily="Inter Tight, Inter, sans-serif" fontWeight="700" fontSize="13" fill="currentColor">{label}</text>
       {sub && <text x={x + w / 2} y={y + h + 16} textAnchor="middle" fontSize="10.5" fill="currentColor" opacity=".6">{sub}</text>}
     </g>
   )
@@ -34,7 +34,7 @@ function Packet({ path, dur, begin, color, r = 4.5 }) {
 export default function Machine() {
   const flow = { fill: 'none', stroke: 'currentColor', strokeOpacity: 0.22, strokeWidth: 2, className: 'flow' }
   return (
-    <div className="machine card" aria-label="Animated data pipeline: sources flow into bronze, silver and gold layers, with an orchestrator and a data quality gate.">
+    <div className="machine" aria-label="Animated data pipeline: sources flow into bronze, silver and gold layers, with an orchestrator and a data quality gate.">
       <svg viewBox="0 0 700 310" role="img">
         <title>Medallion pipeline</title>
         <g fontSize="11" fill="currentColor" opacity=".75">
