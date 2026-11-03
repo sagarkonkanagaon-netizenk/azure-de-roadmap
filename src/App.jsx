@@ -4,11 +4,13 @@ import Home from './pages/Home.jsx'
 import Path, { Week } from './pages/Path.jsx'
 import Library, { Book, Chapter, GuidePhase } from './pages/Learn.jsx'
 import SqlLab from './pages/SqlLab.jsx'
+import Playground from './pages/Playground.jsx'
 import PyLab from './pages/PyLab.jsx'
 import Drills, { Drill } from './pages/Drills.jsx'
 import Interview, { Scenarios, PySparkQs, Playbook } from './pages/Interview.jsx'
 import Flashcards from './pages/Flashcards.jsx'
 import Quiz from './pages/Quiz.jsx'
+import Visual from './pages/Visual.jsx'
 import Notes, { Note } from './pages/Notes.jsx'
 import { Projects, Resources, About, Pro, NotFound } from './pages/Misc.jsx'
 import ProgressPage from './pages/Progress.jsx'
@@ -38,6 +40,8 @@ export default function App() {
           <Route path="interview/flashcards" element={<Flashcards />} />
           <Route path="interview/quiz" element={<Quiz />} />
           <Route path="quiz" element={<Quiz />} />
+          <Route path="visual" element={<Visual />} />
+          <Route path="playground" element={<Playground />} />
           <Route path="notes" element={<Notes />} />
           <Route path="notes/:slug" element={<Note />} />
           <Route path="projects" element={<Projects />} />
