@@ -726,3 +726,31 @@ main .page-head h1 em, main .daily-head h1 em, main .play-head h1 em { color: va
 .hero-brand-txt { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; padding-bottom: 8px; }
 .hero-tagline { margin: 0; font-family: 'Space Grotesk', var(--font); font-weight: 700; font-size: clamp(1.15rem, 2.4vw, 1.6rem); letter-spacing: -.02em; color: var(--text); }
 .hero-tagline em { font-style: normal; color: var(--accent); }
+
+/* Table guide: SQL Lab problems and the Practice tables page */
+.tables-card { margin: 14px 0; padding: 16px; border: 1px solid var(--line); border-radius: 14px; background: var(--card); }
+.tables-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 14px; margin-bottom: 12px; }
+.tables-head b { font-size: 1rem; }
+.tables-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; }
+.tcard { border: 1px solid var(--line); border-radius: 12px; background: var(--bg); overflow: hidden; display: flex; flex-direction: column; }
+.tcard.on { border-color: var(--accent); box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 20%, transparent); }
+.tcard-top { all: unset; box-sizing: border-box; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; padding: 10px 12px; background: color-mix(in srgb, var(--accent) 9%, var(--card)); border-bottom: 1px solid var(--line); }
+.tcard-top.static { cursor: default; }
+.tcard-top:not(.static):hover { background: color-mix(in srgb, var(--accent) 16%, var(--card)); }
+.tcard-top:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.tcard-top code { font-family: var(--mono); font-weight: 700; font-size: .92rem; color: var(--accent); background: none; padding: 0; }
+.tcard-n { font-size: .76rem; font-weight: 600; color: var(--text-2); white-space: nowrap; }
+.tcard-about { margin: 0; padding: 8px 12px 0; font-size: .84rem; color: var(--text-2); line-height: 1.45; }
+.tcols { list-style: none; margin: 0; padding: 8px 12px 10px; display: grid; gap: 3px; }
+.tcols li { display: flex; justify-content: space-between; gap: 10px; font-size: .84rem; padding: 3px 0; border-bottom: 1px dashed var(--line); }
+.tcols li:last-child { border-bottom: 0; }
+.tcols code { font-family: var(--mono); background: none; padding: 0; color: var(--text); }
+.tcols span { color: var(--muted); font-size: .78rem; }
+.tcard-used { padding: 0 12px 10px; margin-top: auto; }
+.ds-search { max-width: 460px; margin: 4px 0 8px; }
+.ds-h { font-size: 1.2rem; margin: 30px 0 12px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px; }
+.ds-links { display: grid; gap: 8px; }
+.ds-link { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; padding: 10px 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--card); }
+.ds-link code { font-family: var(--mono); font-size: .86rem; }
+.ds-arrow { color: var(--primary); font-weight: 700; }
+.tcard-go { margin-left: 8px; padding: 2px 8px; border-radius: 999px; background: var(--card); border: 1px solid var(--line); color: var(--accent); }

@@ -8,6 +8,7 @@ import Playground from './pages/Playground.jsx'
 import Daily from './pages/Daily.jsx'
 import PyLab from './pages/PyLab.jsx'
 import Practice from './pages/Practice.jsx'
+import Datasets from './pages/Datasets.jsx'
 import Drills, { Drill } from './pages/Drills.jsx'
 import Interview, { Scenarios, PySparkQs, Playbook } from './pages/Interview.jsx'
 import Flashcards from './pages/Flashcards.jsx'
@@ -45,6 +46,8 @@ export default function App() {
           <Route path="quiz" element={<Quiz />} />
           <Route path="visual" element={<Visual />} />
           <Route path="playground" element={<Playground />} />
+          <Route path="practice/tables" element={<Datasets />} />
+          <Route path="datasets" element={<Datasets />} />
           <Route path="daily" element={<Daily />} />
           <Route path="daily/:n" element={<Daily />} />
           <Route path="notes" element={<Notes />} />

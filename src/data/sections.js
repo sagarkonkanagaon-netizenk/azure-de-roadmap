@@ -19,6 +19,7 @@ export const SECTIONS = [
       { to: '/practice', icon: '🛠️', label: 'Overview', desc: 'Pick what to practise' },
       { to: '/practice/sql', icon: '🗄️', label: 'SQL Lab', desc: '78 questions, checked instantly' },
       { to: '/playground', icon: '🧪', label: 'SQL Playground', desc: 'Any query on 2.6M rows' },
+      { to: '/practice/tables', icon: '📋', label: 'Practice tables', desc: 'Every table and column, explained' },
       { to: '/practice/python', icon: '🐍', label: 'Python Lab', desc: 'Coding problems with auto-checks' },
       { to: '/drills', icon: '🚨', label: 'Incident drills', desc: 'Fix a pipeline that broke at 3 AM' },
     ],
@@ -44,7 +45,7 @@ export const SECTIONS = [
 
 const PREFIX = [
   ['/daily', 'daily'], ['/interview', 'interview'], ['/quiz', 'interview'],
-  ['/practice', 'practice'], ['/playground', 'practice'], ['/drills', 'practice'],
+  ['/practice', 'practice'], ['/datasets', 'practice'], ['/playground', 'practice'], ['/drills', 'practice'],
   ['/path', 'learn'], ['/learn', 'learn'], ['/visual', 'learn'], ['/notes', 'learn'], ['/projects', 'learn'], ['/resources', 'learn'],
 ]
 
