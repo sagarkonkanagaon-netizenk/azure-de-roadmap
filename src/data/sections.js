@@ -2,10 +2,10 @@
 export const SECTIONS = [
   {
     id: 'learn', label: 'Learn', icon: '🎓', blurb: 'Understand it',
-    lead: 'A 12-week path, four handbooks and animated SQL. Read a little every day.',
+    lead: 'A 24-week path, four handbooks and animated SQL. Read a little every day.',
     items: [
       { to: '/learn', icon: '📚', label: 'Overview', desc: 'Handbooks and where to start' },
-      { to: '/path', icon: '🗺️', label: '12-week path', desc: 'Week by week, SQL to lakehouse' },
+      { to: '/path', icon: '🗺️', label: '24-week path', desc: '5½ months, SQL to job offer' },
       { to: '/visual', icon: '✨', label: 'Visual SQL', desc: 'Joins and window functions, animated' },
       { to: '/notes', icon: '📝', label: 'Notes & PDFs', desc: 'Download the handbooks to keep' },
       { to: '/projects', icon: '🏗️', label: 'Projects', desc: 'Portfolio builds you can show' },
@@ -19,6 +19,7 @@ export const SECTIONS = [
       { to: '/practice', icon: '🛠️', label: 'Overview', desc: 'Pick what to practise' },
       { to: '/practice/sql', icon: '🗄️', label: 'SQL Lab', desc: '78 questions, checked instantly' },
       { to: '/playground', icon: '🧪', label: 'SQL Playground', desc: 'Any query on 2.6M rows' },
+      { to: '/practice/tables', icon: '📋', label: 'Practice tables', desc: 'Every table and column, explained' },
       { to: '/practice/python', icon: '🐍', label: 'Python Lab', desc: 'Coding problems with auto-checks' },
       { to: '/drills', icon: '🚨', label: 'Incident drills', desc: 'Fix a pipeline that broke at 3 AM' },
     ],
@@ -44,7 +45,7 @@ export const SECTIONS = [
 
 const PREFIX = [
   ['/daily', 'daily'], ['/interview', 'interview'], ['/quiz', 'interview'],
-  ['/practice', 'practice'], ['/playground', 'practice'], ['/drills', 'practice'],
+  ['/practice', 'practice'], ['/datasets', 'practice'], ['/playground', 'practice'], ['/drills', 'practice'],
   ['/path', 'learn'], ['/learn', 'learn'], ['/visual', 'learn'], ['/notes', 'learn'], ['/projects', 'learn'], ['/resources', 'learn'],
 ]
 

@@ -34,6 +34,9 @@ export default function Practice() {
             </Link>
           ))}
         </div>
+        <Link to="/practice/tables" className="card card-pad card-link hub-daily">
+          <b>Not sure what is in the data?</b> <span className="muted">See every practice table, its columns and how they connect.</span>
+        </Link>
         <Link to="/daily" className="card card-pad card-link hub-daily">
           <b>Short on time?</b> <span className="muted">Do today's daily SQL challenge. It takes about five minutes.</span>
         </Link>

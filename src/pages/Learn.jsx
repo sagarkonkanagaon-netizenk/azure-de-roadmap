@@ -20,12 +20,12 @@ export default function Library() {
         <div className="page-head">
           <div className="eyebrow">Learn</div>
           <h1>Learn the ideas, one step at a time</h1>
-          <p>Not sure where to begin? Follow the 12-week path. It tells you what to read and practise each week, using the handbooks below.</p>
+          <p>Not sure where to begin? Follow the 24-week path. It tells you what to read and practise each week, using the handbooks below.</p>
         </div>
         <div className="grid g3 learn-ways">
           <Link to="/path" className="card hub-card card-link hub-main">
             <span className="basic-k">Recommended start</span>
-            <h3>The 12-week path</h3>
+            <h3>The 24-week path</h3>
             <p>A weekly plan from SQL basics to cloud pipelines, with a checklist for each week.</p>
             <span className="hub-go">Open the path →</span>
           </Link>

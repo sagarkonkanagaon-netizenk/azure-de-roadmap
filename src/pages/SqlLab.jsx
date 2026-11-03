@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import data from '../content/sql-questions.json'
 import CodeEditor from '../components/CodeEditor.jsx'
 import ResultTable from '../components/ResultTable.jsx'
+import { parseSchema, ABOUT, typeLabel } from '../lib/schema.js'
 import Markdown from '../components/Markdown.jsx'
 import Playground from './Playground.jsx'
 import { runIsolated, compareResults } from '../lib/duck.js'
@@ -112,6 +113,7 @@ function Question({ q }) {
   }
 
   const isConcept = q.mode === 'concept'
+  const schema = q.tables.length ? parseSchema(q.setup, q.tables) : []
   return (
     <section>
       <div className="qhead">
@@ -120,10 +122,26 @@ function Question({ q }) {
       </div>
       {q.given && q.given !== '—' && <div className="given">{q.given}</div>}
       {q.hint && <p className="small" style={{ marginTop: 8 }}><b>Note:</b> {q.hint}</p>}
-      {q.tables.length > 0 && (
-        <div className="schema" style={{ margin: '12px 0' }}>
-          <span className="small muted" style={{ alignSelf: 'center' }}>Peek at the data:</span>
-          {q.tables.map((t) => <button key={t} className="btn btn-ghost btn-sm" onClick={() => showTable(t)} disabled={!!busy}>{t}</button>)}
+      {schema.length > 0 && (
+        <div className="tables-card">
+          <div className="tables-head">
+            <b>Tables for this problem</b>
+            <span className="small muted">Click a table to see its rows. <Link to="/practice/tables">All practice tables</Link></span>
+          </div>
+          <div className="tables-grid">
+            {schema.map((t) => (
+              <div key={t.name} className={'tcard' + (preview && preview.t === t.name ? ' on' : '')}>
+                <button className="tcard-top" onClick={() => (preview && preview.t === t.name ? setPreview(null) : showTable(t.name))} disabled={!!busy}>
+                  <code>{t.name}</code>
+                  <span className="tcard-n">{t.rows ? t.rows + ' rows' : ''}<span className="tcard-go">{preview && preview.t === t.name ? 'Hide' : 'See rows'}</span></span>
+                </button>
+                {ABOUT[t.name] && <p className="tcard-about">{ABOUT[t.name]}</p>}
+                <ul className="tcols">
+                  {t.cols.map((c) => <li key={c.name}><code>{c.name}</code><span>{typeLabel(c.type)}</span></li>)}
+                </ul>
+              </div>
+            ))}
+          </div>
         </div>
       )}
       {preview && (
