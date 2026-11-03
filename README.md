@@ -1,4 +1,4 @@
-<p align="center"><img src=".github/banner.png" alt="Data Dhaba: on your highway to get hired" width="100%" /></p>
+<p align="center"><img src=".github/banner.svg" alt="Data Dhaba: on your highway to get hired" width="100%" /></p>
 
 # Data Dhaba
 
