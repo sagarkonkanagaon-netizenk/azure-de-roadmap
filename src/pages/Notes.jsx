@@ -1,6 +1,7 @@
 import { Link, useParams } from 'react-router-dom'
 import til from '../content/til.json'
 import Markdown from '../components/Markdown.jsx'
+import { PdfGrid } from '../data/pdfs.jsx'
 
 export default function Notes() {
   const topics = [...new Set(til.map((t) => t.topic))]
@@ -9,7 +10,12 @@ export default function Notes() {
       <div className="container narrow">
         <div className="page-head">
           <div className="eyebrow">Notes</div>
-          <h1>Today I learned</h1>
+          <h1>Download the <em>notes</em></h1>
+          <p>Sagar's original handbooks and interview notes as PDFs. Free to download, print and keep offline.</p>
+        </div>
+        <PdfGrid />
+        <div className="page-head" style={{ marginTop: 40 }}>
+          <h2 style={{ margin: 0 }}>Today I learned</h2>
           <p>Short, practical notes from building pipelines. One problem, one fix, and code you can paste.</p>
         </div>
         {topics.map((t) => (
