@@ -58,6 +58,7 @@ export default function Celebrate() {
     if (newBadge) { setBadge({ ...newBadge, key: Date.now() }); if (lv.i <= lvBefore.i) confetti(true) }
     if (lv.i <= lvBefore.i && !newBadge && kind && POINTS[kind] >= 20) confetti(false)
   }, [p])
+  useEffect(() => { if (!big) return; const k = (e) => { if (e.key === 'Escape') setBig(null) }; window.addEventListener('keydown', k); return () => window.removeEventListener('keydown', k) }, [big])
   useEffect(() => { if (!badge) return; const x = setTimeout(() => setBadge(null), 4500); return () => clearTimeout(x) }, [badge])
   return (
     <>

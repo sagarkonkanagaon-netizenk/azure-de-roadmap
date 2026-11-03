@@ -80,7 +80,7 @@ export default function Path() {
             const st = phaseStats(ph, p)
             const here = current.phase === ph.n && doneWeeks < WEEKS.length
             return (
-              <a key={ph.n} href={`#stop-${ph.n}`} className={'hw-stop' + (st.done === st.total ? ' done' : '') + (here ? ' here' : '')} style={{ '--c': ph.color }}>
+              <a key={ph.n} href={`#stop-${ph.n}`} onClick={(e) => { e.preventDefault(); document.getElementById(`stop-${ph.n}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' }) }} className={'hw-stop' + (st.done === st.total ? ' done' : '') + (here ? ' here' : '')} style={{ '--c': ph.color }}>
                 <span className="hw-dot">{st.done === st.total ? '✓' : ph.n}</span>
                 <span className="hw-name">{ph.title}</span>
                 <span className="hw-badge">{st.done === st.total ? ph.badge : `${st.done}/${st.total} weeks`}</span>

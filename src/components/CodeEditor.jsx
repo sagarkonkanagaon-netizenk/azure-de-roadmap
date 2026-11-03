@@ -1,10 +1,15 @@
 import { useEffect, useRef } from 'react'
 import { EditorView, basicSetup } from 'codemirror'
 import { keymap } from '@codemirror/view'
-import { EditorState } from '@codemirror/state'
+import { EditorState, Prec } from '@codemirror/state'
 import { sql, PostgreSQL } from '@codemirror/lang-sql'
 import { python } from '@codemirror/lang-python'
 import { oneDark } from '@codemirror/theme-one-dark'
+import { HighlightStyle, syntaxHighlighting } from '@codemirror/language'
+import { tags } from '@lezer/highlight'
+
+// One Dark's comment grey fails WCAG contrast on our editor background; lighten it.
+const readableComments = Prec.highest(syntaxHighlighting(HighlightStyle.define([{ tag: tags.comment, color: '#a3adbf', fontStyle: 'italic' }])))
 
 export default function CodeEditor({ value, onChange, lang = 'sql', onRun, minHeight = 180 }) {
   const host = useRef(null)
@@ -25,6 +30,7 @@ export default function CodeEditor({ value, onChange, lang = 'sql', onRun, minHe
           basicSetup,
           lang === 'sql' ? sql({ dialect: PostgreSQL }) : python(),
           oneDark,
+          readableComments,
           EditorView.lineWrapping,
           EditorView.theme({ '&': { minHeight: minHeight + 'px', backgroundColor: 'transparent' }, '.cm-gutters': { backgroundColor: 'transparent' }, '.cm-content': { padding: '10px 0' } }),
           EditorView.updateListener.of((u) => { if (u.docChanged) changeRef.current && changeRef.current(u.state.doc.toString()) }),

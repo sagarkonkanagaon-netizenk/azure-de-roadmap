@@ -785,3 +785,4 @@ main .page-head h1 em, main .daily-head h1 em, main .play-head h1 em { color: va
   .highway { grid-template-columns: repeat(4, minmax(0, 1fr)); row-gap: 16px; }
   .highway::before { display: none; }
 }
+.phase { scroll-margin-top: calc(var(--header-h) + 70px); }
