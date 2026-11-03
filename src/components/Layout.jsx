@@ -7,6 +7,7 @@ import Celebrate from './Celebrate.jsx'
 import { useProgress } from '../lib/progress.js'
 import { tally, levelOf } from '../lib/xp.js'
 import { SECTIONS, sectionOf, itemOf } from '../data/sections.js'
+import { SectionArt } from './DataArt.jsx'
 
 const MENUS = SECTIONS.filter((x) => x.id !== 'daily')
 
@@ -43,6 +44,7 @@ export default function Layout() {
   const [open, setOpen] = useState(null)
   const here = sectionOf(loc.pathname)
   const crumb = itemOf(loc.pathname, here)
+  const bigArt = here && !/^\/(playground|daily|practice|drills\/)/.test(loc.pathname) && loc.pathname.split('/').filter(Boolean).length <= 2
   useEffect(() => { setMenu(false); setOpen(null); if (!loc.hash) window.scrollTo(0, 0) }, [loc.pathname])
   useEffect(() => {
     if (loc.hash) {
@@ -104,6 +106,7 @@ export default function Layout() {
           <div className="container crumbs">
             <span className="crumb-sec">{here.icon} {here.label}</span>
             {crumb && <><span aria-hidden="true">›</span><span>{crumb.label}</span></>}
+            {bigArt && <span className="sec-art"><SectionArt id={here.id} size={92} /></span>}
           </div>
         )}
         <Outlet />

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Mission, { Onboarding, getProfile, startWeek } from '../components/Mission.jsx'
 import DailyBanner from '../components/DailyBanner.jsx'
@@ -13,10 +13,23 @@ import { useProgress } from '../lib/progress.js'
 import { weekDone } from './Path.jsx'
 import { BRAND, MANTRAS } from '../data/extras.js'
 import { SECTIONS } from '../data/sections.js'
+import { SectionArt, DataRain } from '../components/DataArt.jsx'
 
 const chapters = booksIndex.reduce((a, b) => a + b.chapters.length, 0)
 const scenarios = scen.sections.reduce((a, s) => a + s.questions.length, 0)
 const COST = [['Live bootcamps', '₹60,000 – ₹2,50,000'], ['Self-paced platforms', '₹15,000 – ₹20,000 / yr'], ['Zero to Hero', '₹0']]
+
+function Count({ to }) {
+  const [v, setV] = useState(0)
+  useEffect(() => {
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) { setV(to); return }
+    let raf, t0
+    const step = (t) => { t0 ??= t; const k = Math.min(1, (t - t0) / 1400); setV(Math.round(to * (1 - Math.pow(1 - k, 3)))); if (k < 1) raf = requestAnimationFrame(step) }
+    raf = requestAnimationFrame(step)
+    return () => cancelAnimationFrame(raf)
+  }, [to])
+  return v
+}
 
 function greet() {
   const h = new Date().getHours()
@@ -38,6 +51,7 @@ export default function Home() {
     <>
       <section className="hero2">
         <div className="hero-grid-bg" aria-hidden="true" />
+        <DataRain />
         <div className="container hero2-grid">
           <div className="hero2-copy">
             <div className="hello"><span className="wave" aria-hidden="true">👋</span>{greet()} Free forever · no signup</div>
@@ -50,10 +64,10 @@ export default function Home() {
               <Link to="/playground" className="btn btn-ghost">Run any SQL now</Link>
             </div>
             <dl className="ticker">
-              <div><dt>Chapters</dt><dd>{chapters}</dd></div>
-              <div><dt>Runnable SQL</dt><dd>{sqlQ.questions.length}</dd></div>
-              <div><dt>Interview Qs</dt><dd>{pyQ.questions.length + scenarios + QUIZ.length}</dd></div>
-              <div><dt>Cost</dt><dd>₹0</dd></div>
+              <div><dt>Chapters</dt><dd className="glow-num"><Count to={chapters} /></dd></div>
+              <div><dt>Runnable SQL</dt><dd className="glow-num"><Count to={sqlQ.questions.length} /></dd></div>
+              <div><dt>Interview Qs</dt><dd className="glow-num"><Count to={pyQ.questions.length + scenarios + QUIZ.length} /></dd></div>
+              <div><dt>Cost</dt><dd className="glow-num">₹0</dd></div>
             </dl>
           </div>
           <Console />
@@ -74,7 +88,7 @@ export default function Home() {
           <div className="steps">
             {SECTIONS.filter((x) => x.id !== 'daily').map((sec, i) => (
               <div key={sec.id} className="step card" data-sec={sec.id}>
-                <div className="step-top"><span className="step-n">0{i + 1}</span><span className="step-ico" aria-hidden="true">{sec.icon}</span></div>
+                <div className="step-top"><span className="step-n">0{i + 1}</span><span className="step-ico" aria-hidden="true"><SectionArt id={sec.id} size={46} /></span></div>
                 <div className="step-k">{sec.blurb}</div>
                 <h3>{sec.label}</h3>
                 <p>{sec.lead}</p>
