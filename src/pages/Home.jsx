@@ -2,24 +2,26 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Mission, { Onboarding, getProfile, startWeek } from '../components/Mission.jsx'
 import DailyBanner from '../components/DailyBanner.jsx'
-import Machine from '../components/Machine.jsx'
 import Console from '../components/Console.jsx'
 import booksIndex from '../content/books-index.json'
 import sqlQ from '../content/sql-questions.json'
 import pyQ from '../content/py-questions.json'
 import scen from '../content/scenarios.json'
 import { WEEKS, PHASES } from '../data/path.js'
-import { DRILLS } from '../data/drills.js'
 import { QUIZ } from '../data/quiz.js'
 import { useProgress } from '../lib/progress.js'
 import { weekDone } from './Path.jsx'
 import { BRAND, MANTRAS } from '../data/extras.js'
+import { SECTIONS } from '../data/sections.js'
 
 const chapters = booksIndex.reduce((a, b) => a + b.chapters.length, 0)
 const scenarios = scen.sections.reduce((a, s) => a + s.questions.length, 0)
-const TOPICS = ['SQL', 'Window functions', 'PySpark', 'Spark internals', 'Delta Lake', 'Databricks', 'Unity Catalog', 'Azure Data Factory', 'ADLS Gen2', 'Medallion', 'SCD Type 2', 'Streaming', 'Kafka', 'Watermarks', 'Airflow', 'Data quality', 'CI/CD', 'Data modeling', 'Interviews']
-const SPINES = { sql: 'var(--bronze)', spark: 'var(--primary)', lake: 'var(--accent)', stream: 'var(--silver)' }
 const COST = [['Live bootcamps', '₹60,000 – ₹2,50,000'], ['Self-paced platforms', '₹15,000 – ₹20,000 / yr'], ['Zero to Hero', '₹0']]
+
+function greet() {
+  const h = new Date().getHours()
+  return h < 5 ? 'Up late?' : h < 12 ? 'Good morning!' : h < 17 ? 'Good afternoon!' : 'Good evening!'
+}
 
 export default function Home() {
   const p = useProgress()
@@ -27,15 +29,18 @@ export default function Home() {
   const [onboard, setOnboard] = useState(false)
   const profile = getProfile()
   const doneWeeks = WEEKS.filter((w) => weekDone(w, p)).length
-  const drill = DRILLS[0]
-  const sample = QUIZ.find((x) => x.id === 'sql7')
+    const STAT = {
+    learn: `${chapters} chapters · ${Object.keys(p.chapters).length} read`,
+    practice: `${sqlQ.questions.length + pyQ.questions.length} problems · ${Object.values(p.sql).filter((v) => v === 'solved').length + Object.values(p.py).filter((v) => v === 'solved').length} solved`,
+    interview: `${QUIZ.length} quiz questions · ${scenarios} scenarios`,
+  }
   return (
     <>
       <section className="hero2">
         <div className="hero-grid-bg" aria-hidden="true" />
         <div className="container hero2-grid">
           <div className="hero2-copy">
-            <div className="eyebrow">Free forever · 12 weeks · no signup</div>
+            <div className="hello"><span className="wave" aria-hidden="true">👋</span>{greet()} Free forever · no signup</div>
             <h1>Become a data engineer <em>by shipping</em> real pipelines.</h1>
             <p className="lead">The full path from SQL to production lakehouses on Azure and Databricks. You write real SQL and Python in the browser, fix broken pipelines from a 3 AM page, and practise the interviews that decide offers.</p>
             <div className="hero-cta">
@@ -59,74 +64,26 @@ export default function Home() {
       {(started || profile) && <Mission />}
       <DailyBanner />
 
-      <div className="marquee" aria-hidden="true">
-        <div className="marquee-track">
-          {[...TOPICS, ...TOPICS].map((t, i) => <span key={i}>{t}</span>)}
-        </div>
-      </div>
-
-      <section className="section">
+      <section className="section steps-sec">
         <div className="container">
-          <div className="section-head">
-            <div className="eyebrow">What's inside</div>
-            <h2>Everything between <em>zero</em> and your first offer.</h2>
-            <p>Courses teach you to recognise answers. Jobs ask you to produce them. Every part of this site ends with you doing the work.</p>
+          <div className="section-head center">
+            <div className="eyebrow">How it works</div>
+            <h2>Three steps. <em>One</em> habit.</h2>
+            <p>Read a little, do a lot, then prove it. Every part of the site sits in one of these three places.</p>
           </div>
-          <div className="bento">
-            <Link to="/practice/sql" className="tile tile-sql card-link">
-              <div className="tile-k">SQL lab</div>
-              <h3>{sqlQ.questions.length} interview questions on a real engine</h3>
-              <p>DuckDB runs on the page. Write the query, press Check, and see exactly which rows differ.</p>
-              <pre className="mini-code"><b>WITH</b> ranked <b>AS</b> (<br />  <b>SELECT</b> *, <b>ROW_NUMBER</b>() <b>OVER</b> (<br />    <b>PARTITION BY</b> order_id<br />    <b>ORDER BY</b> updated_at <b>DESC</b>) rn<br />  <b>FROM</b> orders)<br /><b>SELECT</b> * <b>FROM</b> ranked <b>WHERE</b> rn = 1;</pre>
-            </Link>
-            <Link to={`/drills/${drill.id}`} className="tile tile-drill card-link">
-              <div className="tile-k" style={{ color: 'var(--danger)' }}>● Incident drill</div>
-              <div className="pager-mini"><b>03:12</b> {drill.pager}</div>
-              <h3>Fix the broken pipeline</h3>
-              <p>{DRILLS.length} drills from real failures: schema drift, replayed duplicates, late data, null storms, outages.</p>
-            </Link>
-            <Link to="/interview/quiz" className="tile tile-quiz card-link">
-              <div className="tile-k">Quiz · {QUIZ.length} questions</div>
-              <h3>{sample.q}</h3>
-              <ul className="quiz-mini">{sample.a.slice(0, 3).map((o, i) => <li key={i}><span>{'ABC'[i]}</span>{o}</li>)}</ul>
-              <p className="small muted" style={{ margin: 0 }}>Every wrong option is a mistake real candidates make.</p>
-            </Link>
-            <Link to="/learn" className="tile tile-books card-link">
-              <div className="tile-k">Handbooks</div>
-              <h3>Four books, {chapters} chapters, written from production work</h3>
-              <div className="spines">
-                {booksIndex.map((b) => <span key={b.slug} style={{ '--c': SPINES[b.icon] }}><i>{b.title.replace(/ Handbook.*/, '')}</i></span>)}
+          <div className="steps">
+            {SECTIONS.filter((x) => x.id !== 'daily').map((sec, i) => (
+              <div key={sec.id} className="step card" data-sec={sec.id}>
+                <div className="step-top"><span className="step-n">0{i + 1}</span><span className="step-ico" aria-hidden="true">{sec.icon}</span></div>
+                <div className="step-k">{sec.blurb}</div>
+                <h3>{sec.label}</h3>
+                <p>{sec.lead}</p>
+                <div className="step-links">
+                  {sec.items.slice(0, 4).map((it) => <Link key={it.to} to={it.to}><span aria-hidden="true">{it.icon}</span>{it.label}<i aria-hidden="true">→</i></Link>)}
+                </div>
+                <div className="step-stat">{STAT[sec.id]}</div>
               </div>
-            </Link>
-            <Link to="/practice/python" className="tile tile-py card-link">
-              <div className="tile-k">Python lab</div>
-              <h3>Python in a Web Worker</h3>
-              <p>Interview problems with auto-checks, plus {pyQ.questions.filter((q) => q.section === 'PySpark').length} PySpark questions to reason through.</p>
-            </Link>
-            <Link to="/interview/flashcards" className="tile tile-flash card-link">
-              <div className="tile-k">Flashcards</div>
-              <h3>Five minutes a day</h3>
-              <p>Spaced repetition brings back what you are about to forget.</p>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      <section className="section">
-        <div className="container">
-          <div className="flow-sec">
-            <div>
-              <div className="eyebrow">How the work flows</div>
-              <h2>Raw data in. <em>Trusted</em> data out.</h2>
-              <p className="muted">Every phase of the path builds one part of this machine: ingest with Data Factory, land in bronze, clean and conform in silver, model in gold, and keep it running with orchestration, quality checks and CI/CD.</p>
-              <ul className="legend">
-                <li><span style={{ background: 'var(--bronze)' }} />Bronze: raw and append-only, replayable</li>
-                <li><span style={{ background: 'var(--silver)' }} />Silver: deduplicated, typed, conformed</li>
-                <li><span style={{ background: 'var(--gold)' }} />Gold: modelled for BI and ML</li>
-                <li><span style={{ background: 'var(--danger)' }} />Quarantine: bad rows, held for review</li>
-              </ul>
-            </div>
-            <Machine />
+            ))}
           </div>
         </div>
       </section>
