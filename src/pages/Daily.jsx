@@ -66,7 +66,7 @@ function drawCard(n, c, rec, streak) {
   g.fillText(rec.solved ? `Solved in ${rec.tries} ${rec.tries === 1 ? 'try' : 'tries'}` : 'Answer revealed', 72, 400)
   g.fillStyle = '#b9b5ab'; g.font = '400 30px "Inter Tight", system-ui, sans-serif'
   g.fillText([rec.solved ? fmtTime(rec.secs) : null, rec.hint ? 'used a hint' : 'no hints', streak > 1 ? `${streak}-day streak` : null].filter(Boolean).join('  ·  '), 72, 452)
-  g.fillStyle = '#f2b14b'; g.font = '500 24px "JetBrains Mono", monospace'; g.fillText('Zero to Hero · Data Engineering', 72, 560)
+  g.fillStyle = '#f2b14b'; g.font = '500 24px "JetBrains Mono", monospace'; g.fillText('Data Dhaba · datadhaba', 72, 560)
   g.fillStyle = '#7d7a72'; g.fillText('2.6M rows · real SQL · free', W - 470, 560)
   return cv
 }

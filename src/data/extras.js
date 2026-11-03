@@ -1,6 +1,6 @@
 export const BRAND = {
-  name: 'Zero to Hero',
-  tagline: 'Data Engineering',
+  name: 'Data Dhaba',
+  tagline: 'On your highway to get hired',
   author: 'Sagar Konkanagaon',
   authorRole: 'Senior Data Engineer, Bengaluru',
   email: 'sagarkonkanagaon@gmail.com',
