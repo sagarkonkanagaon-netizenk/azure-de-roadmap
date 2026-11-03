@@ -2,10 +2,10 @@
 export const SECTIONS = [
   {
     id: 'learn', label: 'Learn', icon: '🎓', blurb: 'Understand it',
-    lead: 'A 12-week path, four handbooks and animated SQL. Read a little every day.',
+    lead: 'A 24-week path, four handbooks and animated SQL. Read a little every day.',
     items: [
       { to: '/learn', icon: '📚', label: 'Overview', desc: 'Handbooks and where to start' },
-      { to: '/path', icon: '🗺️', label: '12-week path', desc: 'Week by week, SQL to lakehouse' },
+      { to: '/path', icon: '🗺️', label: '24-week path', desc: '5½ months, SQL to job offer' },
       { to: '/visual', icon: '✨', label: 'Visual SQL', desc: 'Joins and window functions, animated' },
       { to: '/notes', icon: '📝', label: 'Notes & PDFs', desc: 'Download the handbooks to keep' },
       { to: '/projects', icon: '🏗️', label: 'Projects', desc: 'Portfolio builds you can show' },

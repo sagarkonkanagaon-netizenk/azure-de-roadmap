@@ -32,7 +32,7 @@ const BASICS = [
 ]
 
 const STEPS = [
-  { n: 1, title: 'Learn', body: 'Follow the 12-week path. Each week has short reading, a little practice and a checklist.', to: '/learn', cta: 'Open Learn' },
+  { n: 1, title: 'Learn', body: 'Follow the 24-week path. Each week is a ticket from your lead, with short reading, daily practice and a build.', to: '/learn', cta: 'Open Learn' },
   { n: 2, title: 'Practise', body: 'Write real SQL and Python in the browser. Answers are checked instantly, no setup needed.', to: '/practice', cta: 'Open Practice' },
   { n: 3, title: 'Get hired', body: 'Quizzes, flashcards and model answers for the questions interviewers actually ask.', to: '/interview', cta: 'Open Interview' },
 ]
@@ -51,7 +51,7 @@ export default function Home() {
           <div className="hero3-copy">
             <div className="hero-brand"><HeroMark /><div className="hero-brand-txt"><p className="hero-tagline">On your highway <em>to get hired</em></p><span className="pill-note">Free · No signup · Works in your browser</span></div></div>
             <h1>Learn data engineering <em>by doing it.</em></h1>
-            <p className="lead">A clear 12-week path from your first SQL query to real pipelines on the cloud. Read a little, practise a lot, and get ready for interviews.</p>
+            <p className="lead">A 24-week path, about five and a half months, from your first SQL query to real pipelines on the cloud. Read a little, practise a lot, and get ready for interviews.</p>
             <div className="hero-cta">
               {returning
                 ? <Link to={`/path/${startWeek(profile)}`} className="btn btn-primary btn-lg">Continue learning</Link>
@@ -112,7 +112,7 @@ export default function Home() {
         <div className="container">
           <div className="spread path-head">
             <div className="section-head" style={{ margin: 0 }}>
-              <div className="eyebrow">The 12-week path · {doneWeeks}/12 done</div>
+              <div className="eyebrow">The 24-week path · {doneWeeks}/{WEEKS.length} done</div>
               <h2>Seven phases, one week at a time</h2>
               <p>About two hours on weekdays and five at weekends.</p>
             </div>
@@ -139,7 +139,7 @@ export default function Home() {
               <span className="basic-k">Free, forever</span>
               <h3>Everything you need to learn</h3>
               <ul className="ticks">
-                <li>The full 12-week path and four handbooks</li>
+                <li>The full 24-week path and four handbooks</li>
                 <li>SQL Lab, Python Lab and the 2.6M-row Playground</li>
                 <li>Daily challenge, quizzes and flashcards</li>
               </ul>

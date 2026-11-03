@@ -22,7 +22,7 @@ export function tally(p) {
     scenario: Object.keys(p.scenarios).length,
     drill: Object.keys(p.drills).length,
     project: Object.keys(p.checks).filter((k) => /^proj\d+$/.test(k)).length,
-    check: Object.keys(p.checks).filter((k) => /^w\d+:/.test(k)).length,
+    check: Object.keys(p.checks).filter((k) => /^v2w\d+:/.test(k)).length,
     card: Object.values(p.cards).filter((c) => c.box >= 3).length,
     daily: Object.entries(p.checks).filter(([k, v]) => k.startsWith('daily:') && v && v.solved).length,
   }

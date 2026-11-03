@@ -110,7 +110,7 @@ export function About() {
   )
 }
 
-const FREE = ['The full 12-week path and every handbook', 'SQL lab: 78 questions, auto-checked', 'Python lab with auto-checks', 'Incident drills, scenario and PySpark questions', 'Flashcards and progress tracking', 'No account, no ads, no paywall on learning']
+const FREE = ['The full 24-week path and every handbook', 'SQL lab: 78 questions, auto-checked', 'Python lab with auto-checks', 'Incident drills, scenario and PySpark questions', 'Flashcards and progress tracking', 'No account, no ads, no paywall on learning']
 const PRO = ['AI mock interviewer that asks follow-ups and scores you', 'Graded capstone reviews on your GitHub projects', 'Shareable certificate of completion', 'Progress sync across devices', 'Early access to the live cohort']
 
 export function Pro() {

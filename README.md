@@ -4,7 +4,7 @@
 
 **On your highway to get hired.** A free, hands-on path into data engineering. Learn by doing, in the browser:
 
-- **12-week path** from SQL to production pipelines on Azure and Databricks
+- **24-week path** (about 5½ months, 8 stops, 8 boss builds) from your first SQL query to production pipelines on Azure and Databricks
 - **Four handbooks** (SQL, PySpark, Databricks, Streaming): 98 chapters
 - **SQL lab**: 78 interview questions on a real DuckDB engine in your browser, auto-checked
 - **Python lab**: Pyodide in a Web Worker, auto-checked
