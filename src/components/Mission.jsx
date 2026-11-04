@@ -70,9 +70,13 @@ export default function Mission() {
       ? { to: `/drills/${drill.id}`, k: 'Fix', t: drill.title, d: 'Incident drill', xp: 50 }
       : { to: '/interview/flashcards', k: 'Review', t: due ? `${due} flashcards due` : 'Flashcards', d: 'Five minutes', xp: 5 },
   ]
+  let backedUp = 0
+  try { backedUp = Number(localStorage.getItem('dd:backup')) || 0 } catch (e) { /* ignore */ }
+  const nudge = t.xp >= 100 && Date.now() - backedUp > 14 * 864e5
   return (
     <section className="mission">
       <div className="container">
+        {nudge && <Link to="/progress#backup" className="backup-nudge"><span aria-hidden="true">💾</span><span><b>{t.xp} XP saved only in this browser.</b> Back it up in one tap, so clearing your browser never wipes it.</span><span className="backup-go">Back up →</span></Link>}
         <div className="mission-grid">
           <div className="mission-me card">
             <div className="lv-ico">{lv.icon}</div>

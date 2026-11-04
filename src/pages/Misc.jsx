@@ -1,5 +1,7 @@
+import { useState } from 'react'
 import { Link, Navigate } from 'react-router-dom'
-import { PRO_PRICE, PRO_PLANS, PRO_PILLARS, PRO_PROJECTS, PRO_CHEATSHEETS, PRO_PROJECT_COUNT } from '../data/pro.js'
+import Waitlist from '../components/Waitlist.jsx'
+import { PRO_PRICE, PRO_PLANS, PRO_PILLARS, PRO_PROJECTS, PRO_CHEATSHEETS, PRO_PROJECT_COUNT, PRO_FAQ } from '../data/pro.js'
 import guide from '../content/guide.json'
 import { BRAND, CERTS, FREE_PLATFORMS, MANTRAS, FINAL_WORD } from '../data/extras.js'
 import { useProgress, toggleIn } from '../lib/progress.js'
@@ -113,7 +115,8 @@ export function About() {
 
 const FREE = ['The full 24-week path and every handbook', 'SQL lab: 78 questions, auto-checked', 'Python lab with auto-checks', 'Incident drills, scenario and PySpark questions', 'Flashcards and progress tracking', 'No account, no ads, no paywall on learning']
 export function Pro() {
-  const mail = `mailto:${BRAND.email}?subject=${encodeURIComponent(BRAND.name + ' Pro waitlist')}&body=${encodeURIComponent('Hi, please add me to the Data Dhaba Pro waitlist.\n\nWhere I am in my journey: \nWhat I want most from Pro: ')}`
+  const [plan, setPlan] = useState('')
+  const pick = (name) => { setPlan(name); document.getElementById('waitlist')?.scrollIntoView({ behavior: 'smooth', block: 'start' }) }
   return (
     <div className="page">
       <div className="container">
@@ -129,11 +132,13 @@ export function Pro() {
               <div className="spread"><span className="chip">{pl.name}</span>{pl.best ? <span className="chip chip-primary">Best value</span> : <span className="chip chip-warn">{PRO_PRICE.status}</span>}</div>
               <div className="price">{pl.amount}</div>
               <div className="small muted">{pl.per} · {pl.sub}</div>
-              <a className={'btn ' + (pl.best ? 'btn-primary' : 'btn-ghost')} href={mail}>Join the waitlist</a>
+              <button className={'btn ' + (pl.best ? 'btn-primary' : 'btn-ghost')} onClick={() => pick(pl.name)}>Join the waitlist</button>
             </div>
           ))}
         </div>
         <p className="small muted center" style={{ marginTop: 0 }}>Coming soon. No payment now: you get an email the day it opens.</p>
+
+        <div id="waitlist" className="wl-wrap"><Waitlist plan={plan} /></div>
 
         <h2 className="ds-h">What you get</h2>
         <div className="grid g2 pro-pillars">
@@ -148,11 +153,11 @@ export function Pro() {
         <h2 className="ds-h">The {PRO_PROJECT_COUNT} projects</h2>
         <p className="muted" style={{ marginTop: -4 }}>Each one is a portfolio piece: a brief, messy data, a step-by-step build, a solution walkthrough and a README ready for GitHub.</p>
         <div className="grid g2">
-          {PRO_PROJECTS.map((g) => (
-            <div key={g.group} className="card card-pad">
-              <h3>{g.group}</h3>
-              <ol className="pro-list">{g.items.map((it) => <li key={it}>{it}</li>)}</ol>
-            </div>
+          {PRO_PROJECTS.map((g, i) => (
+            <details key={g.group} className="card card-pad pro-group" open={i === 0}>
+              <summary><h3>{g.group}</h3><span className="chip">{g.items.length}</span></summary>
+              <ol className="pro-list" start={PRO_PROJECTS.slice(0, i).reduce((a, x) => a + x.items.length, 1)}>{g.items.map((it) => <li key={it}>{it}</li>)}</ol>
+            </details>
           ))}
         </div>
 
@@ -164,7 +169,16 @@ export function Pro() {
           <ul className="ticks">{FREE.map((x) => <li key={x}>{x}</li>)}</ul>
           <Link className="btn btn-ghost" to="/path">Start learning free</Link>
         </div>
-        <p className="small muted center" style={{ marginTop: 20 }}>Students who can't afford Pro can email for a free pass. Nobody should be priced out of learning.</p>
+        <h2 className="ds-h">Questions</h2>
+        <div className="faq">
+          {PRO_FAQ.map((f) => (
+            <details key={f.q} className="faq-item"><summary>{f.q}</summary><p>{f.a}</p></details>
+          ))}
+        </div>
+        <div className="card card-pad pro-end">
+          <div><h3>Can't afford Pro?</h3><p className="muted">Students can ask for a free pass. Nobody should be priced out of learning.</p></div>
+          <a className="btn btn-ghost" href={`mailto:${BRAND.email}?subject=${encodeURIComponent('Data Dhaba student pass')}`}>Ask for a student pass</a>
+        </div>
       </div>
     </div>
   )
@@ -182,5 +196,48 @@ export function NotFound() {
         <div className="row" style={{ justifyContent: 'center' }}><Link className="btn btn-primary" to="/">Home</Link><Link className="btn btn-ghost" to="/path">The path</Link></div>
       </div>
     </div>
+  )
+}
+
+function Policy({ eyebrow, title, updated, sections }) {
+  return (
+    <div className="page">
+      <div className="container narrow">
+        <div className="page-head">
+          <div className="eyebrow">{eyebrow}</div>
+          <h1>{title}</h1>
+          <p className="small muted">Last updated {updated}</p>
+        </div>
+        <div className="prose">
+          {sections.map(([h, body]) => (
+            <section key={h}><h2>{h}</h2>{body.map((t) => <p key={t}>{t}</p>)}</section>
+          ))}
+          <p>Questions? Email <a href={`mailto:${BRAND.email}`}>{BRAND.email}</a>.</p>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export function Privacy() {
+  return (
+    <Policy eyebrow="Privacy" title="Your data, in plain words" updated="4 November 2026" sections={[
+      ['The short version', [`${BRAND.name} has no accounts, no ads and no tracking cookies. Your learning progress stays in your own browser.`]],
+      ['Your progress', ['XP, streaks, solved questions and checklists are saved in your browser\'s local storage on this device. They are never sent to us. Clearing your browser data deletes them, so use Export on the My progress page to keep a copy.']],
+      ['The Pro waitlist', ['If you join the waitlist, we keep your name, email, the plan you picked, where you are in your career and any note you write. It is stored in a Google Form owned by the site\'s author.', 'We use it only to email you about Pro. We never sell it or share it. Email us and we will delete it.']],
+      ['Code that runs in your browser', ['The SQL engine (DuckDB) and Python (Pyodide) are downloaded from the jsDelivr CDN the first time you use them. Your queries and code run on your device and are not sent anywhere.']],
+      ['Hosting', ['The site is hosted on GitHub Pages. GitHub may keep standard server logs, such as IP addresses, to run and protect the service.']],
+    ]} />
+  )
+}
+
+export function Terms() {
+  return (
+    <Policy eyebrow="Terms" title="Terms of use" updated="4 November 2026" sections={[
+      ['Using the site', [`${BRAND.name} is free to use for learning. You can share links to any page. Please don\'t copy the handbooks or questions wholesale onto other sites.`]],
+      ['No guarantees', ['We work hard to keep the content correct, but it is provided as is. It is learning material, not professional advice, and it can\'t promise a job or an exam result.']],
+      ['Pro', ['Pro is not on sale yet, and joining the waitlist costs nothing. Prices, renewal and refund terms will be published here before anyone is asked to pay.']],
+      ['Names and trademarks', ['Product names such as Databricks, Azure, Spark or Kafka belong to their owners and are used only to describe what you learn. RasoiRun is a made-up company.']],
+    ]} />
   )
 }

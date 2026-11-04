@@ -87,6 +87,7 @@ export default function Home() {
               </article>
             ))}
           </div>
+          <p className="swipe-hint" aria-hidden="true">Swipe for more →</p>
         </div>
       </section>
 
@@ -106,6 +107,7 @@ export default function Home() {
               </li>
             ))}
           </ol>
+          <p className="swipe-hint" aria-hidden="true">Swipe for more →</p>
         </div>
       </section>
 
