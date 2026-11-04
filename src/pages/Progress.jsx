@@ -1,5 +1,5 @@
-import { useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useRef, useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import booksIndex from '../content/books-index.json'
 import sqlQ from '../content/sql-questions.json'
 import pyQ from '../content/py-questions.json'
@@ -24,10 +24,13 @@ export default function ProgressPage() {
   const s = streak(p.days)
   const last28 = Array.from({ length: 28 }, (_, i) => { const d = new Date(); d.setDate(d.getDate() - (27 - i)); return d.toISOString().slice(0, 10) })
 
+  const loc = useLocation()
+  useEffect(() => { if (loc.hash === '#backup') setTimeout(() => document.getElementById('backup')?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 50) }, [loc.hash])
   const download = () => {
     const blob = new Blob([exportProgress()], { type: 'application/json' })
     const a = document.createElement('a')
-    a.href = URL.createObjectURL(blob); a.download = 'zero-to-hero-progress.json'; a.click()
+    a.href = URL.createObjectURL(blob); a.download = 'data-dhaba-progress.json'; a.click()
+    try { localStorage.setItem('dd:backup', String(Date.now())) } catch (err) { /* ignore */ }
     setTimeout(() => URL.revokeObjectURL(a.href), 1000)
   }
   const upload = async (e) => {
@@ -93,8 +96,8 @@ export default function ProgressPage() {
             )
           })}
         </div>
-        <div className="row">
-          <button className="btn btn-ghost btn-sm" onClick={download}>Export progress</button>
+        <div className="row backup-row" id="backup">
+          <button className="btn btn-primary btn-sm" onClick={download}>Back up progress</button>
           <button className="btn btn-ghost btn-sm" onClick={() => file.current.click()}>Import progress</button>
           <input ref={file} type="file" accept="application/json" style={{ display: 'none' }} onChange={upload} />
           <button className="btn btn-ghost btn-sm" onClick={() => { if (window.confirm('Reset all progress on this device?')) resetProgress() }}>Reset</button>

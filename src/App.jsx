@@ -15,7 +15,7 @@ import Flashcards from './pages/Flashcards.jsx'
 import Quiz from './pages/Quiz.jsx'
 import Visual from './pages/Visual.jsx'
 import Notes, { Note } from './pages/Notes.jsx'
-import { Projects, Resources, About, Pro, NotFound } from './pages/Misc.jsx'
+import { Projects, Resources, About, Pro, NotFound, Privacy, Terms } from './pages/Misc.jsx'
 import ProgressPage from './pages/Progress.jsx'
 
 export default function App() {
@@ -57,6 +57,8 @@ export default function App() {
           <Route path="progress" element={<ProgressPage />} />
           <Route path="pro" element={<Pro />} />
           <Route path="about" element={<About />} />
+          <Route path="privacy" element={<Privacy />} />
+          <Route path="terms" element={<Terms />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

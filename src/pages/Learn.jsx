@@ -10,6 +10,10 @@ import { headings } from '../lib/md.js'
 import { useProgress, toggleIn } from '../lib/progress.js'
 import { PHASES } from '../data/path.js'
 
+// The seven study guides came before the 24-week path; each one belongs to the stop that teaches its topic.
+const GUIDE_STOP = { 1: 1, 2: 3, 3: 5, 4: 4, 5: 6, 6: 7, 7: 8 }
+const guideStop = (n) => PHASES.find((x) => x.n === GUIDE_STOP[n]) || PHASES[0]
+
 const ICON = { sql: '🗄️', spark: '⚡', lake: '🏞️', stream: '🌊' }
 
 export default function Library() {
@@ -60,15 +64,15 @@ export default function Library() {
           })}
         </div>
         <div className="section-head" style={{ marginTop: 44 }}>
-          <h2>Phase study guides</h2>
-          <p>What to study in each phase of the path, with code, must-know questions and what to say in interviews. Covers Azure Data Factory, ADLS Gen2, CI/CD and governance.</p>
+          <h2>Study guides</h2>
+          <p>Seven deep-dive guides that sit alongside the path, with code, must-know questions and what to say in interviews. Covers Azure Data Factory, ADLS Gen2, CI/CD and governance.</p>
         </div>
         <div className="grid g3">
           {guide.phases.map((g) => {
-            const ph = PHASES.find((x) => x.n === g.n)
+            const ph = guideStop(g.n)
             return (
               <Link key={g.n} to={`/learn/azure/${g.n}`} className="card card-pad card-link" style={{ borderLeft: `4px solid ${ph.color}` }}>
-                <div className="small muted">Phase {g.n} · weeks {ph.weeks}</div>
+                <div className="small muted">Guide {g.n} · goes with stop {ph.n}, weeks {ph.weeks}</div>
                 <b>{g.title.replace(/^\S+\s/, '').replace(/^Phase \d+:\s*/, '')}</b>
               </Link>
             )
@@ -214,7 +218,7 @@ export function GuidePhase() {
   const { phase } = useParams()
   const g = guide.phases.find((x) => x.n === Number(phase))
   if (!g) return <div className="page container">Not found.</div>
-  const ph = PHASES.find((x) => x.n === g.n)
+  const ph = guideStop(g.n)
   const prev = guide.phases.find((x) => x.n === g.n - 1)
   const next = guide.phases.find((x) => x.n === g.n + 1)
   const clean = (t) => t.replace(/^\S+\s/, '').replace(/^Phase \d+:\s*/, '')
@@ -223,13 +227,13 @@ export function GuidePhase() {
       <div className="container narrow">
         <Link to="/path" className="small">← The path</Link>
         <div className="page-head" style={{ marginTop: 10 }}>
-          <div className="eyebrow" style={{ color: ph.color }}>Phase {g.n} study guide · weeks {ph.weeks}</div>
+          <div className="eyebrow" style={{ color: ph.color }}>Study guide {g.n} · stop {ph.n}, weeks {ph.weeks}</div>
           <h1>{clean(g.title)}</h1>
         </div>
         <Markdown md={g.md} />
         <div className="chapter-foot">
-          {prev ? <Link to={`/learn/azure/${prev.n}`}><small>← Phase {prev.n}</small>{clean(prev.title)}</Link> : <span />}
-          {next ? <Link className="next" to={`/learn/azure/${next.n}`}><small>Phase {next.n} →</small>{clean(next.title)}</Link> : <span />}
+          {prev ? <Link to={`/learn/azure/${prev.n}`}><small>← Guide {prev.n}</small>{clean(prev.title)}</Link> : <span />}
+          {next ? <Link className="next" to={`/learn/azure/${next.n}`}><small>Guide {next.n} →</small>{clean(next.title)}</Link> : <span />}
         </div>
       </div>
     </div>
