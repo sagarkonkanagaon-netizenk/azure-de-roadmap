@@ -1,3 +1,5 @@
+import DeviceWatch from './DeviceWatch.jsx'
+import { AUTH_ENABLED } from '../lib/auth.js'
 import { useEffect, useState } from 'react'
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
 import { useTheme } from '../lib/theme.js'
@@ -101,11 +103,12 @@ export default function Layout() {
         </div>
         <div className="container footer-base">
           <span>© {new Date().getFullYear()} {BRAND.name}</span>
-          <nav aria-label="Legal"><Link to="/privacy">Privacy</Link><Link to="/terms">Terms</Link><Link to="/pro">Pro waitlist</Link></nav>
+          <nav aria-label="Legal"><Link to="/privacy">Privacy</Link><Link to="/terms">Terms</Link><Link to="/pro">Pro waitlist</Link>{AUTH_ENABLED && <Link to="/account">Account</Link>}</nav>
         </div>
       </footer>
       {search && <Search onClose={() => setSearch(false)} />}
       <Celebrate />
+      <DeviceWatch />
     </div>
   )
 }

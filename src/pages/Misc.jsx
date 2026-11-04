@@ -240,9 +240,10 @@ function Policy({ eyebrow, title, updated, sections }) {
 export function Privacy() {
   return (
     <Policy eyebrow="Privacy" title="Your data, in plain words" updated="4 November 2026" sections={[
-      ['The short version', [`${BRAND.name} has no accounts, no ads and no tracking cookies. Your learning progress stays in your own browser.`]],
+      ['The short version', [`${BRAND.name} has no ads and no tracking cookies, and the free course needs no account. Your learning progress stays in your own browser.`]],
       ['Your progress', ['XP, streaks, solved questions and checklists are saved in your browser\'s local storage on this device. They are never sent to us. Clearing your browser data deletes them, so use Export on the My progress page to keep a copy.']],
       ['The Pro waitlist', ['If you join the waitlist, we keep your name, email, the plan you picked, where you are in your career and any note you write. It is stored in a Google Form owned by the site\'s author.', 'We use it only to email you about Pro. We never sell it or share it. Email us and we will delete it.']],
+      ['Accounts (Pro only)', ['When Pro opens, Pro members sign in with an email link or Google. We then store your email, your plan, and a random id plus a short label (such as "Chrome on Android") for the one device your account is active on. That is how one account stays on one device.', 'Accounts are run by Supabase, our database provider. You can ask us to delete your account at any time.']],
       ['Code that runs in your browser', ['The SQL engine (DuckDB) and Python (Pyodide) are downloaded from the jsDelivr CDN the first time you use them. Your queries and code run on your device and are not sent anywhere.']],
       ['Hosting', ['The site is hosted on GitHub Pages. GitHub may keep standard server logs, such as IP addresses, to run and protect the service.']],
     ]} />

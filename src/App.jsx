@@ -19,6 +19,7 @@ import { Projects, Resources, About, Pro, NotFound, Privacy, Terms } from './pag
 import ProProject from './pages/ProProject.jsx'
 import { SheetIndex, Sheet } from './pages/ProSheets.jsx'
 import ProgressPage from './pages/Progress.jsx'
+import Account from './pages/Account.jsx'
 
 export default function App() {
   return (
@@ -57,6 +58,7 @@ export default function App() {
           <Route path="projects" element={<Projects />} />
           <Route path="resources" element={<Resources />} />
           <Route path="progress" element={<ProgressPage />} />
+          <Route path="account" element={<Account />} />
           <Route path="pro" element={<Pro />} />
           <Route path="pro/projects/food-delivery-lakehouse" element={<ProProject />} />
           <Route path="pro/cheatsheets" element={<SheetIndex />} />
