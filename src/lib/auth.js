@@ -10,16 +10,30 @@ export function client() {
   if (!AUTH_ENABLED) return Promise.resolve(null)
   if (!clientPromise) {
     // A sign-in link or Google lands here with ?code=. Note it before the library swaps it for a session.
-    const fromRedirect = /[?&]code=/.test(window.location.search)
+    // An email link carries ?token_hash=, which works in any browser or app, not only the one that asked for it.
+    const params = new URLSearchParams(window.location.search)
+    const tokenHash = params.get('token_hash')
+    const fromRedirect = /[?&](code|token_hash|error_description)=/.test(window.location.search)
     clientPromise = import('@supabase/supabase-js').then(async ({ createClient }) => {
       const sb = createClient(URL_, KEY, { auth: { flowType: 'pkce', persistSession: true, detectSessionInUrl: true, storageKey: 'dd:auth' } })
+      if (tokenHash) {
+        const { error } = await sb.auth.verifyOtp({ token_hash: tokenHash, type: params.get('type') || 'email' })
+        if (error) { try { sessionStorage.setItem('dd:auth-error', error.message) } catch (e) { /* ignore */ } }
+      }
       const { data: { session } } = await sb.auth.getSession()
       if (fromRedirect) {
         if (session) await sb.rpc('claim_device', { p_device: deviceId(), p_label: deviceLabel() })
+        else {
+          const why = params.get('error_description') || 'That sign-in link has expired or was opened in a different browser. Enter your email again, or type the code from the email.'
+          try { if (!sessionStorage.getItem('dd:auth-error')) sessionStorage.setItem('dd:auth-error', why) } catch (e) { /* ignore */ }
+        }
         let next = null
         try { next = sessionStorage.getItem('dd:next'); sessionStorage.removeItem('dd:next') } catch (e) { /* ignore */ }
-        window.history.replaceState(null, '', window.location.pathname + (next ? '#' + next : window.location.hash))
-        if (next) window.dispatchEvent(new HashChangeEvent('hashchange'))
+        // Without a saved page (a new browser, or a failed link), show the account page so the result is clear.
+        if (!next || !session) next = '/account'
+        window.history.replaceState(null, '', window.location.pathname + '#' + next)
+        // React Router listens for popstate, not hashchange.
+        window.dispatchEvent(new PopStateEvent('popstate', { state: null }))
         announce()
       }
       return sb
@@ -54,7 +68,9 @@ export async function sendEmailLink(email) {
 
 export async function verifyCode(email, token) {
   const sb = await client()
-  const { error } = await sb.auth.verifyOtp({ email, token, type: 'email' })
+  let { error } = await sb.auth.verifyOtp({ email, token, type: 'email' })
+  // A first sign-in sends a "confirm signup" code, which older projects only accept as type 'signup'.
+  if (error) ({ error } = await sb.auth.verifyOtp({ email, token, type: 'signup' }))
   if (error) throw error
   await claimDevice()
   announce()
@@ -102,5 +118,5 @@ const announce = () => { try { window.dispatchEvent(new Event(AUTH_EVENT)) } cat
 
 export function mightBeSignedIn() {
   if (!AUTH_ENABLED) return false
-  try { return /[?&]code=/.test(window.location.search) || Boolean(localStorage.getItem('dd:auth')) } catch (e) { return false }
+  try { return /[?&](code|token_hash)=/.test(window.location.search) || Boolean(localStorage.getItem('dd:auth')) } catch (e) { return false }
 }
