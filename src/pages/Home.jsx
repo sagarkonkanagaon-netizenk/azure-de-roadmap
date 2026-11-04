@@ -7,6 +7,7 @@ import HeroMark from '../components/HeroMark.jsx'
 import sqlQ from '../content/sql-questions.json'
 import { WEEKS, PHASES } from '../data/path.js'
 import { useProgress } from '../lib/progress.js'
+import { PRO_PRICE, PRO_PROJECT_COUNT } from '../data/pro.js'
 import { weekDone } from './Path.jsx'
 
 // The basics, explained before any feature is shown.
@@ -146,14 +147,14 @@ export default function Home() {
               <Link to="/path/1" className="btn btn-primary">Start week 1</Link>
             </div>
             <div className="plan card plan-pro">
-              <span className="basic-k">Pro · coming soon · ₹299/month</span>
-              <h3>Extra help to get hired</h3>
+              <span className="basic-k">Pro · coming soon · {PRO_PRICE.amount} one-time</span>
+              <h3>Everything to get hired</h3>
               <ul className="ticks">
-                <li>AI mock interviewer</li>
-                <li>Reviews of your capstone project</li>
-                <li>A certificate you can share</li>
+                <li>{PRO_PROJECT_COUNT} end-to-end portfolio projects</li>
+                <li>60+ cheat sheets and 500+ interview answers</li>
+                <li>AI mock interviewer and system design cases</li>
               </ul>
-              <Link to="/pro" className="btn btn-ghost">Join the waitlist</Link>
+              <Link to="/pro" className="btn btn-ghost">See what's inside</Link>
             </div>
           </div>
         </div>

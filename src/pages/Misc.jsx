@@ -1,4 +1,5 @@
 import { Link, Navigate } from 'react-router-dom'
+import { PRO_PRICE, PRO_PILLARS, PRO_PROJECTS, PRO_CHEATSHEETS, PRO_PROJECT_COUNT } from '../data/pro.js'
 import guide from '../content/guide.json'
 import { BRAND, CERTS, FREE_PLATFORMS, MANTRAS, FINAL_WORD } from '../data/extras.js'
 import { useProgress, toggleIn } from '../lib/progress.js'
@@ -111,32 +112,57 @@ export function About() {
 }
 
 const FREE = ['The full 24-week path and every handbook', 'SQL lab: 78 questions, auto-checked', 'Python lab with auto-checks', 'Incident drills, scenario and PySpark questions', 'Flashcards and progress tracking', 'No account, no ads, no paywall on learning']
-const PRO = ['AI mock interviewer that asks follow-ups and scores you', 'Graded capstone reviews on your GitHub projects', 'Shareable certificate of completion', 'Progress sync across devices', 'Early access to the live cohort']
-
 export function Pro() {
-  const mail = `mailto:${BRAND.email}?subject=${encodeURIComponent(BRAND.name + ' Pro waitlist')}&body=${encodeURIComponent('Hi, please add me to the Pro waitlist.\n\nWhere I am in my journey: ')}`
+  const mail = `mailto:${BRAND.email}?subject=${encodeURIComponent(BRAND.name + ' Pro waitlist')}&body=${encodeURIComponent('Hi, please add me to the Data Dhaba Pro waitlist.\n\nWhere I am in my journey: \nWhat I want most from Pro: ')}`
   return (
     <div className="page">
       <div className="container">
         <div className="page-head center" style={{ marginInline: 'auto' }}>
-          <div className="eyebrow">Pricing</div>
-          <h1>Learning is free. Forever.</h1>
-          <p>Everything you need to learn data engineering stays free. Pro adds the things that cost money to run: an AI interviewer, human-style reviews and a certificate.</p>
+          <div className="eyebrow">Data Dhaba Pro · {PRO_PRICE.status}</div>
+          <h1>Everything between learning and getting hired.</h1>
+          <p>The free path teaches you data engineering. Pro gives you the portfolio, the shortcuts and the interview practice that land the job: {PRO_PROJECT_COUNT} end-to-end projects, 60+ cheat sheets, 500+ interview answers and an AI mock interviewer.</p>
         </div>
-        <div className="grid g2" style={{ maxWidth: 860, marginInline: 'auto' }}>
-          <div className="card card-pad">
-            <span className="chip">Free</span>
-            <div className="price">₹0</div>
-            <ul className="ticks">{FREE.map((x) => <li key={x}>{x}</li>)}</ul>
-            <Link className="btn btn-ghost" to="/path">Start learning</Link>
+
+        <div className="pro-hero card">
+          <div>
+            <span className="chip chip-warn">{PRO_PRICE.status}</span>
+            <div className="price">{PRO_PRICE.amount}</div>
+            <div className="small muted">{PRO_PRICE.note}</div>
           </div>
-          <div className="card card-pad" style={{ borderColor: 'var(--primary)' }}>
-            <div className="spread"><span className="chip chip-primary">Pro</span><span className="chip chip-warn">Coming soon</span></div>
-            <div className="price">₹299<small>/month</small></div>
-            <div className="small muted">or ₹1,999 a year (save 44%)</div>
-            <ul className="ticks">{PRO.map((x) => <li key={x}>{x}</li>)}</ul>
-            <a className="btn btn-primary" href={mail}>Join the waitlist</a>
+          <div className="pro-hero-cta">
+            <a className="btn btn-primary btn-lg" href={mail}>Join the waitlist</a>
+            <span className="small muted">No payment now. You get an email the day it opens.</span>
           </div>
+        </div>
+
+        <h2 className="ds-h">What you get</h2>
+        <div className="grid g2 pro-pillars">
+          {PRO_PILLARS.map((x) => (
+            <div key={x.t} className="card card-pad pro-pillar">
+              <b className="pro-k">{x.k}</b>
+              <div><h3>{x.t}</h3><p className="muted">{x.d}</p></div>
+            </div>
+          ))}
+        </div>
+
+        <h2 className="ds-h">The {PRO_PROJECT_COUNT} projects</h2>
+        <p className="muted" style={{ marginTop: -4 }}>Each one is a portfolio piece: a brief, messy data, a step-by-step build, a solution walkthrough and a README ready for GitHub.</p>
+        <div className="grid g2">
+          {PRO_PROJECTS.map((g) => (
+            <div key={g.group} className="card card-pad">
+              <h3>{g.group}</h3>
+              <ol className="pro-list">{g.items.map((it) => <li key={it}>{it}</li>)}</ol>
+            </div>
+          ))}
+        </div>
+
+        <h2 className="ds-h">Cheat sheets <span className="small muted">60+ planned, including</span></h2>
+        <div className="chips pro-chips">{PRO_CHEATSHEETS.map((c) => <span key={c} className="chip">{c}</span>)}</div>
+
+        <h2 className="ds-h">Free stays free</h2>
+        <div className="card card-pad">
+          <ul className="ticks">{FREE.map((x) => <li key={x}>{x}</li>)}</ul>
+          <Link className="btn btn-ghost" to="/path">Start learning free</Link>
         </div>
         <p className="small muted center" style={{ marginTop: 20 }}>Students who can't afford Pro can email for a free pass. Nobody should be priced out of learning.</p>
       </div>
