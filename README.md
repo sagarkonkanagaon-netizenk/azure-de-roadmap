@@ -19,7 +19,7 @@
 ---
 
 > [!IMPORTANT]
-> ### 📣 Data Dhaba Pro is coming: ₹999 for 6 months or ₹1,600 a year
+> ### 📣 Data Dhaba Pro is coming: ₹999 for 6 months or ₹1,599 a year
 > **34 end-to-end projects · 60+ cheat sheets · 500+ interview answers · AI mock interviewer · 20 system design cases.**
 > Everything between "I finished the course" and "I got the offer".
 > **[Join the waitlist →](mailto:sagarkonkanagaon@gmail.com?subject=Data%20Dhaba%20Pro%20waitlist)** No payment now. You get an email the day it opens.
@@ -62,7 +62,7 @@ Most data engineering courses are videos you watch and forget. Data Dhaba is a p
 | Plan | Price | |
 |---|---|---|
 | **6 months** | **₹999** | about ₹167 a month |
-| **1 year** | **₹1,600** | about ₹133 a month, save 20% |
+| **1 year** | **₹1,599** | about ₹133 a month, save 20% |
 
 Built for people who want the job, not just the certificate.
 

@@ -1,9 +1,9 @@
 // Data Dhaba Pro: announced, not built yet. Shown on the Pro page, the home page and the README.
 export const PRO_PRICE = { amount: '₹999', note: 'for 6 months', status: 'Coming soon' }
-// Two subscriptions. The yearly plan costs ₹1,600 instead of ₹1,998 for two half-year plans.
+// Two subscriptions. The yearly plan costs ₹1,599 instead of ₹1,998 for two half-year plans.
 export const PRO_PLANS = [
   { id: '6m', name: '6 months', amount: '₹999', per: 'for 6 months', sub: 'About ₹167 a month' },
-  { id: '1y', name: '1 year', amount: '₹1,600', per: 'for 12 months', sub: 'About ₹133 a month · save 20%', best: true },
+  { id: '1y', name: '1 year', amount: '₹1,599', per: 'for 12 months', sub: 'About ₹133 a month · save 20%', best: true },
 ]
 
 export const PRO_PILLARS = [
