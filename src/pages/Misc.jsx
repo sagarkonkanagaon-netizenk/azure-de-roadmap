@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { Link, Navigate } from 'react-router-dom'
 import Waitlist from '../components/Waitlist.jsx'
+import { SHEETS } from '../pro/cheatsheets.js'
+const SHEET_COUNT = SHEETS.length
 import { PRO_PRICE, PRO_PLANS, PRO_PILLARS, PRO_PROJECTS, PRO_CHEATSHEETS, PRO_PROJECT_COUNT, PRO_FAQ } from '../data/pro.js'
 import guide from '../content/guide.json'
 import { BRAND, CERTS, FREE_PLATFORMS, MANTRAS, FINAL_WORD } from '../data/extras.js'
@@ -140,6 +142,22 @@ export function Pro() {
 
         <div id="waitlist" className="wl-wrap"><Waitlist plan={plan} /></div>
 
+        <h2 className="ds-h">Try Pro free</h2>
+        <div className="grid g2 pro-preview">
+          <Link to="/pro/projects/food-delivery-lakehouse" className="card card-pad card-link">
+            <span className="chip chip-ok">Free preview</span>
+            <h3>Project 1: Food-delivery lakehouse</h3>
+            <p className="muted">The whole thing, unlocked: a brief from your lead, messy data to download, 7 build steps with solutions and checkpoints, a README and interview answers.</p>
+            <b className="how-link">Open the project →</b>
+          </Link>
+          <Link to="/pro/cheatsheets" className="card card-pad card-link">
+            <span className="chip chip-ok">Free preview</span>
+            <h3>{SHEET_COUNT} printable cheat sheets</h3>
+            <p className="muted">Window functions, joins and their traps, the PySpark API, Delta Lake commands and Spark tuning. One page each, ready to print.</p>
+            <b className="how-link">Open the cheat sheets →</b>
+          </Link>
+        </div>
+
         <h2 className="ds-h">What you get</h2>
         <div className="grid g2 pro-pillars">
           {PRO_PILLARS.map((x) => (
@@ -156,13 +174,13 @@ export function Pro() {
           {PRO_PROJECTS.map((g, i) => (
             <details key={g.group} className="card card-pad pro-group" open={i === 0}>
               <summary><h3>{g.group}</h3><span className="chip">{g.items.length}</span></summary>
-              <ol className="pro-list" start={PRO_PROJECTS.slice(0, i).reduce((a, x) => a + x.items.length, 1)}>{g.items.map((it) => <li key={it}>{it}</li>)}</ol>
+              <ol className="pro-list" start={PRO_PROJECTS.slice(0, i).reduce((a, x) => a + x.items.length, 1)}>{g.items.map((it, j) => <li key={it}>{i === 0 && j === 0 ? <><Link to="/pro/projects/food-delivery-lakehouse">{it}</Link> <span className="chip chip-ok">Free preview</span></> : it}</li>)}</ol>
             </details>
           ))}
         </div>
 
         <h2 className="ds-h">Cheat sheets <span className="small muted">60+ planned, including</span></h2>
-        <div className="chips pro-chips">{PRO_CHEATSHEETS.map((c) => <span key={c} className="chip">{c}</span>)}</div>
+        <div className="chips pro-chips">{PRO_CHEATSHEETS.map((c) => { const sh = SHEETS.find((x) => x.title.toLowerCase() === c.toLowerCase()); return sh ? <Link key={c} to={`/pro/cheatsheets/${sh.slug}`} className="chip chip-ok">{c} · free</Link> : <span key={c} className="chip">{c}</span> })}</div>
 
         <h2 className="ds-h">Free stays free</h2>
         <div className="card card-pad">

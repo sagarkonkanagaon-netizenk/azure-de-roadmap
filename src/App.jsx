@@ -16,6 +16,8 @@ import Quiz from './pages/Quiz.jsx'
 import Visual from './pages/Visual.jsx'
 import Notes, { Note } from './pages/Notes.jsx'
 import { Projects, Resources, About, Pro, NotFound, Privacy, Terms } from './pages/Misc.jsx'
+import ProProject from './pages/ProProject.jsx'
+import { SheetIndex, Sheet } from './pages/ProSheets.jsx'
 import ProgressPage from './pages/Progress.jsx'
 
 export default function App() {
@@ -56,6 +58,9 @@ export default function App() {
           <Route path="resources" element={<Resources />} />
           <Route path="progress" element={<ProgressPage />} />
           <Route path="pro" element={<Pro />} />
+          <Route path="pro/projects/food-delivery-lakehouse" element={<ProProject />} />
+          <Route path="pro/cheatsheets" element={<SheetIndex />} />
+          <Route path="pro/cheatsheets/:slug" element={<Sheet />} />
           <Route path="about" element={<About />} />
           <Route path="privacy" element={<Privacy />} />
           <Route path="terms" element={<Terms />} />

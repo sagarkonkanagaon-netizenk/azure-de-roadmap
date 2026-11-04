@@ -156,7 +156,10 @@ export default function Home() {
                 <li>60+ cheat sheets and 500+ interview answers</li>
                 <li>AI mock interviewer and system design cases</li>
               </ul>
-              <Link to="/pro" className="btn btn-ghost">See what's inside</Link>
+              <div className="row" style={{ flexWrap: 'wrap' }}>
+                <Link to="/pro" className="btn btn-ghost">See what's inside</Link>
+                <Link to="/pro/projects/food-delivery-lakehouse" className="btn btn-ghost">Try project 1 free</Link>
+              </div>
             </div>
           </div>
         </div>
