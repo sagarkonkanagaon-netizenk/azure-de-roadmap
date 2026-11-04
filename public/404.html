@@ -5,12 +5,14 @@
 <title>Data Dhaba</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>
-  // GitHub Pages serves this for any path it does not know, for example /data-dhaba/practice.
-  // The app uses hash routes, so send the visitor to the same page as /data-dhaba/#/practice.
+  // GitHub Pages serves this for any path it does not know, for example datadhaba.in/practice.
+  // The app uses hash routes, so send the visitor to the same page as datadhaba.in/#/practice.
+  // On the old github.io address the site lives under /data-dhaba/, so keep that first segment there.
   (function () {
     var parts = location.pathname.split('/').filter(Boolean)
-    var base = parts.length ? '/' + parts[0] + '/' : '/'
-    var rest = parts.slice(1).join('/').replace(/[*]+$/, '')
+    var keep = /github\.io$/.test(location.hostname) && parts.length ? 1 : 0
+    var base = '/' + parts.slice(0, keep).join('/') + (keep ? '/' : '')
+    var rest = parts.slice(keep).join('/').replace(/[*]+$/, '')
     location.replace(base + '#/' + rest + location.search)
   })()
 </script>

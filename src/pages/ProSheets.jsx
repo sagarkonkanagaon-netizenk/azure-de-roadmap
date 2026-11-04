@@ -46,7 +46,7 @@ export function Sheet() {
             <span className="chip">{s.tag}</span>
           </header>
           <Markdown md={s.md} className="prose sheet-body no-try" />
-          <footer className="sheet-foot">sagarkonkanagaon-netizenk.github.io/data-dhaba · free to print and share</footer>
+          <footer className="sheet-foot">datadhaba.in · free to print and share</footer>
         </article>
         <div className="row no-print" style={{ justifyContent: 'space-between', marginTop: 20, flexWrap: 'wrap' }}>
           <Link className="btn btn-ghost" to={`/pro/cheatsheets/${next.slug}`}>Next: {next.title} →</Link>
