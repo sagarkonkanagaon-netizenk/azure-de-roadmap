@@ -58,7 +58,7 @@ export default function Layout() {
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" /></svg>
               <span>Search</span><kbd>Ctrl K</kbd>
             </button>
-            <button className="icon-btn" onClick={toggle} aria-label={isDark ? 'Switch to light theme' : 'Switch to dark theme'} title="Theme">
+            <button className="icon-btn theme-btn" onClick={toggle} aria-label={isDark ? 'Switch to light theme' : 'Switch to dark theme'} title="Theme">
               {isDark
                 ? <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" /></svg>
                 : <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" /></svg>}
@@ -84,7 +84,7 @@ export default function Layout() {
             <div className="m-items">{sec.items.map((i) => <NavLink key={i.to} to={i.to} end>{i.label}</NavLink>)}</div>
           </div>
         ))}
-        <div className="m-items m-extra"><NavLink to="/progress">My progress</NavLink><NavLink to="/pro">Pro</NavLink>{AUTH_ENABLED && <NavLink to="/account">Account</NavLink>}</div>
+        <div className="m-items m-extra"><NavLink to="/progress">My progress · {xp} XP</NavLink><NavLink to="/pro">Pro</NavLink>{AUTH_ENABLED && <NavLink to="/account">Account</NavLink>}<button type="button" className="m-theme" onClick={toggle}>{isDark ? 'Light theme' : 'Dark theme'}</button></div>
       </nav>
       <main data-section={here?.id || 'home'}>
         {here && here.items.length > 1 && (
