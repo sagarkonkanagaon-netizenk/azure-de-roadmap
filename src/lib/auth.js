@@ -16,7 +16,11 @@ export function client() {
       const { data: { session } } = await sb.auth.getSession()
       if (fromRedirect) {
         if (session) await sb.rpc('claim_device', { p_device: deviceId(), p_label: deviceLabel() })
-        window.history.replaceState(null, '', window.location.pathname + window.location.hash)
+        let next = null
+        try { next = sessionStorage.getItem('dd:next'); sessionStorage.removeItem('dd:next') } catch (e) { /* ignore */ }
+        window.history.replaceState(null, '', window.location.pathname + (next ? '#' + next : window.location.hash))
+        if (next) window.dispatchEvent(new HashChangeEvent('hashchange'))
+        announce()
       }
       return sb
     })
@@ -53,6 +57,7 @@ export async function verifyCode(email, token) {
   const { error } = await sb.auth.verifyOtp({ email, token, type: 'email' })
   if (error) throw error
   await claimDevice()
+  announce()
 }
 
 export async function signInWithGoogle() {
@@ -64,6 +69,7 @@ export async function signInWithGoogle() {
 export async function signOut() {
   const sb = await client()
   if (sb) await sb.auth.signOut({ scope: 'local' })
+  announce()
 }
 
 // Make this browser the account's one active device. Any other device is signed out at its next check.
@@ -84,12 +90,16 @@ export async function loadProfile() {
   if (!data || !data.active_device) { await claimDevice(); return { email: session.user.email, plan: data?.plan || 'free', pro_until: data?.pro_until || null, device_label: deviceLabel() } }
   if (data.active_device !== deviceId()) {
     await sb.auth.signOut({ scope: 'local' })
+    announce()
     return { kicked: true, other: data.device_label }
   }
   return { email: session.user.email, ...data }
 }
 
 // True when this browser may hold a session, so the background check is worth loading the library for.
+export const AUTH_EVENT = 'dd:auth-change'
+const announce = () => { try { window.dispatchEvent(new Event(AUTH_EVENT)) } catch (e) { /* ignore */ } }
+
 export function mightBeSignedIn() {
   if (!AUTH_ENABLED) return false
   try { return /[?&]code=/.test(window.location.search) || Boolean(localStorage.getItem('dd:auth')) } catch (e) { return false }

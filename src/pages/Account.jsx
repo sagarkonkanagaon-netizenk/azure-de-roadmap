@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { AUTH_ENABLED, client, loadProfile, sendEmailLink, verifyCode, signInWithGoogle, signOut, deviceLabel } from '../lib/auth.js'
 
 export default function Account() {
@@ -9,6 +9,16 @@ export default function Account() {
   const [code, setCode] = useState('')
   const [err, setErr] = useState('')
   const [busy, setBusy] = useState(false)
+  const navigate = useNavigate()
+  const [params] = useSearchParams()
+  // Where to go after signing in. Kept in sessionStorage so it survives the email-link round trip.
+  useEffect(() => { const n = params.get('next'); if (n && n.startsWith('/')) { try { sessionStorage.setItem('dd:next', n) } catch (e) { /* ignore */ } } }, [params])
+  useEffect(() => {
+    if (state !== 'signed-in') return
+    let n = null
+    try { n = sessionStorage.getItem('dd:next'); sessionStorage.removeItem('dd:next') } catch (e) { /* ignore */ }
+    if (n && n !== '/account') navigate(n, { replace: true })
+  }, [state, navigate])
 
   async function refresh() {
     try {
@@ -42,7 +52,7 @@ export default function Account() {
         <div className="page-head">
           <div className="eyebrow">Account</div>
           <h1>{state === 'signed-in' ? 'You\'re signed in' : 'Sign in'}</h1>
-          <p className="muted">You only need an account for Pro. Every free handbook, lab and quiz works without one.</p>
+          <p className="muted">A free account gets you Pro launch news and early access. Every handbook, lab and quiz still works without one.</p>
         </div>
 
         <div className="card account-card">

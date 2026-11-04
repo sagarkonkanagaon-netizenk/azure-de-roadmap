@@ -44,3 +44,35 @@ $$;
 
 revoke all on function public.claim_device(text, text) from public;
 grant execute on function public.claim_device(text, text) to authenticated;
+
+-- Pro waitlist. Anyone can add themselves; nobody can read the list from the site.
+-- You see it in Supabase under Table Editor > waitlist (Export to CSV from there).
+create table if not exists public.waitlist (
+  id         bigint generated always as identity primary key,
+  name       text not null check (length(name) between 1 and 120),
+  email      text not null check (email ~* '^[^@\s]+@[^@\s]+\.[^@\s]{2,}$' and length(email) <= 200),
+  plan       text check (length(plan) <= 40),
+  stage      text check (length(stage) <= 40),
+  want       text check (length(want) <= 1000),
+  source     text check (length(source) <= 40),
+  created_at timestamptz not null default now()
+);
+create unique index if not exists waitlist_email_once on public.waitlist (lower(email));
+
+alter table public.waitlist enable row level security;
+
+drop policy if exists "anyone can join" on public.waitlist;
+create policy "anyone can join" on public.waitlist
+  for insert to anon, authenticated with check (true);
+-- No select, update or delete policies: the list is private to you.
+
+-- Learning progress saved to the account (XP, solved problems, streak days).
+create table if not exists public.progress (
+  user_id    uuid primary key references auth.users (id) on delete cascade,
+  data       jsonb not null check (pg_column_size(data) < 500000),
+  updated_at timestamptz not null default now()
+);
+alter table public.progress enable row level security;
+drop policy if exists "own progress" on public.progress;
+create policy "own progress" on public.progress
+  for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
