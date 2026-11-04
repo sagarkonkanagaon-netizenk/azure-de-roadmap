@@ -5,6 +5,8 @@ import './styles.css'
 
 // The site uses hash routes (#/path). A plain in-page anchor such as #try would be read as a
 // route and show the 404 page, so treat those as scroll targets instead.
+// A sign-in link returns with #access_token=… (or #error=…). Keep it for the auth code before clearing the hash.
+if (/^#(access_token|error)=|[#&](access_token|error_description)=/.test(location.hash)) { try { sessionStorage.setItem('dd:authhash', location.hash.slice(1)) } catch (e) { /* ignore */ } }
 if (location.hash && !location.hash.startsWith('#/')) history.replaceState(null, '', location.pathname + location.search + '#/')
 document.addEventListener('click', (e) => {
   const a = e.target.closest && e.target.closest('a[href^="#"]')
