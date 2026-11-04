@@ -87,7 +87,7 @@ export default function Account() {
 
           {state === 'code' && (
             <form onSubmit={(e) => { e.preventDefault(); act(() => verifyCode(email.trim(), code.trim())) }}>
-              <p>We sent an email to <b>{email}</b>. Open the link on this device, or type the 6-digit code from the email.</p>
+              <p>We sent an email to <b>{email}</b>. Open the link in that email on this device to sign in. If the email shows a code, you can type it here instead.</p>
               <label className="wl-f">
                 <span>Code</span>
                 <input inputMode="numeric" autoComplete="one-time-code" maxLength={8} value={code} onChange={(e) => setCode(e.target.value.replace(/\D/g, ''))} />
