@@ -147,7 +147,7 @@ export default function Home() {
               <Link to="/path/1" className="btn btn-primary">Start week 1</Link>
             </div>
             <div className="plan card plan-pro">
-              <span className="basic-k">Pro · coming soon · {PRO_PRICE.amount} one-time</span>
+              <span className="basic-k">Pro · coming soon · from {PRO_PRICE.amount} for 6 months</span>
               <h3>Everything to get hired</h3>
               <ul className="ticks">
                 <li>{PRO_PROJECT_COUNT} end-to-end portfolio projects</li>

@@ -25,17 +25,23 @@ export default function PyLab() {
   const p = useProgress()
   const q = QS.find((x) => String(x.n) === String(n)) || QS[0]
   const solved = QS.filter((x) => p.py[x.n] === 'solved').length
+  const [listOpen, setListOpen] = useState(false)
   return (
     <div className="container">
       <div className="lab">
-        <aside className="qlist card" style={{ padding: 8 }}>
+        <aside className={'qlist card' + (listOpen ? ' open' : '')} style={{ padding: 8 }}>
           <div className="spread" style={{ padding: '6px 8px' }}><b>Python lab</b><span className="chip chip-primary">{solved}/{QS.length}</span></div>
           <div className="small muted" style={{ padding: '0 8px 6px' }}>PySpark questions are in <Link to="/interview/pyspark">Interview → PySpark</Link>.</div>
+          <button className="qlist-toggle" aria-expanded={listOpen} onClick={() => setListOpen(!listOpen)}>
+            <span>Problem {q.n} of {QS.length}</span><b>{listOpen ? 'Hide list ▴' : 'All problems ▾'}</b>
+          </button>
+          <div className="qlist-body" onClick={() => setListOpen(false)}>
           {QS.map((x) => (
             <button key={x.n} className={x.n === q.n ? 'on' : ''} onClick={() => navigate(`/practice/python/${x.n}`)}>
               <span className="n">{x.n}</span><span>{x.title}</span><span className="st">{p.py[x.n] === 'solved' ? '✅' : p.py[x.n] === 'tried' ? '•' : ''}</span>
             </button>
           ))}
+          </div>
         </aside>
         <PyQuestion key={q.n} q={q} />
       </div>

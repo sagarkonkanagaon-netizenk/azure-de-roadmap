@@ -798,3 +798,18 @@ main .page-head h1 em, main .daily-head h1 em, main .play-head h1 em { color: va
 .pro-list li { line-height: 1.45; }
 .pro-chips { display: flex; flex-wrap: wrap; gap: 8px; }
 @media (max-width: 560px) { .pro-pillar { flex-direction: column; gap: 4px; } .pro-k { flex: none; } }
+.pro-plans { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; max-width: 760px; margin: 0 auto 10px; }
+.pro-plan { padding: 22px; display: flex; flex-direction: column; gap: 8px; }
+.pro-plan .btn { align-self: flex-start; margin-top: 6px; }
+.pro-plan.best { border: 2px solid var(--primary); background: linear-gradient(135deg, color-mix(in srgb, var(--primary) 8%, var(--card)), color-mix(in srgb, var(--accent) 8%, var(--card))); }
+@media (max-width: 560px) { .pro-plans { grid-template-columns: 1fr; } }
+
+/* Question lists collapse on phones and tablets so they never cover the editor */
+.qlist-toggle { display: none; }
+@media (max-width: 960px) {
+  .qlist, .lab .qlist { position: static; max-height: none; overflow: visible; }
+  .qlist-toggle { display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 10px; margin-top: 4px; padding: 10px 12px !important; border: 1px solid var(--line) !important; border-radius: 10px !important; background: var(--bg) !important; color: var(--text) !important; font-size: .92rem !important; }
+  .qlist-toggle b { color: var(--sec); font-size: .86rem; }
+  .qlist-body { display: none; }
+  .qlist.open .qlist-body { display: block; max-height: 340px; overflow: auto; margin-top: 6px; }
+}

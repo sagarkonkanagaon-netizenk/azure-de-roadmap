@@ -7,7 +7,7 @@
 <p align="center">
   <a href="https://sagarkonkanagaon-netizenk.github.io/data-dhaba/"><img alt="Open the site" src="https://img.shields.io/badge/Open%20the%20site-e8366f?style=for-the-badge&logoColor=white"></a>
   <a href="https://sagarkonkanagaon-netizenk.github.io/data-dhaba/#/path"><img alt="24-week path" src="https://img.shields.io/badge/24--week%20path-0fb5b0?style=for-the-badge"></a>
-  <a href="https://sagarkonkanagaon-netizenk.github.io/data-dhaba/#/pro"><img alt="Pro coming soon" src="https://img.shields.io/badge/Pro-coming%20soon%20%C2%B7%20%E2%82%B9999-1a1420?style=for-the-badge"></a>
+  <a href="https://sagarkonkanagaon-netizenk.github.io/data-dhaba/#/pro"><img alt="Pro coming soon" src="https://img.shields.io/badge/Pro-coming%20soon%20%C2%B7%20from%20%E2%82%B9999-1a1420?style=for-the-badge"></a>
 </p>
 
 <p align="center">
@@ -19,7 +19,7 @@
 ---
 
 > [!IMPORTANT]
-> ### 📣 Data Dhaba Pro is coming: ₹999, one-time, lifetime access
+> ### 📣 Data Dhaba Pro is coming: ₹999 for 6 months or ₹1,600 a year
 > **34 end-to-end projects · 60+ cheat sheets · 500+ interview answers · AI mock interviewer · 20 system design cases.**
 > Everything between "I finished the course" and "I got the offer".
 > **[Join the waitlist →](mailto:sagarkonkanagaon@gmail.com?subject=Data%20Dhaba%20Pro%20waitlist)** No payment now. You get an email the day it opens.
@@ -59,7 +59,12 @@ Most data engineering courses are videos you watch and forget. Data Dhaba is a p
 
 ## 💎 Coming soon: Data Dhaba Pro
 
-**₹999 per learner · one-time · lifetime access.** Built for people who want the job, not just the certificate.
+| Plan | Price | |
+|---|---|---|
+| **6 months** | **₹999** | about ₹167 a month |
+| **1 year** | **₹1,600** | about ₹133 a month, save 20% |
+
+Built for people who want the job, not just the certificate.
 
 | | Pro gives you | |
 |---|---|---|

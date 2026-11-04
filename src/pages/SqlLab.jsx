@@ -38,15 +38,20 @@ export default function SqlLab() {
   const { n } = useParams()
   const navigate = useNavigate()
   const p = useProgress()
+  const [listOpen, setListOpen] = useState(false)
   if (n === 'scratch') return <Playground />
   const q = QS.find((x) => String(x.n) === String(n)) || QS[0]
   const solved = Object.values(p.sql).filter((v) => v === 'solved').length
   return (
     <div className="container">
       <div className="lab">
-        <aside className="qlist card" style={{ padding: 8 }}>
+        <aside className={'qlist card' + (listOpen ? ' open' : '')} style={{ padding: 8 }}>
           <div className="spread" style={{ padding: '6px 8px' }}><b>SQL lab</b><span className="chip chip-primary">{solved}/{QS.length}</span></div>
           <div style={{ padding: '0 8px 6px' }}><Link to="/playground" className="small">▶ SQL playground: run any query →</Link></div>
+          <button className="qlist-toggle" aria-expanded={listOpen} onClick={() => setListOpen(!listOpen)}>
+            <span>Question {q.n} of {QS.length}</span><b>{listOpen ? 'Hide list ▴' : 'All questions ▾'}</b>
+          </button>
+          <div className="qlist-body" onClick={() => setListOpen(false)}>
           {SECTIONS.map((s) => (
             <div key={s}>
               <div className="sec">{s}</div>
@@ -58,6 +63,7 @@ export default function SqlLab() {
               ))}
             </div>
           ))}
+          </div>
         </aside>
         <Question key={q.n} q={q} />
       </div>
@@ -120,7 +126,7 @@ function Question({ q }) {
         <div className="row small muted"><span>{q.section}</span><span>·</span><span>Question {q.n} of {QS.length}</span>{p.sql[q.n] === 'solved' && <span className="chip chip-ok">Solved</span>}</div>
         <h2>{q.title}</h2>
       </div>
-      {q.given && q.given !== '—' && <div className="given">{q.given}</div>}
+      {q.given && q.given !== '—' && !schema.length && <div className="given">{q.given}</div>}
       {q.hint && <p className="small" style={{ marginTop: 8 }}><b>Note:</b> {q.hint}</p>}
       {schema.length > 0 && (
         <div className="tables-card">

@@ -1,5 +1,5 @@
 import { Link, Navigate } from 'react-router-dom'
-import { PRO_PRICE, PRO_PILLARS, PRO_PROJECTS, PRO_CHEATSHEETS, PRO_PROJECT_COUNT } from '../data/pro.js'
+import { PRO_PRICE, PRO_PLANS, PRO_PILLARS, PRO_PROJECTS, PRO_CHEATSHEETS, PRO_PROJECT_COUNT } from '../data/pro.js'
 import guide from '../content/guide.json'
 import { BRAND, CERTS, FREE_PLATFORMS, MANTRAS, FINAL_WORD } from '../data/extras.js'
 import { useProgress, toggleIn } from '../lib/progress.js'
@@ -123,17 +123,17 @@ export function Pro() {
           <p>The free path teaches you data engineering. Pro gives you the portfolio, the shortcuts and the interview practice that land the job: {PRO_PROJECT_COUNT} end-to-end projects, 60+ cheat sheets, 500+ interview answers and an AI mock interviewer.</p>
         </div>
 
-        <div className="pro-hero card">
-          <div>
-            <span className="chip chip-warn">{PRO_PRICE.status}</span>
-            <div className="price">{PRO_PRICE.amount}</div>
-            <div className="small muted">{PRO_PRICE.note}</div>
-          </div>
-          <div className="pro-hero-cta">
-            <a className="btn btn-primary btn-lg" href={mail}>Join the waitlist</a>
-            <span className="small muted">No payment now. You get an email the day it opens.</span>
-          </div>
+        <div className="pro-plans">
+          {PRO_PLANS.map((pl) => (
+            <div key={pl.id} className={'card pro-plan' + (pl.best ? ' best' : '')}>
+              <div className="spread"><span className="chip">{pl.name}</span>{pl.best ? <span className="chip chip-primary">Best value</span> : <span className="chip chip-warn">{PRO_PRICE.status}</span>}</div>
+              <div className="price">{pl.amount}</div>
+              <div className="small muted">{pl.per} · {pl.sub}</div>
+              <a className={'btn ' + (pl.best ? 'btn-primary' : 'btn-ghost')} href={mail}>Join the waitlist</a>
+            </div>
+          ))}
         </div>
+        <p className="small muted center" style={{ marginTop: 0 }}>Coming soon. No payment now: you get an email the day it opens.</p>
 
         <h2 className="ds-h">What you get</h2>
         <div className="grid g2 pro-pillars">
