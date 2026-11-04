@@ -2,12 +2,12 @@
 export const PRO_PRICE = { amount: '₹999', note: 'per learner · one-time · lifetime access', status: 'Coming soon' }
 
 export const PRO_PILLARS = [
-  { k: '32', t: 'End-to-end projects', d: 'Real business problems built start to finish: ingestion, lakehouse, quality, orchestration, CI/CD and a dashboard. Each ships with messy data, a brief from a made-up lead, a solution walkthrough and a README you can put on your resume.' },
+  { k: '34', t: 'End-to-end projects', d: 'Real business problems built start to finish: ingestion, lakehouse, quality, orchestration, Docker, CI/CD and a dashboard. Each ships with messy data, a brief from a made-up lead, a solution walkthrough and a README you can put on your resume.' },
   { k: '60+', t: 'Cheat sheets', d: 'One-page, print-ready sheets for every tool and pattern a data engineer touches, from window functions to Spark tuning to Kafka offsets.' },
   { k: '500+', t: 'Interview questions with model answers', d: 'SQL, PySpark, data modelling, cloud and behavioural, each with the follow-up an interviewer asks next and what a strong answer sounds like.' },
   { k: '20', t: 'Data system design case studies', d: 'Whiteboard-style walk-throughs: requirements, numbers, architecture, trade-offs and the questions to ask, for the round that decides senior offers.' },
   { k: 'AI', t: 'Mock interviewer', d: 'Speaks like a real panel: asks, listens, pushes back, then scores you with notes on what to fix before the real thing.' },
-  { k: '15', t: 'Production templates', d: 'Copy-paste starter repos with tests and CI already wired: Airflow, dbt, Databricks Asset Bundles, Terraform, data contracts and more.' },
+  { k: '15', t: 'Production templates', d: 'Copy-paste starter repos with tests and CI already wired: a Docker Compose data stack, Airflow, dbt, Databricks Asset Bundles, Terraform, data contracts and more.' },
   { k: '4', t: 'Certification prep tracks', d: 'Practice exams and study plans for Databricks Data Engineer Associate and Professional, Microsoft Fabric Data Engineer (DP-700) and AWS Data Engineer Associate.' },
   { k: '1', t: 'Resume and LinkedIn kit', d: 'ATS-friendly templates, a bank of measurable project bullets, and a LinkedIn headline and About section that recruiters actually search for.' },
 ]
@@ -46,6 +46,8 @@ export const PRO_PROJECTS = [
     'CI/CD for Databricks with Asset Bundles and GitHub Actions',
     'Data contracts between producer and consumer teams',
     'Pipeline observability: freshness, volume and lineage alerts',
+    'Your own data platform on a laptop: Spark, Airflow, Postgres and MinIO in Docker Compose',
+    'Containerised PySpark jobs: Docker images, a registry and Kubernetes',
   ] },
   { group: 'Domain capstones', items: [
     'Banking regulatory report with full number lineage',
@@ -57,6 +59,6 @@ export const PRO_PROJECTS = [
   ] },
 ]
 
-export const PRO_CHEATSHEETS = ['SQL window functions', 'SQL joins and traps', 'PySpark DataFrame API', 'Spark performance tuning', 'Reading the Spark UI', 'Delta Lake commands', 'Databricks and Unity Catalog', 'Azure Data Factory patterns', 'Airflow DAG patterns', 'dbt commands and Jinja', 'Kafka for data engineers', 'Structured Streaming', 'Data modelling: star, snowflake, vault', 'SCD types 1 to 6', 'Snowflake essentials', 'BigQuery essentials', 'AWS Glue and Athena', 'Python for data engineers', 'pandas to PySpark', 'Git for data teams', 'Linux and bash for pipelines', 'Docker for data engineers', 'Terraform for data platforms', 'Data quality checks', 'File formats: Parquet, Avro, ORC', 'Partitioning and Z-ordering', 'System design numbers to know', 'Interview day checklist']
+export const PRO_CHEATSHEETS = ['SQL window functions', 'SQL joins and traps', 'PySpark DataFrame API', 'Spark performance tuning', 'Reading the Spark UI', 'Delta Lake commands', 'Databricks and Unity Catalog', 'Azure Data Factory patterns', 'Airflow DAG patterns', 'dbt commands and Jinja', 'Kafka for data engineers', 'Structured Streaming', 'Data modelling: star, snowflake, vault', 'SCD types 1 to 6', 'Snowflake essentials', 'BigQuery essentials', 'AWS Glue and Athena', 'Python for data engineers', 'pandas to PySpark', 'Git for data teams', 'Linux and bash for pipelines', 'Docker for data engineers', 'Docker Compose for data stacks', 'Kubernetes for data engineers', 'Terraform for data platforms', 'Data quality checks', 'File formats: Parquet, Avro, ORC', 'Partitioning and Z-ordering', 'System design numbers to know', 'Interview day checklist']
 
 export const PRO_PROJECT_COUNT = PRO_PROJECTS.reduce((a, g) => a + g.items.length, 0)

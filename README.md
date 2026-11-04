@@ -20,7 +20,7 @@
 
 > [!IMPORTANT]
 > ### 📣 Data Dhaba Pro is coming: ₹999, one-time, lifetime access
-> **32 end-to-end projects · 60+ cheat sheets · 500+ interview answers · AI mock interviewer · 20 system design cases.**
+> **34 end-to-end projects · 60+ cheat sheets · 500+ interview answers · AI mock interviewer · 20 system design cases.**
 > Everything between "I finished the course" and "I got the offer".
 > **[Join the waitlist →](mailto:sagarkonkanagaon@gmail.com?subject=Data%20Dhaba%20Pro%20waitlist)** No payment now. You get an email the day it opens.
 
@@ -63,17 +63,17 @@ Most data engineering courses are videos you watch and forget. Data Dhaba is a p
 
 | | Pro gives you | |
 |---|---|---|
-| 🏗️ | **32 end-to-end projects** | Real business problems, start to finish: ingestion, lakehouse, quality, orchestration, CI/CD and a dashboard. Messy data, a brief, a build guide, a solution walkthrough and a README ready for your GitHub. |
+| 🏗️ | **34 end-to-end projects** | Real business problems, start to finish: ingestion, lakehouse, quality, orchestration, Docker, CI/CD and a dashboard. Messy data, a brief, a build guide, a solution walkthrough and a README ready for your GitHub. |
 | 📄 | **60+ cheat sheets** | One page, print-ready, for every tool and pattern a data engineer touches. |
 | 💬 | **500+ interview questions with model answers** | SQL, PySpark, modelling, cloud and behavioural, each with the follow-up an interviewer asks next. |
 | 🧠 | **20 data system design case studies** | Requirements, numbers, architecture and trade-offs, for the round that decides senior offers. |
 | 🤖 | **AI mock interviewer** | Asks, listens, pushes back, then scores you with notes on what to fix. |
-| 🧰 | **15 production templates** | Starter repos with tests and CI already wired: Airflow, dbt, Databricks Asset Bundles, Terraform, data contracts. |
+| 🧰 | **15 production templates** | Starter repos with tests and CI already wired: a Docker Compose data stack, Airflow, dbt, Databricks Asset Bundles, Terraform, data contracts. |
 | 🎓 | **4 certification prep tracks** | Practice exams for Databricks DE Associate and Professional, Microsoft Fabric DP-700 and AWS Data Engineer Associate. |
 | 📝 | **Resume and LinkedIn kit** | ATS-friendly templates, a bank of measurable project bullets, and a headline recruiters search for. |
 
 <details>
-<summary><b>🏗️ See all 32 projects</b></summary>
+<summary><b>🏗️ See all 34 projects</b></summary>
 
 **Batch and lakehouse**
 1. Food-delivery lakehouse: orders to bronze, silver and gold on Delta
@@ -111,22 +111,24 @@ Most data engineering courses are videos you watch and forget. Data Dhaba is a p
 24. CI/CD for Databricks with Asset Bundles and GitHub Actions
 25. Data contracts between producer and consumer teams
 26. Pipeline observability: freshness, volume and lineage alerts
+27. Your own data platform on a laptop: Spark, Airflow, Postgres and MinIO in Docker Compose
+28. Containerised PySpark jobs: Docker images, a registry and Kubernetes
 
 **Domain capstones**
 
-27. Banking regulatory report with full number lineage
-28. Healthcare claims pipeline with PII masking
-29. Ad-tech attribution model on billions of events
-30. Telecom churn feature store for machine learning
-31. Retail demand forecasting data platform
-32. Open data pipeline on Indian public datasets
+29. Banking regulatory report with full number lineage
+30. Healthcare claims pipeline with PII masking
+31. Ad-tech attribution model on billions of events
+32. Telecom churn feature store for machine learning
+33. Retail demand forecasting data platform
+34. Open data pipeline on Indian public datasets
 
 </details>
 
 <details>
 <summary><b>📄 Cheat sheets on the way</b></summary>
 
-SQL window functions · SQL joins and traps · PySpark DataFrame API · Spark performance tuning · Reading the Spark UI · Delta Lake commands · Databricks and Unity Catalog · Azure Data Factory patterns · Airflow DAG patterns · dbt commands and Jinja · Kafka for data engineers · Structured Streaming · Data modelling: star, snowflake, vault · SCD types 1 to 6 · Snowflake essentials · BigQuery essentials · AWS Glue and Athena · Python for data engineers · pandas to PySpark · Git for data teams · Linux and bash for pipelines · Docker for data engineers · Terraform for data platforms · Data quality checks · File formats: Parquet, Avro, ORC · Partitioning and Z-ordering · System design numbers to know · Interview day checklist · and more.
+SQL window functions · SQL joins and traps · PySpark DataFrame API · Spark performance tuning · Reading the Spark UI · Delta Lake commands · Databricks and Unity Catalog · Azure Data Factory patterns · Airflow DAG patterns · dbt commands and Jinja · Kafka for data engineers · Structured Streaming · Data modelling: star, snowflake, vault · SCD types 1 to 6 · Snowflake essentials · BigQuery essentials · AWS Glue and Athena · Python for data engineers · pandas to PySpark · Git for data teams · Linux and bash for pipelines · Docker for data engineers · Docker Compose for data stacks · Kubernetes for data engineers · Terraform for data platforms · Data quality checks · File formats: Parquet, Avro, ORC · Partitioning and Z-ordering · System design numbers to know · Interview day checklist · and more.
 
 </details>
 
