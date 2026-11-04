@@ -9,13 +9,23 @@ let clientPromise = null
 export function client() {
   if (!AUTH_ENABLED) return Promise.resolve(null)
   if (!clientPromise) {
-    // A sign-in link or Google lands here with ?code=. Note it before the library swaps it for a session.
     // An email link carries ?token_hash=, which works in any browser or app, not only the one that asked for it.
     const params = new URLSearchParams(window.location.search)
     const tokenHash = params.get('token_hash')
-    const fromRedirect = /[?&](code|token_hash|error_description)=/.test(window.location.search)
+    // The default email link returns with #access_token=…, which main.jsx saved before the router cleared it.
+    // This "implicit" flow works in any browser or email app, unlike PKCE, which needs the browser that asked.
+    let hash = null
+    try { hash = sessionStorage.getItem('dd:authhash'); sessionStorage.removeItem('dd:authhash') } catch (e) { /* ignore */ }
+    const hp = new URLSearchParams(hash || '')
+    const fromRedirect = Boolean(hash) || /[?&](code|token_hash|error_description)=/.test(window.location.search)
     clientPromise = import('@supabase/supabase-js').then(async ({ createClient }) => {
-      const sb = createClient(URL_, KEY, { auth: { flowType: 'pkce', persistSession: true, detectSessionInUrl: true, storageKey: 'dd:auth' } })
+      const sb = createClient(URL_, KEY, { auth: { flowType: 'implicit', persistSession: true, detectSessionInUrl: false, storageKey: 'dd:auth' } })
+      if (hp.get('access_token')) {
+        const { error } = await sb.auth.setSession({ access_token: hp.get('access_token'), refresh_token: hp.get('refresh_token') || '' })
+        if (error) { try { sessionStorage.setItem('dd:auth-error', error.message) } catch (e) { /* ignore */ } }
+      } else if (hp.get('error_description')) {
+        try { sessionStorage.setItem('dd:auth-error', hp.get('error_description').replace(/\+/g, ' ')) } catch (e) { /* ignore */ }
+      }
       if (tokenHash) {
         const { error } = await sb.auth.verifyOtp({ token_hash: tokenHash, type: params.get('type') || 'email' })
         if (error) { try { sessionStorage.setItem('dd:auth-error', error.message) } catch (e) { /* ignore */ } }
@@ -118,5 +128,5 @@ const announce = () => { try { window.dispatchEvent(new Event(AUTH_EVENT)) } cat
 
 export function mightBeSignedIn() {
   if (!AUTH_ENABLED) return false
-  try { return /[?&](code|token_hash)=/.test(window.location.search) || Boolean(localStorage.getItem('dd:auth')) } catch (e) { return false }
+  try { return /[?&](code|token_hash)=/.test(window.location.search) || Boolean(sessionStorage.getItem('dd:authhash')) || Boolean(localStorage.getItem('dd:auth')) } catch (e) { return false }
 }
