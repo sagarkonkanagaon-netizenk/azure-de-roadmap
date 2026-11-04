@@ -1,5 +1,10 @@
 // Data Dhaba Pro: announced, not built yet. Shown on the Pro page, the home page and the README.
-export const PRO_PRICE = { amount: '₹999', note: 'per learner · one-time · lifetime access', status: 'Coming soon' }
+export const PRO_PRICE = { amount: '₹999', note: 'for 6 months', status: 'Coming soon' }
+// Two subscriptions. The yearly plan costs ₹1,600 instead of ₹1,998 for two half-year plans.
+export const PRO_PLANS = [
+  { id: '6m', name: '6 months', amount: '₹999', per: 'for 6 months', sub: 'About ₹167 a month' },
+  { id: '1y', name: '1 year', amount: '₹1,600', per: 'for 12 months', sub: 'About ₹133 a month · save 20%', best: true },
+]
 
 export const PRO_PILLARS = [
   { k: '34', t: 'End-to-end projects', d: 'Real business problems built start to finish: ingestion, lakehouse, quality, orchestration, Docker, CI/CD and a dashboard. Each ships with messy data, a brief from a made-up lead, a solution walkthrough and a README you can put on your resume.' },
