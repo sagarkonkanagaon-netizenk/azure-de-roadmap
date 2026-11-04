@@ -52,7 +52,7 @@ export default function Account() {
         <div className="page-head">
           <div className="eyebrow">Account</div>
           <h1>{state === 'signed-in' ? 'You\'re signed in' : 'Sign in'}</h1>
-          <p className="muted">A free account gets you Pro launch news and early access. Every handbook, lab and quiz still works without one.</p>
+          <p className="muted">Your account saves your progress, streak and XP, and works on one device at a time.</p>
         </div>
 
         <div className="card account-card">

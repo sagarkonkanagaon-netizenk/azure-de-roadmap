@@ -36,7 +36,7 @@ export default function ProProject() {
       <div className="container">
         <Link to="/pro" className="small">← Data Dhaba Pro</Link>
         <div className="proj-head">
-          <div className="eyebrow">Pro project {PROJECT.n} of {PRO_PROJECT_COUNT} <span className="chip chip-ok">Free preview</span></div>
+          <div className="eyebrow">Pro project {PROJECT.n} of {PRO_PROJECT_COUNT} <span className="chip chip-ok">Preview</span></div>
           <h1>{PROJECT.title}</h1>
           <p className="lead">{PROJECT.sub}. A real brief, messy data, a step-by-step build with full solutions, and a README ready for your GitHub.</p>
           <div className="row proj-meta">

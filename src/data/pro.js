@@ -70,8 +70,8 @@ export const PRO_PROJECT_COUNT = PRO_PROJECTS.reduce((a, g) => a + g.items.lengt
 
 export const PRO_FAQ = [
   { q: 'When does Pro open?', a: 'Soon. Join the waitlist and you get an email the day it opens.' },
-  { q: 'Do I pay anything now?', a: 'No. The waitlist is free and asks for no card or UPI details. You decide when Pro opens.' },
-  { q: 'Will the free path stay free?', a: 'Yes. The 24-week path, the handbooks, the SQL and Python labs, the drills and the interview prep stay free. Pro adds the portfolio projects, cheat sheets, model answers and mock interviews on top.' },
+  { q: 'Do I pay anything now?', a: 'No. The waitlist asks for no card or UPI details.' },
+  { q: 'What do I get without Pro?', a: 'The 24-week path, the handbooks, the SQL and Python labs, the drills and the interview prep. Pro adds the portfolio projects, cheat sheets, model answers and mock interviews on top.' },
   { q: 'Is it a subscription that renews by itself?', a: 'You pick 6 months for ₹999 or 1 year for ₹1,599. Full details on renewal and refunds will be on this page before anyone is asked to pay.' },
   { q: 'Who is Pro for?', a: 'People who want a data engineering job: students, people switching careers, and working engineers aiming for a better offer. If you can write basic SQL, you can start.' },
   { q: 'Do I need a powerful laptop?', a: 'No. Practice runs in your browser. The bigger projects use free tiers (Databricks Free Edition, cloud free accounts) or Docker on a normal laptop.' },

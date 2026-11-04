@@ -102,7 +102,7 @@ export default function Layout() {
         <div className="container footer-grid">
           <div>
             <Link to="/" className="brand"><img className="brand-mark" src="./favicon.svg" alt="" width="34" height="34" /><span className="wordmark">data<b>dhaba</b></span></Link>
-            <p style={{ marginTop: 12, maxWidth: 360 }}>A free, hands-on path into data engineering. Written by {BRAND.author}, {BRAND.authorRole}. Learning stays free, forever.</p>
+            <p style={{ marginTop: 12, maxWidth: 360 }}>A hands-on path into data engineering. Written by {BRAND.author}, {BRAND.authorRole}.</p>
           </div>
           {MENUS.map((sec) => <div key={sec.id} data-sec={sec.id}><h4>{sec.label}</h4>{sec.items.map((i) => <Link key={i.to} to={i.to}>{i.label === 'Overview' ? 'All of ' + sec.label : i.label}</Link>)}{sec.id === 'practice' && <Link to="/daily">Daily SQL challenge</Link>}</div>)}
           <div><h4>About</h4><Link to="/progress">My progress</Link><Link to="/about">About and mantras</Link><Link to="/pro">Pro</Link><a href={BRAND.portfolio} target="_blank" rel="noreferrer">Author's portfolio</a><a href={`mailto:${BRAND.email}`}>Contact</a></div>
