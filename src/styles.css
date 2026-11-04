@@ -786,3 +786,15 @@ main .page-head h1 em, main .daily-head h1 em, main .play-head h1 em { color: va
   .highway::before { display: none; }
 }
 .phase { scroll-margin-top: calc(var(--header-h) + 70px); }
+
+/* Pro page */
+.pro-hero { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px; padding: 24px 26px; max-width: 860px; margin: 0 auto 10px; border: 2px solid var(--primary); background: linear-gradient(135deg, color-mix(in srgb, var(--primary) 8%, var(--card)), color-mix(in srgb, var(--accent) 8%, var(--card))); }
+.pro-hero-cta { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
+.pro-pillar { display: flex; gap: 16px; align-items: flex-start; }
+.pro-pillar h3 { margin: 2px 0 6px; }
+.pro-pillar p { margin: 0; }
+.pro-k { flex: 0 0 64px; font-family: 'Space Grotesk', var(--font); font-size: 1.7rem; line-height: 1.1; color: var(--primary); }
+.pro-list { margin: 0; padding-left: 22px; display: grid; gap: 6px; }
+.pro-list li { line-height: 1.45; }
+.pro-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+@media (max-width: 560px) { .pro-pillar { flex-direction: column; gap: 4px; } .pro-k { flex: none; } }
