@@ -11,7 +11,7 @@ export default function Notes() {
         <div className="page-head">
           <div className="eyebrow">Notes</div>
           <h1>Download the <em>notes</em></h1>
-          <p>Sagar's original handbooks and interview notes as PDFs. Free to download, print and keep offline.</p>
+          <p>Sagar's original handbooks and interview notes as PDFs. Download, print and keep them offline.</p>
         </div>
         <PdfGrid />
         <div className="page-head" style={{ marginTop: 40 }}>

@@ -57,7 +57,7 @@ export default function Waitlist({ plan: planProp }) {
       <div className="card waitlist waitlist-done" role="status">
         <div className="wl-ok" aria-hidden="true">✓</div>
         <h3>You're on the list</h3>
-        <p className="muted">We'll email you the day Pro opens. Until then, the whole path is free.</p>
+        <p className="muted">We'll email you the day Pro opens. Until then, keep going on the path.</p>
         <div className="row" style={{ justifyContent: 'center', flexWrap: 'wrap' }}>
           <Link className="btn btn-primary" to="/path">Continue learning</Link>
           <button className="btn btn-ghost" onClick={() => { try { localStorage.removeItem(KEY) } catch (e) { /* ignore */ } setV({ name: '', email: '', plan: v.plan, stage: '', want: '' }); setState('idle') }}>Add someone else</button>

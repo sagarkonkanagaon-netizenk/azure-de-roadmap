@@ -64,7 +64,7 @@ export function Resources() {
         <div className="page-head">
           <div className="eyebrow">Resources</div>
           <h1>The best of the rest, curated</h1>
-          <p>You can get job-ready without paying for a course. These are the free videos and platforms worth your time, plus the certifications that matter and when to take them.</p>
+          <p>These are the videos and platforms worth your time, plus the certifications that matter and when to take them.</p>
         </div>
         <div className="section-head"><h2>Certifications</h2></div>
         <div className="grid g3">
@@ -95,7 +95,7 @@ export function About() {
         <div className="page-head">
           <div className="eyebrow">About</div>
           <h1>Why this exists</h1>
-          <p>Good data engineering education is expensive, and most of it stops at slides. {BRAND.name} is free, hands-on and built from real production work: you write SQL and Python that actually runs, fix broken pipelines, and practise the interviews.</p>
+          <p>Most data engineering courses stop at slides. {BRAND.name} is hands-on and built from real production work: you write SQL and Python that actually runs, fix broken pipelines, and practise the interviews.</p>
         </div>
         <div className="card card-pad">
           <h3>Made by {BRAND.author}</h3>
@@ -115,7 +115,7 @@ export function About() {
   )
 }
 
-const FREE = ['The full 24-week path and every handbook', 'SQL lab: 78 questions, auto-checked', 'Python lab with auto-checks', 'Incident drills, scenario and PySpark questions', 'Flashcards and progress tracking', 'No account, no ads, no paywall on learning']
+const FREE = ['The full 24-week path and every handbook', 'SQL lab: 78 questions, auto-checked', 'Python lab with auto-checks', 'Incident drills, scenario and PySpark questions', 'Flashcards and progress tracking', 'No ads']
 export function Pro() {
   const [plan, setPlan] = useState('')
   const pick = (name) => { setPlan(name); document.getElementById('waitlist')?.scrollIntoView({ behavior: 'smooth', block: 'start' }) }
@@ -125,7 +125,7 @@ export function Pro() {
         <div className="page-head center" style={{ marginInline: 'auto' }}>
           <div className="eyebrow">Data Dhaba Pro · {PRO_PRICE.status}</div>
           <h1>Everything between learning and getting hired.</h1>
-          <p>The free path teaches you data engineering. Pro gives you the portfolio, the shortcuts and the interview practice that land the job: {PRO_PROJECT_COUNT} end-to-end projects, 60+ cheat sheets, 500+ interview answers and an AI mock interviewer.</p>
+          <p>The course teaches you data engineering. Pro gives you the portfolio, the shortcuts and the interview practice that land the job: {PRO_PROJECT_COUNT} end-to-end projects, 60+ cheat sheets, 500+ interview answers and an AI mock interviewer.</p>
         </div>
 
         <div className="pro-plans">
@@ -142,16 +142,16 @@ export function Pro() {
 
         <div id="waitlist" className="wl-wrap"><Waitlist plan={plan} /></div>
 
-        <h2 className="ds-h">Try Pro free</h2>
+        <h2 className="ds-h">Preview Pro</h2>
         <div className="grid g2 pro-preview">
           <Link to="/pro/projects/food-delivery-lakehouse" className="card card-pad card-link">
-            <span className="chip chip-ok">Free preview</span>
+            <span className="chip chip-ok">Preview</span>
             <h3>Project 1: Food-delivery lakehouse</h3>
             <p className="muted">The whole thing, unlocked: a brief from your lead, messy data to download, 7 build steps with solutions and checkpoints, a README and interview answers.</p>
             <b className="how-link">Open the project →</b>
           </Link>
           <Link to="/pro/cheatsheets" className="card card-pad card-link">
-            <span className="chip chip-ok">Free preview</span>
+            <span className="chip chip-ok">Preview</span>
             <h3>{SHEET_COUNT} printable cheat sheets</h3>
             <p className="muted">Window functions, joins and their traps, the PySpark API, Delta Lake commands and Spark tuning. One page each, ready to print.</p>
             <b className="how-link">Open the cheat sheets →</b>
@@ -174,18 +174,18 @@ export function Pro() {
           {PRO_PROJECTS.map((g, i) => (
             <details key={g.group} className="card card-pad pro-group" open={i === 0}>
               <summary><h3>{g.group}</h3><span className="chip">{g.items.length}</span></summary>
-              <ol className="pro-list" start={PRO_PROJECTS.slice(0, i).reduce((a, x) => a + x.items.length, 1)}>{g.items.map((it, j) => <li key={it}>{i === 0 && j === 0 ? <><Link to="/pro/projects/food-delivery-lakehouse">{it}</Link> <span className="chip chip-ok">Free preview</span></> : it}</li>)}</ol>
+              <ol className="pro-list" start={PRO_PROJECTS.slice(0, i).reduce((a, x) => a + x.items.length, 1)}>{g.items.map((it, j) => <li key={it}>{i === 0 && j === 0 ? <><Link to="/pro/projects/food-delivery-lakehouse">{it}</Link> <span className="chip chip-ok">Preview</span></> : it}</li>)}</ol>
             </details>
           ))}
         </div>
 
         <h2 className="ds-h">Cheat sheets <span className="small muted">60+ planned, including</span></h2>
-        <div className="chips pro-chips">{PRO_CHEATSHEETS.map((c) => { const sh = SHEETS.find((x) => x.title.toLowerCase() === c.toLowerCase()); return sh ? <Link key={c} to={`/pro/cheatsheets/${sh.slug}`} className="chip chip-ok">{c} · free</Link> : <span key={c} className="chip">{c}</span> })}</div>
+        <div className="chips pro-chips">{PRO_CHEATSHEETS.map((c) => { const sh = SHEETS.find((x) => x.title.toLowerCase() === c.toLowerCase()); return sh ? <Link key={c} to={`/pro/cheatsheets/${sh.slug}`} className="chip chip-ok">{c} · preview</Link> : <span key={c} className="chip">{c}</span> })}</div>
 
-        <h2 className="ds-h">Free stays free</h2>
+        <h2 className="ds-h">What the course includes without Pro</h2>
         <div className="card card-pad">
           <ul className="ticks">{FREE.map((x) => <li key={x}>{x}</li>)}</ul>
-          <Link className="btn btn-ghost" to="/path">Start learning free</Link>
+          <Link className="btn btn-ghost" to="/path">Start learning</Link>
         </div>
         <h2 className="ds-h">Questions</h2>
         <div className="faq">
@@ -240,10 +240,10 @@ function Policy({ eyebrow, title, updated, sections }) {
 export function Privacy() {
   return (
     <Policy eyebrow="Privacy" title="Your data, in plain words" updated="4 November 2026" sections={[
-      ['The short version', [`${BRAND.name} has no ads and no tracking cookies, and the free course needs no account. Your learning progress stays in your own browser.`]],
-      ['Your progress', ['XP, streaks, solved questions and checklists are saved in your browser\'s local storage on this device. They are never sent to us. Clearing your browser data deletes them, so use Export on the My progress page to keep a copy.']],
+      ['The short version', [`${BRAND.name} has no ads and no tracking cookies. To use most of the site you create an account with your email. We keep your email and your learning progress, and nothing else.`]],
+      ['Your progress', ['XP, streaks, solved questions and checklists are saved in your browser and, when you are signed in, copied to your account so they follow you to a new device. Use Export on the My progress page to keep your own copy.']],
       ['The Pro waitlist', ['If you join the waitlist, we keep your name, email, the plan you picked, where you are in your career and any note you write. It is stored in a private database (or Google Form) that only the site\'s author can read.', 'We use it only to email you about Pro. We never sell it or share it. Email us and we will delete it.']],
-      ['Accounts', ['Accounts are optional. If you sign in with an email link or Google, we store your email, your plan, and a random id plus a short label (such as "Chrome on Android") for the one device your account is active on. That is how one account stays on one device.', 'Accounts are run by Supabase, our database provider. You can ask us to delete your account at any time.']],
+      ['Accounts', ['When you sign in with an email link or Google, we store your email, your plan, and a random id plus a short label (such as "Chrome on Android") for the one device your account is active on. That is how one account stays on one device.', 'Accounts are run by Supabase, our database provider. You can ask us to delete your account at any time.']],
       ['Code that runs in your browser', ['The SQL engine (DuckDB) and Python (Pyodide) are downloaded from the jsDelivr CDN the first time you use them. Your queries and code run on your device and are not sent anywhere.']],
       ['Hosting', ['The site is hosted on GitHub Pages. GitHub may keep standard server logs, such as IP addresses, to run and protect the service.']],
     ]} />
@@ -253,7 +253,7 @@ export function Privacy() {
 export function Terms() {
   return (
     <Policy eyebrow="Terms" title="Terms of use" updated="4 November 2026" sections={[
-      ['Using the site', [`${BRAND.name} is free to use for learning. You can share links to any page. Please don\'t copy the handbooks or questions wholesale onto other sites.`]],
+      ['Using the site', [`You can use ${BRAND.name} for your own learning and share links to any page. Please don\'t copy the handbooks or questions wholesale onto other sites.`]],
       ['No guarantees', ['We work hard to keep the content correct, but it is provided as is. It is learning material, not professional advice, and it can\'t promise a job or an exam result.']],
       ['Pro', ['Pro is not on sale yet, and joining the waitlist costs nothing. Prices, renewal and refund terms will be published here before anyone is asked to pay.']],
       ['Names and trademarks', ['Product names such as Databricks, Azure, Spark or Kafka belong to their owners and are used only to describe what you learn. RasoiRun is a made-up company.']],

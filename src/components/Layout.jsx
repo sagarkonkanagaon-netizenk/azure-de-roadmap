@@ -58,7 +58,7 @@ export default function Layout() {
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" /></svg>
               <span>Search</span><kbd>Ctrl K</kbd>
             </button>
-            <button className="icon-btn" onClick={toggle} aria-label={isDark ? 'Switch to light theme' : 'Switch to dark theme'} title="Theme">
+            <button className="icon-btn theme-btn" onClick={toggle} aria-label={isDark ? 'Switch to light theme' : 'Switch to dark theme'} title="Theme">
               {isDark
                 ? <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" /></svg>
                 : <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" /></svg>}
@@ -84,7 +84,7 @@ export default function Layout() {
             <div className="m-items">{sec.items.map((i) => <NavLink key={i.to} to={i.to} end>{i.label}</NavLink>)}</div>
           </div>
         ))}
-        <div className="m-items m-extra"><NavLink to="/progress">My progress</NavLink><NavLink to="/pro">Pro</NavLink>{AUTH_ENABLED && <NavLink to="/account">Account</NavLink>}</div>
+        <div className="m-items m-extra"><NavLink to="/progress">My progress · {xp} XP</NavLink><NavLink to="/pro">Pro</NavLink>{AUTH_ENABLED && <NavLink to="/account">Account</NavLink>}<button type="button" className="m-theme" onClick={toggle}>{isDark ? 'Light theme' : 'Dark theme'}</button></div>
       </nav>
       <main data-section={here?.id || 'home'}>
         {here && here.items.length > 1 && (
@@ -102,7 +102,7 @@ export default function Layout() {
         <div className="container footer-grid">
           <div>
             <Link to="/" className="brand"><img className="brand-mark" src="./favicon.svg" alt="" width="34" height="34" /><span className="wordmark">data<b>dhaba</b></span></Link>
-            <p style={{ marginTop: 12, maxWidth: 360 }}>A free, hands-on path into data engineering. Written by {BRAND.author}, {BRAND.authorRole}. Learning stays free, forever.</p>
+            <p style={{ marginTop: 12, maxWidth: 360 }}>A hands-on path into data engineering. Written by {BRAND.author}, {BRAND.authorRole}.</p>
           </div>
           {MENUS.map((sec) => <div key={sec.id} data-sec={sec.id}><h4>{sec.label}</h4>{sec.items.map((i) => <Link key={i.to} to={i.to}>{i.label === 'Overview' ? 'All of ' + sec.label : i.label}</Link>)}{sec.id === 'practice' && <Link to="/daily">Daily SQL challenge</Link>}</div>)}
           <div><h4>About</h4><Link to="/progress">My progress</Link><Link to="/about">About and mantras</Link><Link to="/pro">Pro</Link><a href={BRAND.portfolio} target="_blank" rel="noreferrer">Author's portfolio</a><a href={`mailto:${BRAND.email}`}>Contact</a></div>

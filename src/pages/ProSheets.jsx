@@ -9,9 +9,9 @@ export function SheetIndex() {
       <div className="container">
         <Link to="/pro" className="small">← Data Dhaba Pro</Link>
         <div className="page-head" style={{ marginTop: 14 }}>
-          <div className="eyebrow">Cheat sheets <span className="chip chip-ok">Free preview</span></div>
+          <div className="eyebrow">Cheat sheets <span className="chip chip-ok">Preview</span></div>
           <h1>One page. Everything you need.</h1>
-          <p>Print them, pin them, revise from them the night before an interview. {SHEETS.length} are free here, and Pro adds 60+ more.</p>
+          <p>Print them, pin them, revise from them the night before an interview. {SHEETS.length} are open here, and Pro adds 60+ more.</p>
         </div>
         <div className="grid g3">
           {SHEETS.map((s) => (
@@ -46,7 +46,7 @@ export function Sheet() {
             <span className="chip">{s.tag}</span>
           </header>
           <Markdown md={s.md} className="prose sheet-body no-try" />
-          <footer className="sheet-foot">datadhaba.in · free to print and share</footer>
+          <footer className="sheet-foot">datadhaba.in</footer>
         </article>
         <div className="row no-print" style={{ justifyContent: 'space-between', marginTop: 20, flexWrap: 'wrap' }}>
           <Link className="btn btn-ghost" to={`/pro/cheatsheets/${next.slug}`}>Next: {next.title} →</Link>

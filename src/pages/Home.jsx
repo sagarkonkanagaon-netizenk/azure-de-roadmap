@@ -6,6 +6,7 @@ import Console from '../components/Console.jsx'
 import HeroMark from '../components/HeroMark.jsx'
 import { AUTH_ENABLED } from '../lib/auth.js'
 import sqlQ from '../content/sql-questions.json'
+import pyQ from '../content/py-questions.json'
 import books from '../content/books-index.json'
 import { WEEKS, PHASES } from '../data/path.js'
 import { useProgress } from '../lib/progress.js'
@@ -42,16 +43,15 @@ const STEPS = [
 
 const CHAPTERS = books.reduce((a, b) => a + b.chapters.length, 0)
 const STATS = [
-  ['₹0', 'to learn everything'],
   ['24', 'weeks, step by step'],
   [CHAPTERS, 'handbook chapters'],
   [sqlQ.questions.length, 'SQL interview problems'],
+  [pyQ.questions.length, 'Python and PySpark problems'],
   ['2.6M', 'rows to practise on'],
 ]
 const STACK = ['SQL', 'Python', 'PySpark', 'Spark internals', 'Databricks', 'Delta Lake', 'Unity Catalog', 'Azure Data Factory', 'ADLS Gen2', 'Kafka', 'Structured Streaming', 'CDC', 'Data modelling', 'SCD Type 2', 'Data quality', 'CI/CD', 'Docker', 'System design', 'Interviews']
 
 const COMPARE = [
-  ['Price', '₹20,000 to ₹90,000', '₹0. Pro from ₹999 for 6 months'],
   ['Practice', 'Watch videos, set up tools yourself', 'Run every example in your browser'],
   ['Pace', 'Fixed batches and timings', 'Your pace, 2 hours a day'],
   ['Interview prep', 'At the end of the course', 'In every chapter, with quizzes'],
@@ -70,16 +70,16 @@ export default function Home() {
       <section className="hero3">
         <div className="container hero3-grid">
           <div className="hero3-copy">
-            <div className="hero-brand"><HeroMark /><div className="hero-brand-txt"><p className="hero-tagline">On your highway <em>to get hired</em></p><span className="pill-note">{AUTH_ENABLED ? 'Free account · Works in your browser' : 'Free · No signup · Works in your browser'}</span></div></div>
-            <h1>Become a data engineer. <em>For free.</em></h1>
+            <div className="hero-brand"><HeroMark /><div className="hero-brand-txt"><p className="hero-tagline">On your highway <em>to get hired</em></p><span className="pill-note">Works in your browser · No setup</span></div></div>
+            <h1>Learn data engineering <em>by doing it.</em></h1>
             <p className="lead">The complete course, from your first SQL query to Spark, Databricks, the cloud and streaming. Practise on millions of rows right in your browser, and walk into interviews ready.</p>
             <div className="hero-cta">
               {returning
                 ? <Link to={`/path/${startWeek(profile)}`} className="btn btn-primary btn-lg">Continue learning</Link>
-                : <button className="btn btn-primary btn-lg" onClick={() => setOnboard(true)}>Start learning free</button>}
+                : <button className="btn btn-primary btn-lg" onClick={() => setOnboard(true)}>Start learning</button>}
               <button className="btn btn-ghost btn-lg" onClick={() => document.getElementById('try')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}>Try a SQL query</button>
             </div>
-            <p className="hero-note">{AUTH_ENABLED ? 'Free forever · No setup · Works on your phone' : 'No signup · No setup · Works on your phone'}</p>
+            <p className="hero-note">Real SQL and Python · Runs on your phone or laptop</p>
           </div>
           <div id="try" className="hero3-try">
             <Console />
@@ -170,7 +170,7 @@ export default function Home() {
         <div className="container">
           <div className="plans">
             <div className="plan card">
-              <span className="basic-k">Free, forever</span>
+              <span className="basic-k">The course</span>
               <h3>Everything you need to learn</h3>
               <ul className="ticks">
                 <li>The full 24-week path and four handbooks</li>
@@ -189,7 +189,7 @@ export default function Home() {
               </ul>
               <div className="row" style={{ flexWrap: 'wrap' }}>
                 <Link to="/pro" className="btn btn-ghost">See what's inside</Link>
-                <Link to="/pro/projects/food-delivery-lakehouse" className="btn btn-ghost">Try project 1 free</Link>
+                <Link to="/pro/projects/food-delivery-lakehouse" className="btn btn-ghost">Preview project 1</Link>
               </div>
             </div>
           </div>

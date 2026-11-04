@@ -23,12 +23,12 @@ export default function Gate({ children }) {
       <div className="container narrow">
         <div className="card gate">
           <HeroMark size={84} />
-          <div className="eyebrow">Free account</div>
+          <div className="eyebrow">Sign in to continue</div>
           <h1>Sign in to keep going</h1>
-          <p className="muted">Everything on Data Dhaba stays free. A free account saves your progress, streak and XP, and works on one device at a time.</p>
+          <p className="muted">Create an account to open this page. It saves your progress, streak and XP, and works on one device at a time.</p>
           <div className="account-actions">
-            <Link className="btn btn-primary btn-lg" to={`/account?next=${encodeURIComponent(pathname)}`}>Create a free account</Link>
-            <Link className="btn btn-ghost btn-lg" to="/learn">Browse the free chapters</Link>
+            <Link className="btn btn-primary btn-lg" to={`/account?next=${encodeURIComponent(pathname)}`}>Create an account</Link>
+            <Link className="btn btn-ghost btn-lg" to="/learn">Browse the open chapters</Link>
           </div>
           <p className="small muted">Takes 20 seconds with your email or Google. No password to remember.</p>
         </div>

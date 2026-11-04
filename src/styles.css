@@ -648,6 +648,7 @@ main .page-head h1 em, main .daily-head h1 em, main .play-head h1 em { color: va
   .m-items { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
   .m-items a { display: flex; gap: 8px; align-items: center; padding: 10px !important; font-size: .92rem; }
   .m-extra { border-top: 1px solid var(--line); padding-top: 8px; }
+  .m-theme { display: flex; align-items: center; padding: 10px; font: inherit; font-size: .92rem; color: var(--text); background: none; border: 0; text-align: left; cursor: pointer; }
 }
 .footer h4 { white-space: nowrap; }
 @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; } .footer-grid > :first-child { grid-column: 1 / -1; } }
@@ -1062,3 +1063,7 @@ main .page-head h1 em, main .daily-head h1 em, main .play-head h1 em { color: va
 .gate .account-actions { justify-content: center; margin: 8px 0; }
 .gate .hero-mark, .gate svg:first-child { max-width: 96px; }
 .cta-band { border-radius: 0; }
+
+/* Phones: keep the wordmark whole. The theme switch moves into the menu, and on the narrowest screens the XP pill does too. */
+@media (max-width: 480px) { .header .theme-btn { display: none; } }
+@media (max-width: 370px) { .header .xp-pill { display: none; } }
