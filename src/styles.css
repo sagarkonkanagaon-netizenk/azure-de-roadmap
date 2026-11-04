@@ -981,3 +981,21 @@ main .page-head h1 em, main .daily-head h1 em, main .play-head h1 em { color: va
 .pro-preview p { margin: 0 0 12px; }
 .pro-preview .how-link { margin-top: auto; color: var(--primary); }
 .page-head .eyebrow .chip { vertical-align: middle; margin-left: 6px; }
+
+/* Check-yourself quizzes and practice boxes inside chapters */
+.quiz { margin: 2em 0 1.4em; padding: 18px 20px; border-radius: 16px; background: var(--card); border: 1px solid var(--line-2); }
+.quiz-k { font-size: .76rem; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; color: var(--primary); margin-bottom: 6px; }
+.quiz-q + .quiz-q { margin-top: 16px; padding-top: 14px; border-top: 1px dashed var(--line); }
+.quiz-text { margin: 0 0 8px; color: var(--text); }
+.quiz-opts { display: flex; flex-direction: column; gap: 6px; }
+.quiz-opt { text-align: left; font: inherit; font-size: .95rem; padding: 9px 12px; border-radius: 10px; border: 1px solid var(--line-2); background: var(--card-2); color: var(--text); cursor: pointer; }
+.quiz-opt:hover { border-color: var(--primary); }
+.quiz-q.answered .quiz-opt { cursor: default; }
+.quiz-q.answered .quiz-opt:not(.right):not(.wrong) { opacity: .6; }
+.quiz-opt.right { border-color: var(--ok); background: var(--ok-soft); opacity: 1; }
+.quiz-opt.wrong { border-color: var(--danger); background: var(--danger-soft); }
+.quiz-why { margin: 8px 0 0; font-size: .92rem; color: var(--text-2); }
+.prose .practice-box { margin: 1.4em 0; padding: 16px 18px; border-radius: 16px; background: var(--primary-soft); }
+.practice-box > b { display: block; font-size: .76rem; letter-spacing: .07em; text-transform: uppercase; color: var(--primary); margin-bottom: 8px; }
+.practice-box a { display: block; padding: 5px 0; font-weight: 600; }
+.practice-box a span { color: var(--muted); font-weight: 400; margin-right: 6px; }

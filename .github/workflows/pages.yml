@@ -17,7 +17,24 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  content-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install duckdb==1.4.1
+      - name: Run every SQL handbook example against the Playground tables
+        run: |
+          node scripts/dump_big_setup.mjs > /tmp/big.json
+          python scripts/check_sql_blocks.py /tmp/big.json
+
   build:
+    needs: content-check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
