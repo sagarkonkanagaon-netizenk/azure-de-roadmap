@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { Link, Navigate } from 'react-router-dom'
 import Waitlist from '../components/Waitlist.jsx'
+import { SHEETS } from '../pro/cheatsheets.js'
+const SHEET_COUNT = SHEETS.length
 import { PRO_PRICE, PRO_PLANS, PRO_PILLARS, PRO_PROJECTS, PRO_CHEATSHEETS, PRO_PROJECT_COUNT, PRO_FAQ } from '../data/pro.js'
 import guide from '../content/guide.json'
 import { BRAND, CERTS, FREE_PLATFORMS, MANTRAS, FINAL_WORD } from '../data/extras.js'
@@ -140,6 +142,22 @@ export function Pro() {
 
         <div id="waitlist" className="wl-wrap"><Waitlist plan={plan} /></div>
 
+        <h2 className="ds-h">Try Pro free</h2>
+        <div className="grid g2 pro-preview">
+          <Link to="/pro/projects/food-delivery-lakehouse" className="card card-pad card-link">
+            <span className="chip chip-ok">Free preview</span>
+            <h3>Project 1: Food-delivery lakehouse</h3>
+            <p className="muted">The whole thing, unlocked: a brief from your lead, messy data to download, 7 build steps with solutions and checkpoints, a README and interview answers.</p>
+            <b className="how-link">Open the project →</b>
+          </Link>
+          <Link to="/pro/cheatsheets" className="card card-pad card-link">
+            <span className="chip chip-ok">Free preview</span>
+            <h3>{SHEET_COUNT} printable cheat sheets</h3>
+            <p className="muted">Window functions, joins and their traps, the PySpark API, Delta Lake commands and Spark tuning. One page each, ready to print.</p>
+            <b className="how-link">Open the cheat sheets →</b>
+          </Link>
+        </div>
+
         <h2 className="ds-h">What you get</h2>
         <div className="grid g2 pro-pillars">
           {PRO_PILLARS.map((x) => (
@@ -156,13 +174,13 @@ export function Pro() {
           {PRO_PROJECTS.map((g, i) => (
             <details key={g.group} className="card card-pad pro-group" open={i === 0}>
               <summary><h3>{g.group}</h3><span className="chip">{g.items.length}</span></summary>
-              <ol className="pro-list" start={PRO_PROJECTS.slice(0, i).reduce((a, x) => a + x.items.length, 1)}>{g.items.map((it) => <li key={it}>{it}</li>)}</ol>
+              <ol className="pro-list" start={PRO_PROJECTS.slice(0, i).reduce((a, x) => a + x.items.length, 1)}>{g.items.map((it, j) => <li key={it}>{i === 0 && j === 0 ? <><Link to="/pro/projects/food-delivery-lakehouse">{it}</Link> <span className="chip chip-ok">Free preview</span></> : it}</li>)}</ol>
             </details>
           ))}
         </div>
 
         <h2 className="ds-h">Cheat sheets <span className="small muted">60+ planned, including</span></h2>
-        <div className="chips pro-chips">{PRO_CHEATSHEETS.map((c) => <span key={c} className="chip">{c}</span>)}</div>
+        <div className="chips pro-chips">{PRO_CHEATSHEETS.map((c) => { const sh = SHEETS.find((x) => x.title.toLowerCase() === c.toLowerCase()); return sh ? <Link key={c} to={`/pro/cheatsheets/${sh.slug}`} className="chip chip-ok">{c} · free</Link> : <span key={c} className="chip">{c}</span> })}</div>
 
         <h2 className="ds-h">Free stays free</h2>
         <div className="card card-pad">
@@ -222,9 +240,10 @@ function Policy({ eyebrow, title, updated, sections }) {
 export function Privacy() {
   return (
     <Policy eyebrow="Privacy" title="Your data, in plain words" updated="4 November 2026" sections={[
-      ['The short version', [`${BRAND.name} has no accounts, no ads and no tracking cookies. Your learning progress stays in your own browser.`]],
+      ['The short version', [`${BRAND.name} has no ads and no tracking cookies, and the free course needs no account. Your learning progress stays in your own browser.`]],
       ['Your progress', ['XP, streaks, solved questions and checklists are saved in your browser\'s local storage on this device. They are never sent to us. Clearing your browser data deletes them, so use Export on the My progress page to keep a copy.']],
-      ['The Pro waitlist', ['If you join the waitlist, we keep your name, email, the plan you picked, where you are in your career and any note you write. It is stored in a Google Form owned by the site\'s author.', 'We use it only to email you about Pro. We never sell it or share it. Email us and we will delete it.']],
+      ['The Pro waitlist', ['If you join the waitlist, we keep your name, email, the plan you picked, where you are in your career and any note you write. It is stored in a private database (or Google Form) that only the site\'s author can read.', 'We use it only to email you about Pro. We never sell it or share it. Email us and we will delete it.']],
+      ['Accounts', ['Accounts are optional. If you sign in with an email link or Google, we store your email, your plan, and a random id plus a short label (such as "Chrome on Android") for the one device your account is active on. That is how one account stays on one device.', 'Accounts are run by Supabase, our database provider. You can ask us to delete your account at any time.']],
       ['Code that runs in your browser', ['The SQL engine (DuckDB) and Python (Pyodide) are downloaded from the jsDelivr CDN the first time you use them. Your queries and code run on your device and are not sent anywhere.']],
       ['Hosting', ['The site is hosted on GitHub Pages. GitHub may keep standard server logs, such as IP addresses, to run and protect the service.']],
     ]} />

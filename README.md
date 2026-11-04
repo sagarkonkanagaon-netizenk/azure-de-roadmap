@@ -5,9 +5,9 @@
 <p align="center"><b>On your highway to get hired.</b><br/>Learn data engineering by doing it, right in your browser. Free, forever.</p>
 
 <p align="center">
-  <a href="https://sagarkonkanagaon-netizenk.github.io/data-dhaba/"><img alt="Open the site" src="https://img.shields.io/badge/Open%20the%20site-e8366f?style=for-the-badge&logoColor=white"></a>
-  <a href="https://sagarkonkanagaon-netizenk.github.io/data-dhaba/#/path"><img alt="24-week path" src="https://img.shields.io/badge/24--week%20path-0fb5b0?style=for-the-badge"></a>
-  <a href="https://sagarkonkanagaon-netizenk.github.io/data-dhaba/#/pro"><img alt="Pro coming soon" src="https://img.shields.io/badge/Pro-coming%20soon%20%C2%B7%20from%20%E2%82%B9999-1a1420?style=for-the-badge"></a>
+  <a href="https://datadhaba.in/"><img alt="Open the site" src="https://img.shields.io/badge/Open%20the%20site-e8366f?style=for-the-badge&logoColor=white"></a>
+  <a href="https://datadhaba.in/#/path"><img alt="24-week path" src="https://img.shields.io/badge/24--week%20path-0fb5b0?style=for-the-badge"></a>
+  <a href="https://datadhaba.in/#/pro"><img alt="Pro coming soon" src="https://img.shields.io/badge/Pro-coming%20soon%20%C2%B7%20from%20%E2%82%B9999-1a1420?style=for-the-badge"></a>
 </p>
 
 <p align="center">
@@ -22,7 +22,7 @@
 > ### 📣 Data Dhaba Pro is coming: ₹999 for 6 months or ₹1,599 a year
 > **34 end-to-end projects · 60+ cheat sheets · 500+ interview answers · AI mock interviewer · 20 system design cases.**
 > Everything between "I finished the course" and "I got the offer".
-> **[Join the waitlist →](https://sagarkonkanagaon-netizenk.github.io/data-dhaba/#/pro)** No payment now. You get an email the day it opens.
+> **[Join the waitlist →](https://datadhaba.in/#/pro)** No payment now. You get an email the day it opens.
 
 ---
 
@@ -137,7 +137,7 @@ SQL window functions · SQL joins and traps · PySpark DataFrame API · Spark pe
 
 </details>
 
-<p align="center"><a href="https://sagarkonkanagaon-netizenk.github.io/data-dhaba/#/pro"><img alt="Join the Pro waitlist" src="https://img.shields.io/badge/Join%20the%20Pro%20waitlist-e8366f?style=for-the-badge"></a></p>
+<p align="center"><a href="https://datadhaba.in/#/pro"><img alt="Join the Pro waitlist" src="https://img.shields.io/badge/Join%20the%20Pro%20waitlist-e8366f?style=for-the-badge"></a></p>
 
 > Students who can't afford Pro can email for a free pass. Nobody should be priced out of learning.
 

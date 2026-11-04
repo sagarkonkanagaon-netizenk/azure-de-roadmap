@@ -12,6 +12,16 @@ export default function Markdown({ md, className = 'prose' }) {
     const onClick = (e) => {
       const btn = e.target.closest('button')
       if (!btn) return
+      if (btn.hasAttribute('data-opt')) {
+        const q = btn.closest('[data-quiz]')
+        if (!q || q.classList.contains('answered')) return
+        q.classList.add('answered')
+        const ok = btn.dataset.ok === '1'
+        btn.classList.add(ok ? 'right' : 'wrong')
+        q.querySelectorAll('[data-opt]').forEach((b) => { if (b.dataset.ok === '1') b.classList.add('right'); b.setAttribute('aria-disabled', 'true') })
+        const why = q.querySelector('.quiz-why'); if (why) { why.hidden = false; why.insertAdjacentHTML('afterbegin', ok ? '<b>Right.</b> ' : '<b>Not quite.</b> ') }
+        return
+      }
       const block = btn.closest('.codeblock')
       if (!block) return
       const code = block.querySelector('code').innerText

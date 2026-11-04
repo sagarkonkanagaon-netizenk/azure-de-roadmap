@@ -68,3 +68,17 @@ export function importProgress(text) {
   save()
 }
 export function resetProgress() { state = empty(); save() }
+
+export function subscribe(cb) { subs.add(cb); return () => subs.delete(cb) }
+
+// Combine progress saved in the account with progress in this browser, keeping everything from both.
+export function mergeProgress(other) {
+  if (!other || typeof other !== 'object') return
+  const next = { ...empty(), ...state }
+  for (const k of Object.keys(empty())) {
+    if (k === 'days') next.days = [...new Set([...(state.days || []), ...(other.days || [])])].sort().slice(-400)
+    else if (other[k] && typeof other[k] === 'object') next[k] = { ...other[k], ...state[k] }
+  }
+  state = next
+  save()
+}

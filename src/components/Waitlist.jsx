@@ -2,15 +2,24 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { WAITLIST, PLAN_CHOICES, STAGE_CHOICES } from '../data/waitlist.js'
 import { BRAND } from '../data/extras.js'
+import { AUTH_ENABLED, client } from '../lib/auth.js'
 
 const KEY = 'dd:waitlist'
 const read = () => { try { return JSON.parse(localStorage.getItem(KEY)) || null } catch (e) { return null } }
 const save = (v) => { try { localStorage.setItem(KEY, JSON.stringify(v)) } catch (e) { /* private mode: fine */ } }
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
 
-export const connected = () => !!(WAITLIST.formId && WAITLIST.fields.email)
+const googleForm = () => !!(WAITLIST.formId && WAITLIST.fields.email)
+export const connected = () => AUTH_ENABLED || googleForm()
 
 async function send(v) {
+  if (AUTH_ENABLED) {
+    // Saved in your Supabase project (table: waitlist). Joining twice with the same email is fine.
+    const sb = await client()
+    const { error } = await sb.from('waitlist').insert({ name: v.name.trim(), email: v.email.trim().toLowerCase(), plan: v.plan, stage: v.stage, want: v.want.trim() || null, source: 'site' })
+    if (error && error.code !== '23505') throw error
+    return
+  }
   const f = WAITLIST.fields
   const body = new URLSearchParams()
   const put = (k, val) => { if (f[k] && val) body.append(f[k], val) }

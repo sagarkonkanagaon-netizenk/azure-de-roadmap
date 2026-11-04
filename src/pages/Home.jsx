@@ -4,7 +4,9 @@ import Mission, { Onboarding, getProfile, startWeek } from '../components/Missio
 import DailyBanner from '../components/DailyBanner.jsx'
 import Console from '../components/Console.jsx'
 import HeroMark from '../components/HeroMark.jsx'
+import { AUTH_ENABLED } from '../lib/auth.js'
 import sqlQ from '../content/sql-questions.json'
+import books from '../content/books-index.json'
 import { WEEKS, PHASES } from '../data/path.js'
 import { useProgress } from '../lib/progress.js'
 import { PRO_PRICE, PRO_PROJECT_COUNT } from '../data/pro.js'
@@ -38,6 +40,24 @@ const STEPS = [
   { n: 3, title: 'Get hired', body: 'Quizzes, flashcards and model answers for the questions interviewers actually ask.', to: '/interview', cta: 'Open Interview' },
 ]
 
+const CHAPTERS = books.reduce((a, b) => a + b.chapters.length, 0)
+const STATS = [
+  ['₹0', 'to learn everything'],
+  ['24', 'weeks, step by step'],
+  [CHAPTERS, 'handbook chapters'],
+  [sqlQ.questions.length, 'SQL interview problems'],
+  ['2.6M', 'rows to practise on'],
+]
+const STACK = ['SQL', 'Python', 'PySpark', 'Spark internals', 'Databricks', 'Delta Lake', 'Unity Catalog', 'Azure Data Factory', 'ADLS Gen2', 'Kafka', 'Structured Streaming', 'CDC', 'Data modelling', 'SCD Type 2', 'Data quality', 'CI/CD', 'Docker', 'System design', 'Interviews']
+
+const COMPARE = [
+  ['Price', '₹20,000 to ₹90,000', '₹0. Pro from ₹999 for 6 months'],
+  ['Practice', 'Watch videos, set up tools yourself', 'Run every example in your browser'],
+  ['Pace', 'Fixed batches and timings', 'Your pace, 2 hours a day'],
+  ['Interview prep', 'At the end of the course', 'In every chapter, with quizzes'],
+  ['Projects', 'One shared capstone', 'Realistic tickets every week'],
+]
+
 export default function Home() {
   const p = useProgress()
   const started = Object.keys(p.chapters).length + Object.keys(p.sql).length + Object.keys(p.py).length + Object.keys(p.drills).length > 0
@@ -50,19 +70,30 @@ export default function Home() {
       <section className="hero3">
         <div className="container hero3-grid">
           <div className="hero3-copy">
-            <div className="hero-brand"><HeroMark /><div className="hero-brand-txt"><p className="hero-tagline">On your highway <em>to get hired</em></p><span className="pill-note">Free · No signup · Works in your browser</span></div></div>
-            <h1>Learn data engineering <em>by doing it.</em></h1>
-            <p className="lead">A 24-week path, about five and a half months, from your first SQL query to real pipelines on the cloud. Read a little, practise a lot, and get ready for interviews.</p>
+            <div className="hero-brand"><HeroMark /><div className="hero-brand-txt"><p className="hero-tagline">On your highway <em>to get hired</em></p><span className="pill-note">{AUTH_ENABLED ? 'Free account · Works in your browser' : 'Free · No signup · Works in your browser'}</span></div></div>
+            <h1>Become a data engineer. <em>For free.</em></h1>
+            <p className="lead">The complete course, from your first SQL query to Spark, Databricks, the cloud and streaming. Practise on millions of rows right in your browser, and walk into interviews ready.</p>
             <div className="hero-cta">
               {returning
                 ? <Link to={`/path/${startWeek(profile)}`} className="btn btn-primary btn-lg">Continue learning</Link>
                 : <button className="btn btn-primary btn-lg" onClick={() => setOnboard(true)}>Start learning free</button>}
               <button className="btn btn-ghost btn-lg" onClick={() => document.getElementById('try')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}>Try a SQL query</button>
             </div>
-            <p className="hero-note">{sqlQ.questions.length} SQL problems · 4 handbooks · 2.6M rows to explore</p>
+            <p className="hero-note">{AUTH_ENABLED ? 'Free forever · No setup · Works on your phone' : 'No signup · No setup · Works on your phone'}</p>
           </div>
           <div id="try" className="hero3-try">
             <Console />
+          </div>
+        </div>
+      </section>
+
+      <section className="stats-band" aria-label="Data Dhaba in numbers">
+        <div className="container stats">
+          {STATS.map(([n, l]) => <div key={l} className="stat"><b>{n}</b><span>{l}</span></div>)}
+        </div>
+        <div className="marquee" aria-label="Skills you learn">
+          <div className="marquee-track">
+            {[...STACK, ...STACK].map((t, i) => <span key={i} aria-hidden={i >= STACK.length}>{t}</span>)}
           </div>
         </div>
       </section>
@@ -156,8 +187,39 @@ export default function Home() {
                 <li>60+ cheat sheets and 500+ interview answers</li>
                 <li>AI mock interviewer and system design cases</li>
               </ul>
-              <Link to="/pro" className="btn btn-ghost">See what's inside</Link>
+              <div className="row" style={{ flexWrap: 'wrap' }}>
+                <Link to="/pro" className="btn btn-ghost">See what's inside</Link>
+                <Link to="/pro/projects/food-delivery-lakehouse" className="btn btn-ghost">Try project 1 free</Link>
+              </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="section section-alt">
+        <div className="container">
+          <div className="section-head center">
+            <div className="eyebrow">Why Data Dhaba</div>
+            <h2>Bootcamp depth, without the bootcamp bill</h2>
+          </div>
+          <div className="compare card" role="table" aria-label="Typical paid course compared with Data Dhaba">
+            <div className="compare-row compare-head" role="row"><span role="columnheader" /><span role="columnheader">Typical paid course</span><span role="columnheader">Data Dhaba</span></div>
+            {COMPARE.map(([k, a, b]) => (
+              <div key={k} className="compare-row" role="row"><span role="rowheader">{k}</span><span role="cell">{a}</span><span role="cell"><i aria-hidden="true">✓</i>{b}</span></div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="cta-band">
+        <div className="container cta-inner">
+          <div>
+            <h2>Your first query is ten seconds away.</h2>
+            <p>Open the Playground, run a query on a million orders, and see why companies hire for this.</p>
+          </div>
+          <div className="row" style={{ flexWrap: 'wrap' }}>
+            <Link to="/path/1" className="btn btn-primary btn-lg">Start week 1</Link>
+            <Link to="/playground" className="btn btn-on-dark btn-lg">Open the Playground</Link>
           </div>
         </div>
       </section>

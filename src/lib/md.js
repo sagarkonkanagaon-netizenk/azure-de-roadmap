@@ -27,14 +27,33 @@ export function highlight(code, lang) {
   return esc(code)
 }
 
+// ```quiz blocks: questions separated by a line of ---. "- " is a wrong option, "* " the right one, "> " the explanation.
+function quiz(text) {
+  const qs = text.split(/\n-{3,}\n/).map((block) => {
+    const lines = block.split('\n').map((x) => x.trimEnd()).filter(Boolean)
+    const q = [], opts = [], why = []
+    for (const ln of lines) {
+      if (/^[-*] /.test(ln)) opts.push({ ok: ln[0] === '*', t: ln.slice(2) })
+      else if (ln.startsWith('> ')) why.push(ln.slice(2))
+      else q.push(ln)
+    }
+    return { q: q.join(' '), opts, why: why.join(' ') }
+  })
+  const inl = (t) => marked.parseInline(t)
+  return `<div class="quiz"><div class="quiz-k">Check yourself</div>${qs.map((x, i) => `<div class="quiz-q" data-quiz><p class="quiz-text"><b>${i + 1}.</b> ${inl(x.q)}</p><div class="quiz-opts">${x.opts.map((o) => `<button type="button" class="quiz-opt" data-opt data-ok="${o.ok ? 1 : 0}">${inl(o.t)}</button>`).join('')}</div><p class="quiz-why" hidden>${inl(x.why)}</p></div>`).join('')}</div>`
+}
+
 const marked = new Marked({
   gfm: true,
   breaks: false,
   renderer: {
     code({ text, lang }) {
-      const l = (lang || 'text').split(/\s/)[0]
-      const runnable = l === 'sql' ? ' data-run="sql"' : ''
-      return `<div class="codeblock" data-lang="${l}"${runnable}><div class="bar"><span>${l}</span><span><button data-copy>Copy</button>${l === 'sql' ? '<button data-try>Try in SQL lab</button>' : ''}</span></div><pre><code>${highlight(text, l)}</code></pre></div>`
+      const info = (lang || 'text').split(/\s+/)
+      const l = info[0]
+      if (l === 'quiz') return quiz(text)
+      const tryable = l === 'sql' && !info.includes('norun')
+      const runnable = tryable ? ' data-run="sql"' : ''
+      return `<div class="codeblock" data-lang="${l}"${runnable}><div class="bar"><span>${l}</span><span><button data-copy>Copy</button>${tryable ? '<button data-try>Run it</button>' : ''}</span></div><pre><code>${highlight(text, l)}</code></pre></div>`
     },
     heading({ tokens, depth }) {
       const html = this.parser.parseInline(tokens)

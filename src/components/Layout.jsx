@@ -1,3 +1,6 @@
+import DeviceWatch from './DeviceWatch.jsx'
+import Gate from './Gate.jsx'
+import { AUTH_ENABLED } from '../lib/auth.js'
 import { useEffect, useState } from 'react'
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
 import { useTheme } from '../lib/theme.js'
@@ -61,6 +64,11 @@ export default function Layout() {
                 : <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" /></svg>}
             </button>
             <Link to="/progress" className="xp-pill" title={`${lv.name} · ${xp} XP`}><span>{lv.icon}</span><b>{xp}</b><small>XP</small></Link>
+            {AUTH_ENABLED && (
+              <Link to="/account" className="icon-btn" aria-label="Account" title="Account">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="8" r="4" /><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6" /></svg>
+              </Link>
+            )}
             <Link to="/pro" className="btn btn-primary btn-sm hide-sm">Go Pro</Link>
             <button className="icon-btn menu-btn" onClick={() => setMenu((m) => !m)} aria-label="Menu" aria-expanded={menu}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
@@ -76,7 +84,7 @@ export default function Layout() {
             <div className="m-items">{sec.items.map((i) => <NavLink key={i.to} to={i.to} end>{i.label}</NavLink>)}</div>
           </div>
         ))}
-        <div className="m-items m-extra"><NavLink to="/progress">My progress</NavLink><NavLink to="/pro">Pro</NavLink></div>
+        <div className="m-items m-extra"><NavLink to="/progress">My progress</NavLink><NavLink to="/pro">Pro</NavLink>{AUTH_ENABLED && <NavLink to="/account">Account</NavLink>}</div>
       </nav>
       <main data-section={here?.id || 'home'}>
         {here && here.items.length > 1 && (
@@ -88,7 +96,7 @@ export default function Layout() {
             </div>
           </div>
         )}
-        <Outlet />
+        <Gate><Outlet /></Gate>
       </main>
       <footer className="footer">
         <div className="container footer-grid">
@@ -101,11 +109,12 @@ export default function Layout() {
         </div>
         <div className="container footer-base">
           <span>© {new Date().getFullYear()} {BRAND.name}</span>
-          <nav aria-label="Legal"><Link to="/privacy">Privacy</Link><Link to="/terms">Terms</Link><Link to="/pro">Pro waitlist</Link></nav>
+          <nav aria-label="Legal"><Link to="/privacy">Privacy</Link><Link to="/terms">Terms</Link><Link to="/pro">Pro waitlist</Link>{AUTH_ENABLED && <Link to="/account">Account</Link>}</nav>
         </div>
       </footer>
       {search && <Search onClose={() => setSearch(false)} />}
       <Celebrate />
+      <DeviceWatch />
     </div>
   )
 }
