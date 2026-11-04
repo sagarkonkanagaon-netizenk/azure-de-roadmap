@@ -114,7 +114,7 @@ export default function Home() {
           <div className="spread path-head">
             <div className="section-head" style={{ margin: 0 }}>
               <div className="eyebrow">The 24-week path · {doneWeeks}/{WEEKS.length} done</div>
-              <h2>Seven phases, one week at a time</h2>
+              <h2>{PHASES.length} stops, one week at a time</h2>
               <p>About two hours on weekdays and five at weekends.</p>
             </div>
             <Link to="/path" className="btn btn-ghost btn-sm">See the full plan</Link>

@@ -813,3 +813,8 @@ main .page-head h1 em, main .daily-head h1 em, main .play-head h1 em { color: va
   .qlist-body { display: none; }
   .qlist.open .qlist-body { display: block; max-height: 340px; overflow: auto; margin-top: 6px; }
 }
+
+/* Badges: two per row on phones instead of one long column */
+@media (max-width: 560px) {
+  .badges { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+}
