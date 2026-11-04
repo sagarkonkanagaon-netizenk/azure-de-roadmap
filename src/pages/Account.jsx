@@ -7,7 +7,7 @@ export default function Account() {
   const [profile, setProfile] = useState(null)
   const [email, setEmail] = useState('')
   const [code, setCode] = useState('')
-  const [err, setErr] = useState('')
+  const [err, setErr] = useState(() => { try { const m = sessionStorage.getItem('dd:auth-error'); sessionStorage.removeItem('dd:auth-error'); return m || '' } catch (e) { return '' } })
   const [busy, setBusy] = useState(false)
   const navigate = useNavigate()
   const [params] = useSearchParams()
