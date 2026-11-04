@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Data Dhaba</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+  // GitHub Pages serves this for any path it does not know, for example /data-dhaba/practice.
+  // The app uses hash routes, so send the visitor to the same page as /data-dhaba/#/practice.
+  (function () {
+    var parts = location.pathname.split('/').filter(Boolean)
+    var base = parts.length ? '/' + parts[0] + '/' : '/'
+    var rest = parts.slice(1).join('/').replace(/[*]+$/, '')
+    location.replace(base + '#/' + rest + location.search)
+  })()
+</script>
+</head>
+<body style="font-family: system-ui, sans-serif; background: #faf8f9; color: #1a1420; display: grid; place-items: center; min-height: 100vh; margin: 0">
+  <p>Taking you to <a href="./">Data Dhaba</a>…</p>
+</body>
+</html>

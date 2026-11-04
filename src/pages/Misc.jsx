@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import guide from '../content/guide.json'
 import { BRAND, CERTS, FREE_PLATFORMS, MANTRAS, FINAL_WORD } from '../data/extras.js'
 import { useProgress, toggleIn } from '../lib/progress.js'
@@ -145,6 +145,8 @@ export function Pro() {
 }
 
 export function NotFound() {
+  // A bare #anchor (not #/route) is never a page: go home instead of showing a dead end.
+  if (typeof window !== 'undefined' && window.location.hash && !window.location.hash.startsWith('#/')) return <Navigate to="/" replace />
   return (
     <div className="page">
       <div className="container narrow center">

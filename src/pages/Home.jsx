@@ -56,7 +56,7 @@ export default function Home() {
               {returning
                 ? <Link to={`/path/${startWeek(profile)}`} className="btn btn-primary btn-lg">Continue learning</Link>
                 : <button className="btn btn-primary btn-lg" onClick={() => setOnboard(true)}>Start learning free</button>}
-              <a href="#try" className="btn btn-ghost btn-lg">Try a SQL query</a>
+              <button className="btn btn-ghost btn-lg" onClick={() => document.getElementById('try')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}>Try a SQL query</button>
             </div>
             <p className="hero-note">{sqlQ.questions.length} SQL problems · 4 handbooks · 2.6M rows to explore</p>
           </div>
