@@ -1092,3 +1092,7 @@ main .page-head h1 em, main .daily-head h1 em, main .play-head h1 em { color: va
 .pro-lock-list li span { flex: none; opacity: .7; }
 .pro-lock .waitlist { margin: 0; box-shadow: none; }
 @media (max-width: 480px) { .pro-lock-card { padding: 18px 14px; } }
+/* Seekho. Karo. Dikhao. journey */
+.journey-name { letter-spacing: -0.01em; }
+.journey-gloss { font-size: .78rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-left: 6px; vertical-align: middle; }
+.journey-stat { font-size: .84rem; font-weight: 600; color: var(--accent) !important; margin: -6px 0 14px !important; }

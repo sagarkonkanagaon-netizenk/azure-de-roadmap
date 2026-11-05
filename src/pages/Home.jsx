@@ -12,6 +12,7 @@ import { WEEKS, PHASES } from '../data/path.js'
 import { useProgress } from '../lib/progress.js'
 import { PRO_PRICE, PRO_PROJECT_COUNT } from '../data/pro.js'
 import { weekDone } from './Path.jsx'
+import { JOURNEY } from '../data/journey.js'
 
 // The basics, explained before any feature is shown.
 const BASICS = [
@@ -35,11 +36,6 @@ const BASICS = [
   },
 ]
 
-const STEPS = [
-  { n: 1, title: 'Learn', body: 'Follow the 24-week path. Each week is a ticket from your lead, with short reading, daily practice and a build.', to: '/learn', cta: 'Open Learn' },
-  { n: 2, title: 'Practise', body: 'Write real SQL and Python in the browser. Answers are checked instantly, no setup needed.', to: '/practice', cta: 'Open Practice' },
-  { n: 3, title: 'Get hired', body: 'Quizzes, flashcards and model answers for the questions interviewers actually ask.', to: '/interview', cta: 'Open Interview' },
-]
 
 const CHAPTERS = books.reduce((a, b) => a + b.chapters.length, 0)
 const STATS = [
@@ -65,6 +61,12 @@ export default function Home() {
   const profile = getProfile()
   const returning = started || profile
   const doneWeeks = WEEKS.filter((w) => weekDone(w, p)).length
+  const built = Object.keys(p.checks || {}).filter((k) => /^proj\d+$/.test(k) && p.checks[k]).length
+  const journeyStat = [
+    `${Math.min(Object.keys(p.chapters).length, CHAPTERS)} of ${CHAPTERS} chapters read`,
+    `${[...Object.values(p.sql), ...Object.values(p.py)].filter((v) => v === 'solved').length} problems solved`,
+    `${built} ${built === 1 ? 'project' : 'projects'} built`,
+  ]
   return (
     <>
       <section className="hero3">
@@ -126,14 +128,16 @@ export default function Home() {
         <div className="container">
           <div className="section-head center">
             <div className="eyebrow">How it works</div>
-            <h2>Three steps, in order</h2>
+            <h2 className="journey-name">{JOURNEY.name}</h2>
+            <p>{JOURNEY.tagline}</p>
           </div>
-          <ol className="how">
-            {STEPS.map((s) => (
-              <li key={s.n} className="how-step">
-                <span className="how-n" aria-hidden="true">{s.n}</span>
-                <h3>{s.title}</h3>
+          <ol className="how journey">
+            {JOURNEY.steps.map((s, i) => (
+              <li key={s.word} className="how-step">
+                <span className="how-n" aria-hidden="true">{i + 1}</span>
+                <h3>{s.word} <span className="journey-gloss">{s.gloss}</span></h3>
                 <p>{s.body}</p>
+                {started && <p className="journey-stat">{journeyStat[i]}</p>}
                 <Link to={s.to} className="how-link">{s.cta} →</Link>
               </li>
             ))}
