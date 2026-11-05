@@ -51,9 +51,11 @@ const marked = new Marked({
       const info = (lang || 'text').split(/\s+/)
       const l = info[0]
       if (l === 'quiz') return quiz(text)
-      const tryable = l === 'sql' && !info.includes('norun')
-      const runnable = tryable ? ' data-run="sql"' : ''
-      return `<div class="codeblock" data-lang="${l}"${runnable}><div class="bar"><span>${l}</span><span><button data-copy>Copy</button>${tryable ? '<button data-try>Run it</button>' : ''}</span></div><pre><code>${highlight(text, l)}</code></pre></div>`
+      const tryable = (l === 'sql' || l === 'python') && !info.includes('norun')
+      const runnable = tryable ? ` data-run="${l}"` : ''
+      // Python blocks run right here in the page and can be edited first.
+      const editable = tryable && l === 'python' ? ' contenteditable="plaintext-only" spellcheck="false" autocapitalize="off" autocorrect="off"' : ''
+      return `<div class="codeblock" data-lang="${l}"${runnable}><div class="bar"><span>${l}</span><span><button data-copy>Copy</button>${tryable ? '<button data-try>Run it</button>' : ''}</span></div><pre><code${editable}>${highlight(text, l)}</code></pre></div>`
     },
     heading({ tokens, depth }) {
       const html = this.parser.parseInline(tokens)

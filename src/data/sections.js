@@ -2,7 +2,7 @@
 export const SECTIONS = [
   {
     id: 'learn', label: 'Learn', icon: '🎓', blurb: 'Understand it',
-    lead: 'A 24-week path, four handbooks and animated SQL. Read a little every day.',
+    lead: 'A 24-week path, five handbooks and animated SQL. Read a little every day.',
     items: [
       { to: '/learn', icon: '📚', label: 'Overview', desc: 'Handbooks and where to start' },
       { to: '/path', icon: '🗺️', label: '24-week path', desc: '5½ months, SQL to job offer' },

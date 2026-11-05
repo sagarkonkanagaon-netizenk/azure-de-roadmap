@@ -9,12 +9,17 @@ async function init(base) {
 }
 
 self.onmessage = async (e) => {
-  const { id, code, base, check } = e.data
+  const { id, code, base, check, show } = e.data
   let out = ''
   try {
     const py = await init(base)
     py.setStdout({ batched: (s) => { out += s + '\n' } })
     py.setStderr({ batched: (s) => { out += s + '\n' } })
+    // Fetch pandas, sqlite3 and friends on first import. zoneinfo needs the tzdata package.
+    try {
+      await py.loadPackagesFromImports(code)
+      if (/\bzoneinfo\b/.test(code)) await py.loadPackage('tzdata')
+    } catch (err) { /* the import itself will report a clear error */ }
     if (check) {
       py.globals.set('__user_code', code)
       py.globals.set('__ref_code', check.ref)
@@ -39,6 +44,27 @@ __r = __run(__ref_code, __fn, __args)
 json.dumps({"ok": __u == __r, "got": repr(__u[0]), "want": repr(__r[0])})
 `)
       self.postMessage({ id, out, verdict: JSON.parse(verdict) })
+    } else if (show) {
+      // Notebook style: print the value of the last line, if there is one.
+      py.globals.set('__cell', code)
+      // Errors show only the learner's own lines, not Pyodide's internals.
+      const err = await py.runPythonAsync(`
+from pyodide.code import eval_code_async as __eval
+import traceback as __tbm
+__err = None
+try:
+    __val = await __eval(__cell, globals(), filename="<cell>")
+    if __val is not None:
+        print(repr(__val))
+except BaseException as __e:
+    __tb = __e.__traceback__
+    while __tb is not None and __tb.tb_frame.f_code.co_filename != "<cell>":
+        __tb = __tb.tb_next
+    __err = "".join(__tbm.format_exception(type(__e), __e, __tb)).replace('File "<cell>", ', "").strip()
+__err
+`)
+      if (err) self.postMessage({ id, out, error: err })
+      else self.postMessage({ id, out })
     } else {
       await py.runPythonAsync(code)
       self.postMessage({ id, out })

@@ -173,7 +173,7 @@ export default function Home() {
               <span className="basic-k">The course</span>
               <h3>Everything you need to learn</h3>
               <ul className="ticks">
-                <li>The full 24-week path and four handbooks</li>
+                <li>The full 24-week path and five handbooks</li>
                 <li>SQL Lab, Python Lab and the 2.6M-row Playground</li>
                 <li>Daily challenge, quizzes and flashcards</li>
               </ul>
