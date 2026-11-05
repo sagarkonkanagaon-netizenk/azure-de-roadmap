@@ -337,7 +337,7 @@ kbd { font-family: var(--mono); font-size: .72rem; padding: 2px 6px; border: 1px
 .hljs-keyword, .hljs-built_in { color: #c792ea; }
 .hljs-string { color: #c3e88d; }
 .hljs-number, .hljs-literal { color: #f78c6c; }
-.hljs-comment { color: #64748b; font-style: italic; }
+.hljs-comment { color: #94a3b8; font-style: italic; }
 .hljs-title, .hljs-title.function_ { color: #82aaff; }
 .hljs-type, .hljs-params { color: #ffcb6b; }
 .hljs-meta, .hljs-attr { color: #89ddff; }
@@ -586,7 +586,7 @@ kbd { font-family: var(--mono); font-size: .72rem; padding: 2px 6px; border: 1px
 .mono { font-family: var(--mono); }
 .lvl-easy { color: var(--ok); border-color: color-mix(in srgb, #3fb27f 45%, transparent); }
 .lvl-med { color: var(--primary); border-color: color-mix(in srgb, var(--primary) 45%, transparent); }
-.lvl-hard { color: #e5534b; border-color: color-mix(in srgb, #e5534b 45%, transparent); }
+.lvl-hard { color: color-mix(in srgb, var(--danger) 82%, var(--text)); border-color: color-mix(in srgb, var(--danger) 45%, transparent); }
 .daily-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 20px; padding-bottom: 60px; align-items: start; }
 .daily-prompt { font-size: 1.12rem; line-height: 1.55; margin: 0 0 10px; color: var(--text); }
 .daily-hint { margin-top: 12px; padding: 10px 12px; border-radius: 10px; background: color-mix(in srgb, var(--primary) 10%, transparent); font-size: .92rem; }
@@ -1067,3 +1067,28 @@ main .page-head h1 em, main .daily-head h1 em, main .play-head h1 em { color: va
 /* Phones: keep the wordmark whole. The theme switch moves into the menu, and on the narrowest screens the XP pill does too. */
 @media (max-width: 480px) { .header .theme-btn { display: none; } }
 @media (max-width: 370px) { .header .xp-pill { display: none; } }
+
+/* Output of a Python block run in the handbook */
+.codeblock pre code[contenteditable] { display: block; outline: none; caret-color: #f8fafc; white-space: pre; }
+.codeblock[data-run="python"] pre:focus-within { box-shadow: inset 0 0 0 1px #334155; }
+.run-out { margin: 0; padding: 10px 16px 12px; border-top: 1px dashed #334155; font-family: var(--mono); font-size: .8rem; line-height: 1.55; color: #e2e8f0; background: rgba(255,255,255,.03); white-space: pre-wrap; word-break: break-word; max-height: 360px; overflow: auto; position: relative; }
+.run-out::before { content: 'Output'; display: block; font-size: .68rem; letter-spacing: .06em; text-transform: uppercase; color: #64748b; margin-bottom: 4px; }
+.run-out.ok::after { content: attr(data-ms); position: absolute; top: 10px; right: 14px; font-size: .68rem; color: #64748b; }
+.run-out.busy { color: #94a3b8; }
+.run-out.err { color: #fca5a5; }
+.codeblock .bar button:disabled { opacity: .5; cursor: progress; }
+
+/* Pro deep dives: chip, sidebar tag, and the lock after the preview */
+.chip-pro { background: color-mix(in srgb, var(--primary) 12%, transparent); color: var(--primary-2); border-color: color-mix(in srgb, var(--primary) 30%, transparent); }
+.deep-note { margin: -4px 0 10px; display: flex; align-items: center; gap: 8px; color: var(--text-2); }
+.side .pro-tick { color: var(--primary); font-size: .7rem; font-weight: 700; }
+.pro-lock { position: relative; margin: 8px 0 32px; }
+.pro-lock-fade { height: 72px; margin-top: -72px; position: relative; pointer-events: none; background: linear-gradient(to bottom, transparent, var(--bg)); }
+.pro-lock-card { border: 1px solid color-mix(in srgb, var(--primary) 30%, var(--line)); border-radius: 16px; padding: 24px; background: var(--card); }
+.pro-lock-card h2 { margin: 10px 0 14px; font-size: 1.35rem; line-height: 1.3; }
+.pro-lock-card .eyebrow { display: flex; align-items: center; gap: 8px; }
+.pro-lock-list { list-style: none; padding: 0; margin: 0 0 16px; display: grid; gap: 8px; }
+.pro-lock-list li { display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px; border-radius: 10px; background: var(--bg-2); line-height: 1.4; overflow-wrap: anywhere; }
+.pro-lock-list li span { flex: none; opacity: .7; }
+.pro-lock .waitlist { margin: 0; box-shadow: none; }
+@media (max-width: 480px) { .pro-lock-card { padding: 18px 14px; } }

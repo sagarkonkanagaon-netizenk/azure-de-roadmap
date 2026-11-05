@@ -9,12 +9,15 @@ import { loadBook } from '../lib/books.js'
 import { headings } from '../lib/md.js'
 import { useProgress, toggleIn } from '../lib/progress.js'
 import { PHASES } from '../data/path.js'
+import Waitlist from '../components/Waitlist.jsx'
 
 // The seven study guides came before the 24-week path; each one belongs to the stop that teaches its topic.
 const GUIDE_STOP = { 1: 1, 2: 3, 3: 5, 4: 4, 5: 6, 6: 7, 7: 8 }
 const guideStop = (n) => PHASES.find((x) => x.n === GUIDE_STOP[n]) || PHASES[0]
 
-const ICON = { sql: '🗄️', spark: '⚡', lake: '🏞️', stream: '🌊' }
+const ICON = { sql: '🗄️', py: '🐍', spark: '⚡', lake: '🏞️', stream: '🌊' }
+// Reading time as people say it: "45 min", "about 2 h".
+export const readTime = (m) => (m < 75 ? `${m} min` : `about ${Math.round(m / 60)} h`)
 
 export default function Library() {
   const p = useProgress()
@@ -48,16 +51,17 @@ export default function Library() {
         </div>
         <div className="section-head" style={{ marginTop: 44 }}>
           <h2>Handbooks</h2>
-          <p>Four complete handbooks written from production experience. Mark chapters as read and your path updates.</p>
+          <p>Five complete handbooks written from production experience. Mark chapters as read and your path updates.</p>
         </div>
         <div className="grid g2">
           {booksIndex.map((b) => {
             const done = b.chapters.filter((c) => p.chapters[`${b.slug}/${c.num}`]).length
             return (
               <Link key={b.slug} to={`/learn/${b.slug}`} className="card card-pad card-link">
-                <div className="spread"><span style={{ fontSize: '1.8rem' }}>{ICON[b.icon]}</span><span className="chip">{b.chapters.length} chapters · ~{Math.round(b.minutes / 60)} h</span></div>
+                <div className="spread"><span style={{ fontSize: '1.8rem' }}>{ICON[b.icon]}</span><span className="chip">{b.chapters.length} chapters · {readTime(b.minutes)}</span></div>
                 <h3 style={{ marginTop: 12, fontSize: '1.3rem' }}>{b.title}</h3>
                 <p className="muted">{b.subtitle}</p>
+                {b.deep && <p className="small deep-note"><span className="chip chip-pro">Pro</span> {b.deep.length} deep dives</p>}
                 <div className="row"><div className="progress" style={{ flex: 1 }}><i style={{ width: (100 * done / b.chapters.length) + '%' }} /></div><span className="small muted">{done}/{b.chapters.length}</span></div>
               </Link>
             )
@@ -107,7 +111,7 @@ export function Book() {
         <div className="page-head" style={{ marginTop: 10 }}>
           <div className="eyebrow">{ICON[b.icon]} Handbook</div>
           <h1>{b.title}</h1>
-          <p>{b.subtitle}. {b.chapters.length} chapters, about {Math.round(b.minutes / 60)} hours of reading.</p>
+          <p>{b.subtitle}. {b.chapters.length} chapters, {readTime(b.minutes)} of reading.</p>
           <div className="row" style={{ gap: 10, flexWrap: 'wrap' }}>
             <Link className="btn btn-primary" to={`/learn/${b.slug}/${next.slug}`}>{Object.keys(p.chapters).some((k) => k.startsWith(b.slug + '/')) ? 'Continue' : 'Start reading'}: {next.title}</Link>
             {pdfFor(b.slug) && <a className="btn btn-ghost" href={pdfFor(b.slug).url} download target="_blank" rel="noreferrer">↓ Download PDF ({pdfFor(b.slug).pages} pages)</a>}
@@ -126,8 +130,47 @@ export function Book() {
             )
           })}
         </div>
+        {b.deep && (
+          <>
+            <div className="section-head" style={{ marginTop: 32 }}>
+              <h2>Pro deep dives</h2>
+              <p>Longer pieces that go past the handbook: the internals, the production patterns and the interview answers. Each one opens with a preview you can read now.</p>
+            </div>
+            <div className="card">
+              {b.deep.map((d) => (
+                <Link key={d.slug} to={`/learn/${b.slug}/${d.slug}`} className="linkrow" style={{ border: 0, borderBottom: '1px solid var(--line)', borderRadius: 0 }}>
+                  <span className="k" style={{ minWidth: 30 }} aria-hidden="true">🔒</span>
+                  <span style={{ flex: 1 }}>{d.title}</span>
+                  <span className="small muted">{d.sections} sections</span>
+                  <span className="chip chip-pro">Pro</span>
+                </Link>
+              ))}
+            </div>
+          </>
+        )}
       </div>
     </div>
+  )
+}
+
+// What a Pro deep dive holds after the preview, and the way in.
+function ProLock({ items }) {
+  return (
+    <section className="pro-lock" aria-label="The rest of this deep dive is part of Pro">
+      <div className="pro-lock-fade" aria-hidden="true" />
+      <div className="pro-lock-card">
+        <div className="eyebrow"><span className="chip chip-pro">Pro</span> The rest of this deep dive</div>
+        <h2>You've read the preview. Here's what comes next.</h2>
+        <ol className="pro-lock-list">
+          {items.map((t) => <li key={t}><span aria-hidden="true">🔒</span>{t}</li>)}
+        </ol>
+        <p className="muted">Pro opens soon. Join the waitlist and we'll email you the day it does.</p>
+        <div className="row" style={{ gap: 10, flexWrap: 'wrap', marginBottom: 16 }}>
+          <Link className="btn btn-ghost" to="/pro">See what Pro includes</Link>
+        </div>
+        <Waitlist />
+      </div>
+    </section>
   )
 }
 
@@ -168,8 +211,9 @@ export function Chapter() {
   if (!b) return <div className="page container">Handbook not found.</div>
   if (!chs) return <div className="page container"><span className="loading"><span className="spinner" /> Loading chapter…</span></div>
   if (!c) return <div className="page container">Chapter not found. <Link to={`/learn/${book}`}>Back to {b.title}</Link></div>
-  const key = `${book}/${c.num}`
-  const done = !!p.chapters[key]
+  // Pro deep dives share numbers with chapters, so they never touch reading progress.
+  const key = c.pro ? null : `${book}/${c.num}`
+  const done = !key || !!p.chapters[key]
   const prev = chs[idx - 1]
   const next = chs[idx + 1]
   return (
@@ -181,22 +225,22 @@ export function Chapter() {
           <h4><Link to={`/learn/${book}`}>{b.title}</Link></h4>
           {chs.map((x) => (
             <Link key={x.slug} to={`/learn/${book}/${x.slug}`} className={x.slug === chapter ? 'active' : ''}>
-              <span className="n">{x.num}</span><span>{x.title}</span>{p.chapters[`${book}/${x.num}`] && <span className="tick">✓</span>}
+              <span className="n">{x.pro ? '🔒' : x.num}</span><span>{x.title}</span>{x.pro ? <span className="tick pro-tick">Pro</span> : p.chapters[`${book}/${x.num}`] && <span className="tick">✓</span>}
             </Link>
           ))}
         </aside>
         <article>
           <div className="row small muted" style={{ marginBottom: 8 }}>
-            <Link to={`/learn/${book}`}>{b.title}</Link><span>·</span><span>Chapter {c.num}</span><span>·</span><span>{c.minutes} min read</span>
+            <Link to={`/learn/${book}`}>{b.title}</Link><span>·</span>{c.pro ? <span className="chip chip-pro">Pro deep dive {c.num}</span> : <><span>Chapter {c.num}</span><span>·</span><span>{c.minutes} min read</span></>}
             <button className="btn btn-ghost btn-sm" onClick={() => setFocus((f) => !f)} style={{ marginLeft: 'auto' }} title="Focus mode (F)">{focus ? 'Exit focus' : 'Focus'}</button>
             <button className="btn btn-ghost btn-sm side-toggle" onClick={() => setSide((s) => !s)}>Chapters</button>
           </div>
           <div className="prose"><h1>{c.title}</h1></div>
           <Markdown md={c.md} />
-          <div className="done-bar">
+          {c.pro ? <ProLock items={c.locked} /> : <div className="done-bar">
             <div><b>{done ? 'Nice. Chapter marked as read.' : 'Finished this chapter?'}</b><div className="small muted">Your path and progress update automatically.</div></div>
             <button className={'btn ' + (done ? 'btn-ghost' : 'btn-primary')} onClick={() => toggleIn('chapters', key)}>{done ? '✓ Read' : 'Mark as read'}</button>
-          </div>
+          </div>}
           <div className="chapter-foot">
             {prev ? <Link to={`/learn/${book}/${prev.slug}`} onClick={() => {}}><small>← Previous</small>{prev.title}</Link> : <span />}
             {next ? <Link className="next" to={`/learn/${book}/${next.slug}`} onClick={() => { if (!done) toggleIn('chapters', key) }}><small>Next →</small>{next.title}</Link> : <Link className="next" to="/learn"><small>Done →</small>Back to handbooks</Link>}
@@ -243,7 +287,7 @@ export function GuidePhase() {
 function ReaderKeys({ prev, next, onFocus, navigate, onNext }) {
   useEffect(() => {
     const k = (e) => {
-      if (e.metaKey || e.ctrlKey || e.altKey || ['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName)) return
+      if (e.metaKey || e.ctrlKey || e.altKey || ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName) || document.activeElement?.isContentEditable || document.activeElement?.closest('.cm-editor')) return
       if (e.key === 'f' || e.key === 'F') onFocus()
       else if (e.key === 'ArrowRight' && next) { onNext(); navigate(next) }
       else if (e.key === 'ArrowLeft' && prev) navigate(prev)

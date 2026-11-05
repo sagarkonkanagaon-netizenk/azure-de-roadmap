@@ -7,6 +7,7 @@ import path from 'path'
 
 const book = process.argv[2] || 'sql'
 const dir = `content-src/${book}`
+if (!fs.existsSync(dir)) throw new Error(`${dir} not found: this handbook isn't built from markdown`)
 const sqlQ = JSON.parse(fs.readFileSync('src/content/sql-questions.json', 'utf8')).questions
 const pyQ = JSON.parse(fs.readFileSync('src/content/py-questions.json', 'utf8'))
 const pyList = pyQ.questions || pyQ
@@ -24,23 +25,35 @@ function practice(body) {
   return `<div class="practice-box"><b>Practise this</b>${links.join('')}</div>`
 }
 
-const files = fs.readdirSync(dir).filter((f) => /^\d+-.*\.md$/.test(f)).sort((a, b) => parseInt(a) - parseInt(b))
-const chapters = files.map((f) => {
-  const raw = fs.readFileSync(path.join(dir, f), 'utf8')
+// Pro deep dives live in content-src/<book>/pro/. Only their preview is in the repo: the text up to a
+// ```locked block, whose lines are the section titles shown behind the lock.
+const mdFiles = (d) => (fs.existsSync(d) ? fs.readdirSync(d).filter((f) => /^\d+-.*\.md$/.test(f)).sort((a, b) => parseInt(a) - parseInt(b)) : [])
+const read = (d, f, pro) => {
+  const raw = fs.readFileSync(path.join(d, f), 'utf8')
   const num = parseInt(f)
-  const title = raw.split('\n')[0].replace(/^#\s+/, '').trim()
+  const title = raw.split('\n')[0].replace(/^#\s+/, '').replace(/^Deep dive:\s*/i, '').trim().replace(/^./, (ch) => ch.toUpperCase())
   let md = raw.split('\n').slice(1).join('\n').trim() + '\n'
+  let locked
+  md = md.replace(/```locked\n([\s\S]*?)```\n?/, (_, b) => { locked = b.trim().split('\n').map((x) => x.trim()).filter(Boolean); return '' })
+  if (pro && !locked) throw new Error(`${f}: a Pro deep dive needs a \`\`\`locked block`)
+  if (!pro && locked) throw new Error(`${f}: \`\`\`locked is only for Pro deep dives`)
   md = md.replace(/```practice\n([\s\S]*?)```/g, (_, b) => practice(b))
   const code = (md.match(/```[\s\S]*?```/g) || []).join('\n')
   const prose = md.replace(/```[\s\S]*?```/g, '').replace(/<[^>]+>/g, ' ')
   const minutes = Math.max(2, Math.round(prose.split(/\s+/).filter(Boolean).length / 200 + code.split('\n').length / 60))
-  return { num, slug: `${num}-${slugify(title)}`, title, minutes, md }
-})
-fs.writeFileSync(`src/content/books/${book}.json`, JSON.stringify(chapters))
+  return pro ? { num, slug: `pro-${num}-${slugify(title)}`, title, minutes, md, pro: true, locked } : { num, slug: `${num}-${slugify(title)}`, title, minutes, md }
+}
+const chapters = mdFiles(dir).map((f) => read(dir, f, false))
+const deep = mdFiles(`${dir}/pro`).map((f) => read(`${dir}/pro`, f, true))
+fs.writeFileSync(`src/content/books/${book}.json`, JSON.stringify([...chapters, ...deep]))
 const idxPath = 'src/content/books-index.json'
 const idx = JSON.parse(fs.readFileSync(idxPath, 'utf8'))
 const b = idx.find((x) => x.slug === book)
+if (!b) throw new Error(`register "${book}" in books-index.json first`)
 b.chapters = chapters.map(({ num, slug, title, minutes }) => ({ num, slug, title, minutes }))
+b.minutes = chapters.reduce((a, c) => a + c.minutes, 0)
+if (deep.length) b.deep = deep.map(({ num, slug, title, locked }) => ({ num, slug, title, sections: locked.length }))
+else delete b.deep
 fs.writeFileSync(idxPath, JSON.stringify(idx))
 const total = chapters.reduce((a, c) => a + c.minutes, 0)
-console.log(`${book}: ${chapters.length} chapters, ${total} min, ${chapters.reduce((a, c) => a + c.md.split(/\s+/).length, 0)} words`)
+console.log(`${book}: ${chapters.length} chapters + ${deep.length} Pro deep dives, ${total} min, ${chapters.reduce((a, c) => a + c.md.split(/\s+/).length, 0)} words`)

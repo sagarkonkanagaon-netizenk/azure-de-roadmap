@@ -1,5 +1,6 @@
 const loaders = {
   sql: () => import('../content/books/sql.json'),
+  python: () => import('../content/books/python.json'),
   pyspark: () => import('../content/books/pyspark.json'),
   databricks: () => import('../content/books/databricks.json'),
   streaming: () => import('../content/books/streaming.json'),

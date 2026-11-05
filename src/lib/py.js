@@ -19,13 +19,13 @@ function spawn() {
 
 export function isPyReady() { return ready }
 
-export function runPython(code, check) {
+export function runPython(code, check, opts = {}) {
   if (!worker) spawn()
   const id = ++seq
   const base = new URL(BASE, window.location.href).href
   return new Promise((resolve) => {
     pending.set(id, resolve)
-    worker.postMessage({ id, code, base, check })
+    worker.postMessage({ id, code, base, check, show: Boolean(opts.show) })
   })
 }
 
