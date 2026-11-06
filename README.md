@@ -2,24 +2,24 @@
 
 <h1 align="center">Data Dhaba</h1>
 
-<p align="center"><b>On your highway to get hired.</b><br/>Learn data engineering by doing it, right in your browser. Free, forever.</p>
+<p align="center"><b>On your highway to get hired.</b><br/>Learn data engineering by doing it, right in your browser. <b>Learn. Build. Get hired.</b></p>
 
 <p align="center">
   <a href="https://datadhaba.in/"><img alt="Open the site" src="https://img.shields.io/badge/Open%20the%20site-e8366f?style=for-the-badge&logoColor=white"></a>
   <a href="https://datadhaba.in/#/path"><img alt="24-week path" src="https://img.shields.io/badge/24--week%20path-0fb5b0?style=for-the-badge"></a>
-  <a href="https://datadhaba.in/#/pro"><img alt="Pro coming soon" src="https://img.shields.io/badge/Pro-coming%20soon%20%C2%B7%20from%20%E2%82%B9999-1a1420?style=for-the-badge"></a>
+  <a href="https://datadhaba.in/#/pro"><img alt="Pro coming soon" src="https://img.shields.io/badge/Pro-coming%20soon%20%C2%B7%20from%20%E2%82%B91%2C999-1a1420?style=for-the-badge"></a>
 </p>
 
 <p align="center">
-  <img alt="No signup" src="https://img.shields.io/badge/no%20signup-needed-08706a">
+  <img alt="Five handbooks" src="https://img.shields.io/badge/5%20handbooks-120%20chapters-08706a">
   <img alt="Runs in browser" src="https://img.shields.io/badge/SQL%20%2B%20Python-run%20in%20your%20browser-6d3fd6">
-  <img alt="Price" src="https://img.shields.io/badge/learning-%E2%82%B90-c8155a">
+  <img alt="Sign in" src="https://img.shields.io/badge/sign%20in-email%20or%20Google-c8155a">
 </p>
 
 ---
 
 > [!IMPORTANT]
-> ### 📣 Data Dhaba Pro is coming: ₹999 for 6 months or ₹1,599 a year
+> ### 📣 Data Dhaba Pro is coming: ₹1,999 for 6 months or ₹2,999 a year
 > **34 end-to-end projects · 60+ cheat sheets · 500+ interview answers · AI mock interviewer · 20 system design cases.**
 > Everything between "I finished the course" and "I got the offer".
 > **[Join the waitlist →](https://datadhaba.in/#/pro)** No payment now. You get an email the day it opens.
@@ -27,6 +27,8 @@
 ---
 
 ## 🛣️ Why Data Dhaba
+
+**Learn → Build → Get hired.** Read a short chapter, solve real problems on real data, then build projects you can show in an interview.
 
 Most data engineering courses are videos you watch and forget. Data Dhaba is a place you **do the work**:
 
@@ -37,12 +39,12 @@ Most data engineering courses are videos you watch and forget. Data Dhaba is a p
 
 <p align="center"><img src=".github/screens/home.png" alt="Data Dhaba home page" width="88%"/></p>
 
-## 🍽️ What's on the menu (free)
+## 🍽️ What's on the menu
 
 | | What you get | |
 |---|---|---|
 | 🗺️ | **24-week path** (about 5½ months, ~12 h a week) | 8 stops, 8 boss builds, a badge at every stop. You join RasoiRun, a made-up food-delivery startup, and every week is a ticket from your lead. |
-| 📚 | **Four handbooks**, 98 chapters | SQL, PySpark, Databricks and Streaming. Short chapters you finish in minutes. PDFs to keep. |
+| 📚 | **Five handbooks**, 120 chapters | SQL, Python, PySpark, Databricks and Streaming. Short chapters you finish in minutes. PDFs to keep. |
 | 🗄️ | **SQL Lab**, 78 problems | Interview questions on a real engine, checked the moment you press Run. Every table and column shown in plain words. |
 | 🧪 | **SQL Playground**, 2.6M rows | Shop orders, clickstream and taxi trips, with real-world mess on purpose: duplicates, NULLs, late events. |
 | 🐍 | **Python Lab** | Data engineering coding problems with tests that check your code. |
@@ -50,7 +52,7 @@ Most data engineering courses are videos you watch and forget. Data Dhaba is a p
 | 🔥 | **Daily SQL challenge** | One question a day, the same for everyone. Keep the streak, share the card. |
 | 🎤 | **Interview prep** | Scenario questions with push-backs, PySpark questions, a 102-question cloud quiz, flashcards and a "tell me about yourself" playbook. |
 | ✨ | **Visual SQL** | Joins and window functions, animated so they finally click. |
-| 🏅 | **XP, levels and badges** | Progress saved in your browser. No account, no ads, no paywall on learning. |
+| 🏅 | **XP, levels and badges** | Sign in with email or Google and your progress, streak and badges follow you. No ads. |
 
 <p align="center">
   <img src=".github/screens/path.png" alt="The 24-week path" width="49%"/>
@@ -61,8 +63,8 @@ Most data engineering courses are videos you watch and forget. Data Dhaba is a p
 
 | Plan | Price | |
 |---|---|---|
-| **6 months** | **₹999** | about ₹167 a month |
-| **1 year** | **₹1,599** | about ₹133 a month, save 20% |
+| **6 months** | **₹1,999** | about ₹333 a month |
+| **1 year** | **₹2,999** | about ₹250 a month, save 25% |
 
 Built for people who want the job, not just the certificate.
 
@@ -155,7 +157,7 @@ npm run dev      # http://localhost:5173
 npm run build    # checks the quiz, then builds to dist/
 ```
 
-- **Stack:** Vite + React, hash routing, DuckDB-WASM for SQL, Pyodide in a Web Worker for Python. No backend.
+- **Stack:** Vite + React, hash routing, DuckDB-WASM for SQL, Pyodide in a Web Worker for Python. Sign-in and saved progress use Supabase Auth (email code or Google); see `supabase/`. The publishable key comes from repository secrets at build time, never from the code.
 - **Deploy:** `.github/workflows/pages.yml` builds and deploys to GitHub Pages on every push to `main` (Settings → Pages → Source: GitHub Actions). `public/404.html` sends path-style links to the right hash route.
 - **Engines:** the SQL and Python engines load from jsDelivr on first use. Set `VITE_WASM_BASE` or `VITE_PYODIDE_BASE` to serve them yourself.
 - **Content:** `src/content/*.json` is generated from the handbook PDFs by `scripts/build_content.py` and the converters in `scripts/convert/`. The path lives in `src/data/path.js`, Pro plans in `src/data/pro.js`. The quiz lives in `src/data/quiz.js`, and `npm run check:quiz` fails if the right answer is too often the longest option.
