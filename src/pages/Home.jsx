@@ -135,7 +135,7 @@ export default function Home() {
             {JOURNEY.steps.map((s, i) => (
               <li key={s.word} className="how-step">
                 <span className="how-n" aria-hidden="true">{i + 1}</span>
-                <h3>{s.word} <span className="journey-gloss">{s.gloss}</span></h3>
+                <h3>{s.word}{s.gloss && <> <span className="journey-gloss">{s.gloss}</span></>}</h3>
                 <p>{s.body}</p>
                 {started && <p className="journey-stat">{journeyStat[i]}</p>}
                 <Link to={s.to} className="how-link">{s.cta} →</Link>
