@@ -1,15 +1,16 @@
 import DeviceWatch from './DeviceWatch.jsx'
 import Gate from './Gate.jsx'
 import { AUTH_ENABLED } from '../lib/auth.js'
-import { useEffect, useState } from 'react'
+import { Suspense, lazy, useEffect, useState } from 'react'
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
 import { useTheme } from '../lib/theme.js'
 import { BRAND } from '../data/extras.js'
-import Search from './Search.jsx'
 import Celebrate from './Celebrate.jsx'
 import { useProgress } from '../lib/progress.js'
 import { tally, levelOf } from '../lib/xp.js'
 import { SECTIONS, sectionOf, itemOf, HOME_OF } from '../data/sections.js'
+
+const Search = lazy(() => import('./Search.jsx'))
 
 const MENUS = SECTIONS.filter((x) => x.id !== 'daily')
 
@@ -96,7 +97,7 @@ export default function Layout() {
             </div>
           </div>
         )}
-        <Gate><Outlet /></Gate>
+        <Suspense fallback={<div className="page container"><span className="loading"><span className="spinner" /> Loading…</span></div>}><Gate><Outlet /></Gate></Suspense>
       </main>
       <footer className="footer">
         <div className="container footer-grid">
@@ -113,7 +114,7 @@ export default function Layout() {
           <nav aria-label="Legal"><Link to="/privacy">Privacy</Link><Link to="/terms">Terms</Link><Link to="/pro">Pro waitlist</Link>{AUTH_ENABLED && <Link to="/account">Account</Link>}</nav>
         </div>
       </footer>
-      {search && <Search onClose={() => setSearch(false)} />}
+      {search && <Suspense fallback={null}><Search onClose={() => setSearch(false)} /></Suspense>}
       <Celebrate />
       <DeviceWatch />
     </div>

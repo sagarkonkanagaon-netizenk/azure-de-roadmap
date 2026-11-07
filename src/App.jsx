@@ -1,25 +1,55 @@
+import { lazy } from 'react'
 import { HashRouter, Route, Routes } from 'react-router-dom'
 import Layout from './components/Layout.jsx'
 import Home from './pages/Home.jsx'
-import Path, { Week } from './pages/Path.jsx'
-import Library, { Book, Chapter, GuidePhase } from './pages/Learn.jsx'
-import SqlLab from './pages/SqlLab.jsx'
-import Playground from './pages/Playground.jsx'
-import Daily from './pages/Daily.jsx'
-import PyLab from './pages/PyLab.jsx'
-import Practice from './pages/Practice.jsx'
-import Datasets from './pages/Datasets.jsx'
-import Drills, { Drill } from './pages/Drills.jsx'
-import Interview, { Scenarios, PySparkQs, Playbook } from './pages/Interview.jsx'
-import Flashcards from './pages/Flashcards.jsx'
-import Quiz from './pages/Quiz.jsx'
-import Visual from './pages/Visual.jsx'
-import Notes, { Note } from './pages/Notes.jsx'
-import { Projects, Resources, About, Pro, NotFound, Privacy, Terms } from './pages/Misc.jsx'
-import ProProject from './pages/ProProject.jsx'
-import { SheetIndex, Sheet } from './pages/ProSheets.jsx'
-import ProgressPage from './pages/Progress.jsx'
-import Account from './pages/Account.jsx'
+
+// Every page except Home loads on demand, so the first visit downloads only what it shows.
+// After a new deploy the old chunk files are gone, so a stale tab reloads once to pick up the new ones.
+const page = (load, name = 'default') => lazy(() => load().then(
+  (m) => { try { sessionStorage.removeItem('dd:reloaded') } catch (e) { /* ignore */ } return { default: m[name] } },
+  (err) => {
+    let again = false
+    try { again = !sessionStorage.getItem('dd:reloaded'); if (again) sessionStorage.setItem('dd:reloaded', '1') } catch (e) { /* ignore */ }
+    if (again) { window.location.reload(); return new Promise(() => {}) }
+    throw err
+  },
+))
+
+const Path = page(() => import('./pages/Path.jsx'))
+const Week = page(() => import('./pages/Path.jsx'), 'Week')
+const Library = page(() => import('./pages/Learn.jsx'))
+const Book = page(() => import('./pages/Learn.jsx'), 'Book')
+const Chapter = page(() => import('./pages/Learn.jsx'), 'Chapter')
+const GuidePhase = page(() => import('./pages/Learn.jsx'), 'GuidePhase')
+const SqlLab = page(() => import('./pages/SqlLab.jsx'))
+const Playground = page(() => import('./pages/Playground.jsx'))
+const Daily = page(() => import('./pages/Daily.jsx'))
+const PyLab = page(() => import('./pages/PyLab.jsx'))
+const Practice = page(() => import('./pages/Practice.jsx'))
+const Datasets = page(() => import('./pages/Datasets.jsx'))
+const Drills = page(() => import('./pages/Drills.jsx'))
+const Drill = page(() => import('./pages/Drills.jsx'), 'Drill')
+const Interview = page(() => import('./pages/Interview.jsx'))
+const Scenarios = page(() => import('./pages/Interview.jsx'), 'Scenarios')
+const PySparkQs = page(() => import('./pages/Interview.jsx'), 'PySparkQs')
+const Playbook = page(() => import('./pages/Interview.jsx'), 'Playbook')
+const Flashcards = page(() => import('./pages/Flashcards.jsx'))
+const Quiz = page(() => import('./pages/Quiz.jsx'))
+const Visual = page(() => import('./pages/Visual.jsx'))
+const Notes = page(() => import('./pages/Notes.jsx'))
+const Note = page(() => import('./pages/Notes.jsx'), 'Note')
+const Projects = page(() => import('./pages/Misc.jsx'), 'Projects')
+const Resources = page(() => import('./pages/Misc.jsx'), 'Resources')
+const About = page(() => import('./pages/Misc.jsx'), 'About')
+const Pro = page(() => import('./pages/Misc.jsx'), 'Pro')
+const NotFound = page(() => import('./pages/Misc.jsx'), 'NotFound')
+const Privacy = page(() => import('./pages/Misc.jsx'), 'Privacy')
+const Terms = page(() => import('./pages/Misc.jsx'), 'Terms')
+const ProProject = page(() => import('./pages/ProProject.jsx'))
+const SheetIndex = page(() => import('./pages/ProSheets.jsx'), 'SheetIndex')
+const Sheet = page(() => import('./pages/ProSheets.jsx'), 'Sheet')
+const ProgressPage = page(() => import('./pages/Progress.jsx'))
+const Account = page(() => import('./pages/Account.jsx'))
 
 export default function App() {
   return (
