@@ -60,6 +60,8 @@ export default function Markdown({ md, className = 'prose' }) {
       else if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); code.closest('.codeblock')?.querySelector('button[data-try]')?.click() }
       else if (e.key === 'Escape') code.blur()
     }
+    // Code blocks that scroll sideways must be reachable by keyboard (WCAG 2.1.1).
+    el.querySelectorAll('pre').forEach((p) => { if (!p.hasAttribute('tabindex')) { p.tabIndex = 0; p.setAttribute('role', 'region'); p.setAttribute('aria-label', 'Code') } })
     el.addEventListener('click', onClick)
     el.addEventListener('keydown', onKey)
     return () => { el.removeEventListener('click', onClick); el.removeEventListener('keydown', onKey) }

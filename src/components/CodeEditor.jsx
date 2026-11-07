@@ -8,10 +8,14 @@ import { oneDark } from '@codemirror/theme-one-dark'
 import { HighlightStyle, syntaxHighlighting } from '@codemirror/language'
 import { tags } from '@lezer/highlight'
 
-// One Dark's comment grey fails WCAG contrast on our editor background; lighten it.
-const readableComments = Prec.highest(syntaxHighlighting(HighlightStyle.define([{ tag: tags.comment, color: '#a3adbf', fontStyle: 'italic' }])))
+// One Dark's comment grey, keyword violet and name coral fail WCAG contrast on the active line; lighten them.
+const readableComments = Prec.highest(syntaxHighlighting(HighlightStyle.define([
+  { tag: tags.comment, color: '#a3adbf', fontStyle: 'italic' },
+  { tag: tags.keyword, color: '#d7a1e8' },
+  { tag: [tags.name, tags.deleted, tags.character, tags.propertyName, tags.macroName], color: '#f2939a' },
+])))
 
-export default function CodeEditor({ value, onChange, lang = 'sql', onRun, minHeight = 180 }) {
+export default function CodeEditor({ value, onChange, lang = 'sql', onRun, minHeight = 180, label }) {
   const host = useRef(null)
   const view = useRef(null)
   const runRef = useRef(onRun)
@@ -32,6 +36,8 @@ export default function CodeEditor({ value, onChange, lang = 'sql', onRun, minHe
           oneDark,
           readableComments,
           EditorView.lineWrapping,
+          // Screen readers announce the editor by this name.
+          EditorView.contentAttributes.of({ 'aria-label': label || (lang === 'sql' ? 'SQL editor' : 'Python editor') }),
           EditorView.theme({ '&': { minHeight: minHeight + 'px', backgroundColor: 'transparent' }, '.cm-gutters': { backgroundColor: 'transparent' }, '.cm-content': { padding: '10px 0' } }),
           EditorView.updateListener.of((u) => { if (u.docChanged) changeRef.current && changeRef.current(u.state.doc.toString()) }),
         ],

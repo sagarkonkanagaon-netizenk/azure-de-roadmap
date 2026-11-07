@@ -91,6 +91,12 @@ ${cta ? `<div class="card cta"><strong>${esc(cta.title)}</strong><p>${esc(cta.te
 }
 
 // ── handbooks ────────────────────────────────────────────────────────────
+// Google shows about 60 characters of a title. Drop the middle part when the full title is longer.
+const fitTitle = (main, mid) => {
+  const full = `${main} · ${mid} | Data Dhaba`
+  return full.length <= 65 ? full : `${main} | Data Dhaba`
+}
+
 // Preview = the intro plus the first "## " section. Chapter 1 of every book is open in the app, so it is shown in full.
 function preview(md, full) {
   if (full) return { md, cut: false }
@@ -110,7 +116,7 @@ for (const b of books) {
     const { md, cut } = preview(ch.md, full)
     const desc = clip(plain(ch.md))
     page({
-      path, title: `${ch.title} · ${b.title} | Data Dhaba`, h1: ch.title, description: desc,
+      path, title: fitTitle(ch.title, b.title), h1: ch.title, description: desc,
       crumbs: [{ name: 'Home', path: '/' }, { name: 'Handbooks', path: '/guide/' }, { name: b.title, path: `/guide/${b.slug}/` }, { name: ch.title, path }],
       body: `<p class="tag">${esc(b.title)} · chapter ${esc(ch.num)} · ${esc(ch.minutes)} min read</p>${marked.parse(md)}`,
       cta: cut
@@ -159,7 +165,7 @@ function questions({ file, base, label, appBase, openUpTo, lang }) {
       open && q.note ? `<h2>Why it works</h2><p>${esc(q.note)}</p>` : '',
     ].join('')
     page({
-      path, title: `${q.title} | ${label} | Data Dhaba`, h1: q.title, description: desc,
+      path, title: fitTitle(q.title, label), h1: q.title, description: desc,
       crumbs: [{ name: 'Home', path: '/' }, { name: label, path: base }, { name: `#${q.n}`, path }],
       body,
       cta: open

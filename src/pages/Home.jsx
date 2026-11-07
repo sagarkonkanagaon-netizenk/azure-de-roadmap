@@ -5,8 +5,6 @@ import DailyBanner from '../components/DailyBanner.jsx'
 import Console from '../components/Console.jsx'
 import HeroMark from '../components/HeroMark.jsx'
 import { AUTH_ENABLED } from '../lib/auth.js'
-import sqlQ from '../content/sql-questions.json'
-import pyQ from '../content/py-questions.json'
 import books from '../content/books-index.json'
 import { WEEKS, PHASES } from '../data/path.js'
 import { useProgress } from '../lib/progress.js'
@@ -41,8 +39,8 @@ const CHAPTERS = books.reduce((a, b) => a + b.chapters.length, 0)
 const STATS = [
   ['24', 'weeks, step by step'],
   [CHAPTERS, 'handbook chapters'],
-  [sqlQ.questions.length, 'SQL interview problems'],
-  [pyQ.questions.length, 'Python and PySpark problems'],
+  [__QUESTION_COUNTS__.sql, 'SQL interview problems'],
+  [__QUESTION_COUNTS__.py, 'Python and PySpark problems'],
   ['2.6M', 'rows to practise on'],
 ]
 const STACK = ['SQL', 'Python', 'PySpark', 'Spark internals', 'Databricks', 'Delta Lake', 'Unity Catalog', 'Azure Data Factory', 'ADLS Gen2', 'Kafka', 'Structured Streaming', 'CDC', 'Data modelling', 'SCD Type 2', 'Data quality', 'CI/CD', 'Docker', 'System design', 'Interviews']

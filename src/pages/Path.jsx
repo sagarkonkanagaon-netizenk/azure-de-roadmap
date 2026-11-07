@@ -104,7 +104,7 @@ export default function Path() {
                 <span className="dot" style={{ background: ph.color }}>{ph.n}</span>
                 <div className="spread" style={{ marginBottom: 10 }}>
                   <div>
-                    <div className="small muted">Stop {ph.n} · weeks {ph.weeks} · badge: <b style={{ color: ph.color }}>{ph.badge}</b>{st.done === st.total ? ' ✓' : ''}</div>
+                    <div className="small muted">Stop {ph.n} · weeks {ph.weeks} · badge: <b className="stop-badge" style={{ '--c': ph.color }}>{ph.badge}</b>{st.done === st.total ? ' ✓' : ''}</div>
                     <h2 style={{ margin: 0 }}>{ph.title}</h2>
                   </div>
                   <Link to={`/learn/azure/${ph.guide}`} className="btn btn-ghost btn-sm">Study guide</Link>
@@ -163,7 +163,7 @@ export function Week() {
       <div className="container narrow">
         <Link to="/path" className="small">← All weeks</Link>
         <div className="page-head" style={{ marginTop: 10 }}>
-          <div className="eyebrow" style={{ color: ph.color }}>Week {w.n} of {WEEKS.length} · Stop {ph.n}: {ph.title}</div>
+          <div className="eyebrow stop-tint" style={{ '--c': ph.color }}>Week {w.n} of {WEEKS.length} · Stop {ph.n}: {ph.title}</div>
           <h1>{w.title}</h1>
           <p>{w.goal}</p>
           <div className="row" style={{ maxWidth: 420 }}><div className="progress" style={{ flex: 1 }}><i style={{ width: s.pct + '%' }} /></div><span className="small muted">{s.pct}%</span></div>
