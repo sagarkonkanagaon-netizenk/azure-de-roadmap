@@ -271,7 +271,7 @@ export function GuidePhase() {
       <div className="container narrow">
         <Link to="/path" className="small">← The path</Link>
         <div className="page-head" style={{ marginTop: 10 }}>
-          <div className="eyebrow" style={{ color: ph.color }}>Study guide {g.n} · stop {ph.n}, weeks {ph.weeks}</div>
+          <div className="eyebrow stop-tint" style={{ '--c': ph.color }}>Study guide {g.n} · stop {ph.n}, weeks {ph.weeks}</div>
           <h1>{clean(g.title)}</h1>
         </div>
         <Markdown md={g.md} />

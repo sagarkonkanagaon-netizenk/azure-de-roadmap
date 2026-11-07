@@ -1,5 +1,4 @@
 import DeviceWatch from './DeviceWatch.jsx'
-import Gate from './Gate.jsx'
 import { AUTH_ENABLED } from '../lib/auth.js'
 import { Suspense, lazy, useEffect, useState } from 'react'
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
@@ -11,6 +10,7 @@ import { tally, levelOf } from '../lib/xp.js'
 import { SECTIONS, sectionOf, itemOf, HOME_OF } from '../data/sections.js'
 
 const Search = lazy(() => import('./Search.jsx'))
+const DEFAULT_TITLE = 'Data Dhaba · On your highway to get hired'
 
 const MENUS = SECTIONS.filter((x) => x.id !== 'daily')
 
@@ -22,6 +22,23 @@ export default function Layout() {
   const [search, setSearch] = useState(false)
   const [menu, setMenu] = useState(false)
   const loc = useLocation()
+  // Each page's tab title is its main heading, e.g. "Joins · Data Dhaba". Pages render their h1
+  // after data loads, so watch the page and set the title once the heading appears or changes.
+  useEffect(() => {
+    const main = document.getElementById('main')
+    if (!main) return
+    let raf = 0
+    const set = () => {
+      raf = 0
+      const h = main.querySelector('h1')
+      const t = h ? h.textContent.replace(/\s+/g, ' ').trim() : ''
+      document.title = loc.pathname === '/' || !t ? DEFAULT_TITLE : `${t.length > 60 ? t.slice(0, 57) + '…' : t} · Data Dhaba`
+    }
+    set()
+    const mo = new MutationObserver(() => { if (!raf) raf = requestAnimationFrame(set) })
+    mo.observe(main, { childList: true, subtree: true, characterData: true })
+    return () => { mo.disconnect(); if (raf) cancelAnimationFrame(raf) }
+  }, [loc.pathname])
   const here = sectionOf(loc.pathname)
   const crumb = itemOf(loc.pathname, here)
   useEffect(() => { setMenu(false); if (!loc.hash) window.scrollTo(0, 0) }, [loc.pathname])
@@ -41,9 +58,10 @@ export default function Layout() {
   }, [])
   return (
     <div className="shell">
+      <a className="skip-link" href="#main" onClick={(e) => { e.preventDefault(); document.getElementById('main')?.focus() }}>Skip to content</a>
       <header className="header">
         <div className="container">
-          <Link to="/" className="brand" aria-label="Home">
+          <Link to="/" className="brand" title="Data Dhaba home">
             <img className="brand-mark" src="./favicon.svg" alt="" width="34" height="34" />
             <span className="wordmark">data<b>dhaba</b> <small>{BRAND.tagline}</small></span>
           </Link>
@@ -87,7 +105,7 @@ export default function Layout() {
         ))}
         <div className="m-items m-extra"><NavLink to="/progress">My progress · {xp} XP</NavLink><NavLink to="/pro">Pro</NavLink>{AUTH_ENABLED && <NavLink to="/account">Account</NavLink>}<button type="button" className="m-theme" onClick={toggle}>{isDark ? 'Light theme' : 'Dark theme'}</button></div>
       </nav>
-      <main data-section={here?.id || 'home'}>
+      <main id="main" tabIndex={-1} data-section={here?.id || 'home'}>
         {here && here.items.length > 1 && (
           <div className="sec-bar" data-sec={here.id}>
             <div className="container sec-tabs" role="navigation" aria-label={here.label + ' pages'}>
@@ -97,7 +115,7 @@ export default function Layout() {
             </div>
           </div>
         )}
-        <Suspense fallback={<div className="page container"><span className="loading"><span className="spinner" /> Loading…</span></div>}><Gate><Outlet /></Gate></Suspense>
+        <Suspense fallback={<div className="page container"><span className="loading"><span className="spinner" /> Loading…</span></div>}><Outlet /></Suspense>
       </main>
       <footer className="footer">
         <div className="container footer-grid">
@@ -105,9 +123,9 @@ export default function Layout() {
             <Link to="/" className="brand"><img className="brand-mark" src="./favicon.svg" alt="" width="34" height="34" /><span className="wordmark">data<b>dhaba</b></span></Link>
             <p style={{ marginTop: 12, maxWidth: 360 }}>A hands-on path into data engineering. Written by {BRAND.author}, {BRAND.authorRole}.</p>
           </div>
-          {MENUS.map((sec) => <div key={sec.id} data-sec={sec.id}><h4>{sec.label}</h4>{sec.items.map((i) => <Link key={i.to} to={i.to}>{i.label === 'Overview' ? 'All of ' + sec.label : i.label}</Link>)}{sec.id === 'practice' && <Link to="/daily">Daily SQL challenge</Link>}</div>)}
-          <div><h4>Guides</h4><a href="/guide/">Handbook guides</a><a href="/sql-interview-questions/">SQL interview questions</a><a href="/python-interview-questions/">Python interview questions</a><a href="/glossary/">Data glossary</a></div>
-          <div><h4>About</h4><Link to="/progress">My progress</Link><Link to="/about">About and mantras</Link><Link to="/pro">Pro</Link><a href={BRAND.portfolio} target="_blank" rel="noreferrer">Author's portfolio</a><a href={`mailto:${BRAND.email}`}>Contact</a></div>
+          {MENUS.map((sec) => <div key={sec.id} data-sec={sec.id}><h2 className="foot-h">{sec.label}</h2>{sec.items.map((i) => <Link key={i.to} to={i.to}>{i.label === 'Overview' ? 'All of ' + sec.label : i.label}</Link>)}{sec.id === 'practice' && <Link to="/daily">Daily SQL challenge</Link>}</div>)}
+          <div><h2 className="foot-h">Guides</h2><a href="/guide/">Handbook guides</a><a href="/sql-interview-questions/">SQL interview questions</a><a href="/python-interview-questions/">Python interview questions</a><a href="/glossary/">Data glossary</a></div>
+          <div><h2 className="foot-h">About</h2><Link to="/progress">My progress</Link><Link to="/about">About and mantras</Link><Link to="/pro">Pro</Link><a href={BRAND.portfolio} target="_blank" rel="noreferrer">Author's portfolio</a><a href={`mailto:${BRAND.email}`}>Contact</a></div>
         </div>
         <div className="container footer-base">
           <span>© {new Date().getFullYear()} {BRAND.name}</span>

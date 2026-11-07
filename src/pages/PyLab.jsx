@@ -79,7 +79,7 @@ function PyQuestion({ q }) {
     <section>
       <div className="qhead">
         <div className="row small muted"><span>Python</span><span>·</span><span>Question {q.n}</span>{p.py[q.n] === 'solved' && <span className="chip chip-ok">Solved</span>}</div>
-        <h2>{q.title}</h2>
+        <h1 className="q-title">{q.title}</h1>
       </div>
       {q.given && <div className="given">{q.given}</div>}
       <div style={{ marginTop: 12 }}><CodeEditor value={code} onChange={setCode} onRun={run} lang="python" minHeight={200} /></div>

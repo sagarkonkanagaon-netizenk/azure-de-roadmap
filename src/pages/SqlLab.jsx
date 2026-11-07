@@ -124,7 +124,7 @@ function Question({ q }) {
     <section>
       <div className="qhead">
         <div className="row small muted"><span>{q.section}</span><span>·</span><span>Question {q.n} of {QS.length}</span>{p.sql[q.n] === 'solved' && <span className="chip chip-ok">Solved</span>}</div>
-        <h2>{q.title}</h2>
+        <h1 className="q-title">{q.title}</h1>
       </div>
       {q.given && q.given !== '—' && !schema.length && <div className="given">{q.given}</div>}
       {q.hint && <p className="small" style={{ marginTop: 8 }}><b>Note:</b> {q.hint}</p>}
