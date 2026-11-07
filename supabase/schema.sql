@@ -76,3 +76,46 @@ alter table public.progress enable row level security;
 drop policy if exists "own progress" on public.progress;
 create policy "own progress" on public.progress
   for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
+
+-- Contact form messages. Anyone can send one; nobody can read them from the site.
+-- You read them in Supabase under Table Editor > contact_messages.
+create table if not exists public.contact_messages (
+  id         bigint generated always as identity primary key,
+  name       text not null check (length(name) between 1 and 120),
+  email      text not null check (email ~* '^[^@\s]+@[^@\s]+\.[^@\s]{2,}$' and length(email) <= 200),
+  topic      text check (length(topic) <= 60),
+  message    text not null check (length(message) between 10 and 4000),
+  page       text check (length(page) <= 200),
+  created_at timestamptz not null default now()
+);
+alter table public.contact_messages enable row level security;
+drop policy if exists "anyone can write" on public.contact_messages;
+create policy "anyone can write" on public.contact_messages
+  for insert to anon, authenticated with check (true);
+grant insert on public.contact_messages to anon, authenticated;
+-- No select, update or delete policies: messages are private to you.
+
+-- Spam guard: forms are open to everyone, so cap how fast rows can arrive.
+-- At most 3 rows per email per hour, and 60 rows per table per 10 minutes overall.
+-- A bot that skips the site and calls the database directly still hits these limits.
+create or replace function public.limit_form_rate() returns trigger
+language plpgsql security definer set search_path = public as $$
+declare per_email int; overall int;
+begin
+  execute format('select count(*) from public.%I where lower(email) = lower($1) and created_at > now() - interval ''1 hour''', tg_table_name)
+    into per_email using new.email;
+  execute format('select count(*) from public.%I where created_at > now() - interval ''10 minutes''', tg_table_name)
+    into overall;
+  if per_email >= 3 or overall >= 60 then
+    raise exception 'Too many messages right now. Please try again later.' using errcode = 'P0001';
+  end if;
+  return new;
+end $$;
+revoke all on function public.limit_form_rate() from public;
+
+drop trigger if exists contact_rate on public.contact_messages;
+create trigger contact_rate before insert on public.contact_messages
+  for each row execute function public.limit_form_rate();
+drop trigger if exists waitlist_rate on public.waitlist;
+create trigger waitlist_rate before insert on public.waitlist
+  for each row execute function public.limit_form_rate();

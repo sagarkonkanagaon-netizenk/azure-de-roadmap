@@ -125,11 +125,11 @@ export default function Layout() {
           </div>
           {MENUS.map((sec) => <div key={sec.id} data-sec={sec.id}><h2 className="foot-h">{sec.label}</h2>{sec.items.map((i) => <Link key={i.to} to={i.to}>{i.label === 'Overview' ? 'All of ' + sec.label : i.label}</Link>)}{sec.id === 'practice' && <Link to="/daily">Daily SQL challenge</Link>}</div>)}
           <div><h2 className="foot-h">Guides</h2><a href="/guide/">Handbook guides</a><a href="/sql-interview-questions/">SQL interview questions</a><a href="/python-interview-questions/">Python interview questions</a><a href="/glossary/">Data glossary</a></div>
-          <div><h2 className="foot-h">About</h2><Link to="/progress">My progress</Link><Link to="/about">About and mantras</Link><Link to="/pro">Pro</Link><a href={BRAND.portfolio} target="_blank" rel="noreferrer">Author's portfolio</a><a href={`mailto:${BRAND.email}`}>Contact</a></div>
+          <div><h2 className="foot-h">About</h2><Link to="/progress">My progress</Link><Link to="/about">About and mantras</Link><Link to="/pro">Pro</Link><a href={BRAND.portfolio} target="_blank" rel="noreferrer">Author's portfolio</a><Link to="/contact">Contact</Link></div>
         </div>
         <div className="container footer-base">
           <span>© {new Date().getFullYear()} {BRAND.name}</span>
-          <nav aria-label="Legal"><Link to="/privacy">Privacy</Link><Link to="/terms">Terms</Link><Link to="/pro">Pro waitlist</Link>{AUTH_ENABLED && <Link to="/account">Account</Link>}</nav>
+          <nav aria-label="Legal"><Link to="/privacy">Privacy</Link><Link to="/terms">Terms</Link><Link to="/refund">Refunds</Link><Link to="/contact">Contact</Link><Link to="/pro">Pro waitlist</Link>{AUTH_ENABLED && <Link to="/account">Account</Link>}</nav>
         </div>
       </footer>
       {search && <Suspense fallback={null}><Search onClose={() => setSearch(false)} /></Suspense>}

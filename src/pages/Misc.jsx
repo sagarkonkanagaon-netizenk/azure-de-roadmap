@@ -239,13 +239,28 @@ function Policy({ eyebrow, title, updated, sections }) {
 
 export function Privacy() {
   return (
-    <Policy eyebrow="Privacy" title="Your data, in plain words" updated="4 November 2026" sections={[
+    <Policy eyebrow="Privacy" title="Your data, in plain words" updated="7 November 2026" sections={[
       ['The short version', [`${BRAND.name} has no ads and no tracking cookies. To use most of the site you create an account with your email. We keep your email and your learning progress, and nothing else.`]],
       ['Your progress', ['XP, streaks, solved questions and checklists are saved in your browser and, when you are signed in, copied to your account so they follow you to a new device. Use Export on the My progress page to keep your own copy.']],
       ['The Pro waitlist', ['If you join the waitlist, we keep your name, email, the plan you picked, where you are in your career and any note you write. It is stored in a private database (or Google Form) that only the site\'s author can read.', 'We use it only to email you about Pro. We never sell it or share it. Email us and we will delete it.']],
       ['Accounts', ['When you sign in with an email link or Google, we store your email, your plan, and a random id plus a short label (such as "Chrome on Android") for the one device your account is active on. That is how one account stays on one device.', 'Accounts are run by Supabase, our database provider. You can ask us to delete your account at any time.']],
       ['Code that runs in your browser', ['The SQL engine (DuckDB) and Python (Pyodide) are downloaded from the jsDelivr CDN the first time you use them. Your queries and code run on your device and are not sent anywhere.']],
+      ['Contact messages', ['If you use the contact form, we keep your name, email, topic and message in the same private database, only to reply to you. Email us and we will delete it.']],
       ['Hosting', ['The site is hosted on GitHub Pages. GitHub may keep standard server logs, such as IP addresses, to run and protect the service.']],
+    ]} />
+  )
+}
+
+export function Refund() {
+  return (
+    <Policy eyebrow="Refunds" title="Refund and cancellation policy" updated="7 November 2026" sections={[
+      ['Pro is not on sale yet', ['Pro opens after the waitlist. This policy applies to every Pro purchase from the day it opens. Free accounts cost nothing, so there is nothing to refund.']],
+      ['7-day full refund', ['If Pro is not right for you, ask for a refund within 7 days of your purchase and you get the full amount back. No reason needed.', 'To ask, email us from the email on your account with the payment ID from your receipt, or use the contact form and pick "Pro and payments".']],
+      ['After 7 days', ['After the 7-day window, payments are not refundable, including for unused months. You keep Pro until the end of the period you paid for.']],
+      ['How refunds are paid', ['Approved refunds go back to the original payment method (UPI, card or net banking). We start them within 2 working days; your bank usually shows the money within 5 to 7 working days after that.']],
+      ['Charged twice or payment failed?', ['If you were charged more than once, or money left your account but Pro did not unlock, email us with the payment ID. We refund duplicate or failed payments in full, at any time.']],
+      ['Cancellation and renewal', ['Pro is a one-time payment for 6 months or 1 year. It does not renew automatically, so there is nothing to cancel. When it ends you keep your free account and your progress.']],
+      ['Misuse', ['Accounts that share or resell Pro content, or break the terms of use, can be closed without a refund.']],
     ]} />
   )
 }
@@ -255,7 +270,7 @@ export function Terms() {
     <Policy eyebrow="Terms" title="Terms of use" updated="4 November 2026" sections={[
       ['Using the site', [`You can use ${BRAND.name} for your own learning and share links to any page. Please don\'t copy the handbooks or questions wholesale onto other sites.`]],
       ['No guarantees', ['We work hard to keep the content correct, but it is provided as is. It is learning material, not professional advice, and it can\'t promise a job or an exam result.']],
-      ['Pro', ['Pro is not on sale yet, and joining the waitlist costs nothing. Prices, renewal and refund terms will be published here before anyone is asked to pay.']],
+      ['Pro', ['Pro is not on sale yet, and joining the waitlist costs nothing. When it opens, Pro is a one-time payment for 6 months or 1 year that does not renew automatically. Refunds follow our refund and cancellation policy at datadhaba.in/#/refund.']],
       ['Names and trademarks', ['Product names such as Databricks, Azure, Spark or Kafka belong to their owners and are used only to describe what you learn. RasoiRun is a made-up company.']],
     ]} />
   )

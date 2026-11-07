@@ -831,6 +831,14 @@ main .page-head h1 em, main .daily-head h1 em, main .play-head h1 em { color: va
   .badges { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
 }
 
+/* Contact page */
+.contact-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); gap: 20px; align-items: start; margin-top: 8px; }
+@media (max-width: 760px) { .contact-grid { grid-template-columns: minmax(0, 1fr); } }
+.contact-card p { margin: 0 0 14px; overflow-wrap: anywhere; }
+.contact-card .contact-h { font-size: .8rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin: 0 0 6px; }
+.contact-select { font: inherit; font-size: 1rem; width: 100%; padding: 11px 13px; border-radius: 12px; border: 1px solid var(--line-2); background: var(--card); color: var(--text); }
+.hp { position: absolute !important; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
 /* Pro waitlist form */
 .wl-wrap { max-width: 760px; margin: 22px auto 8px; scroll-margin-top: calc(var(--header-h) + 16px); }
 .waitlist { padding: 24px; display: flex; flex-direction: column; gap: 16px; border: 1px solid var(--line-2); }
@@ -881,7 +889,7 @@ main .page-head h1 em, main .daily-head h1 em, main .play-head h1 em { color: va
 .pro-end p { margin: 0; }
 
 .footer-base { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 28px; padding-top: 18px; border-top: 1px solid var(--line); font-size: .86rem; color: var(--muted); }
-.footer-base nav { display: flex; gap: 18px; }
+.footer-base nav { display: flex; flex-wrap: wrap; gap: 8px 18px; }
 .footer-base a { display: inline; padding: 0; }
 
 .backup-nudge { display: flex; align-items: center; gap: 12px; padding: 12px 16px; margin-bottom: 14px; border-radius: 14px; background: var(--warn-soft); color: var(--text); border: 1px solid color-mix(in srgb, var(--warn) 30%, transparent); font-size: .92rem; text-decoration: none; }
