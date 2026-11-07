@@ -46,6 +46,8 @@ const Pro = page(() => import('./pages/Misc.jsx'), 'Pro')
 const NotFound = page(() => import('./pages/Misc.jsx'), 'NotFound')
 const Privacy = page(() => import('./pages/Misc.jsx'), 'Privacy')
 const Terms = page(() => import('./pages/Misc.jsx'), 'Terms')
+const Refund = page(() => import('./pages/Misc.jsx'), 'Refund')
+const Contact = page(() => import('./pages/Contact.jsx'))
 const ProProject = page(() => import('./pages/ProProject.jsx'))
 const SheetIndex = page(() => import('./pages/ProSheets.jsx'), 'SheetIndex')
 const Sheet = page(() => import('./pages/ProSheets.jsx'), 'Sheet')
@@ -101,6 +103,8 @@ export default function App() {
             <Route path="about" element={<About />} />
             <Route path="privacy" element={<Privacy />} />
             <Route path="terms" element={<Terms />} />
+            <Route path="refund" element={<Refund />} />
+            <Route path="contact" element={<Contact />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Route>

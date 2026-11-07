@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { WAITLIST, PLAN_CHOICES, STAGE_CHOICES } from '../data/waitlist.js'
 import { BRAND } from '../data/extras.js'
@@ -34,7 +34,8 @@ function mailto(v) {
 }
 
 export default function Waitlist({ plan: planProp }) {
-  const [v, setV] = useState({ name: '', email: '', plan: '1 year', stage: '', want: '' })
+  const [v, setV] = useState({ name: '', email: '', plan: '1 year', stage: '', want: '', website: '' })
+  const opened = useRef(Date.now())
   const [state, setState] = useState(() => (read() ? 'done' : 'idle'))
   const [err, setErr] = useState('')
   useEffect(() => { if (planProp) setV((x) => ({ ...x, plan: planProp })) }, [planProp])
@@ -46,10 +47,12 @@ export default function Waitlist({ plan: planProp }) {
     if (!EMAIL.test(v.email.trim())) return setErr('That email looks incomplete.')
     if (!v.stage) return setErr('Pick where you are now.')
     setErr('')
+    // Spam guard: people never fill the hidden "website" field, and take more than 3 seconds.
+    if (v.website || Date.now() - opened.current < 3000) { setState('done'); return }
     if (!connected()) { window.location.href = mailto(v); save({ at: Date.now(), via: 'email' }); setState('done'); return }
     setState('sending')
     try { await send(v); save({ at: Date.now(), plan: v.plan }); setState('done') }
-    catch (x) { setState('idle'); setErr('Could not reach the form. Check your connection and try again.') }
+    catch (x) { setState('idle'); setErr(x && x.code === 'P0001' ? 'Too many sign-ups right now. Please try again in a little while.' : 'Could not reach the form. Check your connection and try again.') }
   }
 
   if (state === 'done') {
@@ -60,7 +63,7 @@ export default function Waitlist({ plan: planProp }) {
         <p className="muted">We'll email you the day Pro opens. Until then, keep going on the path.</p>
         <div className="row" style={{ justifyContent: 'center', flexWrap: 'wrap' }}>
           <Link className="btn btn-primary" to="/path">Continue learning</Link>
-          <button className="btn btn-ghost" onClick={() => { try { localStorage.removeItem(KEY) } catch (e) { /* ignore */ } setV({ name: '', email: '', plan: v.plan, stage: '', want: '' }); setState('idle') }}>Add someone else</button>
+          <button className="btn btn-ghost" onClick={() => { try { localStorage.removeItem(KEY) } catch (e) { /* ignore */ } setV({ name: '', email: '', plan: v.plan, stage: '', want: '', website: '' }); opened.current = Date.now(); setState('idle') }}>Add someone else</button>
         </div>
       </div>
     )
@@ -85,6 +88,8 @@ export default function Waitlist({ plan: planProp }) {
         <div className="wl-seg">{STAGE_CHOICES.map((c) => <label key={c} className={v.stage === c ? 'on' : ''}><input type="radio" name="wl-stage" value={c} checked={v.stage === c} onChange={set('stage')} />{c}</label>)}</div>
       </fieldset>
       <label className="wl-f"><span>What do you want most from Pro? <i className="muted">(optional)</i></span><textarea rows={2} value={v.want} onChange={set('want')} placeholder="e.g. projects for my resume, mock interviews" /></label>
+      {/* Hidden from people; bots that fill every field reveal themselves. */}
+      <label className="hp" aria-hidden="true">Website<input tabIndex={-1} autoComplete="off" value={v.website} onChange={set('website')} /></label>
       {err && <p className="wl-err" role="alert">{err}</p>}
       <button className="btn btn-primary btn-lg wl-btn" disabled={state === 'sending'}>{state === 'sending' ? 'Adding you…' : 'Join the waitlist'}</button>
       <p className="small muted wl-fine">We only use this to tell you about Pro. See the <Link to="/privacy">privacy note</Link>.</p>
